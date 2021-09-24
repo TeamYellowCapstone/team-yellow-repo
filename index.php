@@ -7,15 +7,12 @@
       $message = "";
 
       //connection credientials
-      $username = "YellowTeam";
-      $password = "Heywood2021";
-      $servername = "aa16s063ub6knw5.cszziiop74rm.us-east-1.rds.amazonaws.com";
-      $database = "LogTime";
-      $conn = new mysqli($servername, $username, $password, $database);
+      $conn = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
 
       // Check connection
-      if (!$conn) {
+      if ($conn->connect_error) {
         die("Connection failed: " . mysqli_connect_error());
+        echo "died";
       }
       //process request
       if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -28,6 +25,7 @@
           $message = "Time retrieved";
         }
       }
+      $conn->close();
 
     ?>
     <style>
