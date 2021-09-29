@@ -1,3 +1,9 @@
+<?php
+if(!isset($_COOKIE["id"])){
+  setcookie("id", 0);
+}
+  
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,26 +12,31 @@
   <?php
     $message = "";
     //connection credientials
+
     $conn = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
-    //$conn = new mysqli($servername, $username, $password, $database);
 
     // Check connection
     if ($conn->connect_error) {
       die("Connection failed: " . mysqli_connect_error());
-      echo "died";
+
     }
     //process request
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       if(isset($_POST["log"])){
 
         // Insert Time and date to mysql
+        $time = new DateTime;
+        echo var_dump($time);
         $sql = "INSERT INTO `LogTime`.`ButtonTime`
                 (`idButtonTime`)
                 VALUES
                 (current_time());";
 
         if ($conn->query($sql) === True){
+          $last = $conn->insert_id;
+          setcookie("id",$last);
           $message = "Current time has been logged successfully!";
+
         }
         else{
           $message = "An error has occured. Please try again.";
@@ -33,8 +44,20 @@
 
       }
       if(isset($_POST["retrieve"])){
-        //echo "Retrieve Time";
-        $message = "Time retrieved";
+        $userID = $_COOKIE['id'];
+        $sql = "SELECT * FROM `LogTime`.`ButtonTime` WHERE TimeID = $userID LIMIT 1";
+        $result = $conn->query($sql);
+        $time = 0;
+        if ($result->num_rows > 0){
+          while ($row = $result->fetch_assoc()){
+            $time = $row["idButtonTime"];
+          }
+          $message = "Last Log was at: ". $time;
+        }
+        else{
+          $message = "No log found!";
+        }       
+        
       }
     }
     $conn->close();
@@ -74,7 +97,7 @@
       <form method="POST">
         <div class="center-div">
           <input type="submit" id="log" name="log" value="Log Time">
-          <!-- <input type="submit" id="retrieve" name="retrieve" value="Retrieve Time"> -->
+          <input type="submit" id="retrieve" name="retrieve" value="Retrieve Time">
         </div>
       </form>
       <?php
