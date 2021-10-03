@@ -64,6 +64,12 @@ body{
   overflow: hidden;
   background-color: #f1f1f1;
 }
+.indent{
+  margin-left:40px;
+}
+.centerText{
+  text-align: center;
+}
 </style>
 
 <nav class="navigation">

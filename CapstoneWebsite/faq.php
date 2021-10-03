@@ -5,13 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ</title>
-    <?php
-        require "templates/navigation.php";
-    ?>
+<?php
+    require "templates/navigation.php";
+?>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 </head>
 <body>
+
     <div class="content">
-    <h1><center>Frequently Asked Questions (FAQ)</center></h1>
+    <h1 class="centerText">Frequently Asked Questions (FAQ)</h1>
 
 
 
@@ -28,10 +45,12 @@
   <li>Sat:7:00 AM - 2:00 PM</li>
   <li>Sun: CLOSED</li>
 
-  <p>OPEN FOR DINE-IN </p>
-
-  <p>*CLOSED CHRISTMAS DAY, THANKSGIVING DAY, LABOR DAY, <br>INDEPENDANCE DAY, MEMORIAL DAY, NEW YEAR'S DAY</p>
 </ul>
+
+<p>OPEN FOR DINE-IN </p>
+
+<p>*CLOSED CHRISTMAS DAY, THANKSGIVING DAY, LABOR DAY, 
+<br>INDEPENDANCE DAY, MEMORIAL DAY, NEW YEAR'S DAY</p>
 </div>
 <hr>
 
@@ -56,23 +75,6 @@
 <hr>
 
 </div>
-
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
 
     
 </body>
