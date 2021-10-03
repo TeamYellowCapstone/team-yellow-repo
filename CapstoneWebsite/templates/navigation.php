@@ -78,5 +78,6 @@ body{
         <li><a href="menu.php">Menu</a></li>
         <li><a href="faq.php">FAQ</a></li>
         <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="retrieve-time.php">Log/Retrieve Time</a></li>
     </ul>
 </nav>

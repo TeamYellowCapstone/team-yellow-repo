@@ -1,5 +1,5 @@
-
 <?php
+require "templates/navigation.php";
 if(!isset($_COOKIE["id"])){
   setcookie("id", 0);
 }
