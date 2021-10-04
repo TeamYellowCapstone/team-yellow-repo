@@ -3,7 +3,9 @@
 ?>
 
 <html>
-    <?php
-        require "templates/navigation.php";
-    ?>
+    <body>
+        <?php
+            require "templates/navigation.php";
+        ?>
+    </body>
 </html>
