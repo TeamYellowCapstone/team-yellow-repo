@@ -3,7 +3,7 @@ html, body {
 } 
 body{
   background-color: white;
-  background-image: url(images/bxf6-hero.jpg);
+  background-image: url(../images/bxf6-hero.jpg);
   background-repeat: no-repeat;
 	background-attachment: fixed;
   background-size: cover;
