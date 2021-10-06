@@ -10,8 +10,5 @@
     <body>
         
         <?php
-            require "templates/navigation.php";
-        ?>
 
-    </body>
 </html>
