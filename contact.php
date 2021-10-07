@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <?php
-        require "templates/head.php";
-    ?> 
-    <title>Contact</title>
-</head>
+    <head>
+        <?php
+            require "templates/head.php";
+        ?> 
+        <title>Contact</title>
+    </head>
 
     <body>
         <?php
