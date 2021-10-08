@@ -1,8 +1,16 @@
+/* Color palette:
+#ef3f6b = pink
+#edddcb = beige
+#df8527 = orange
+#2c1210 = dark brown
+#2c1210 = red
+*/
+
 html, body {
   height:100%;
 } 
 body{
-background-color: white;
+background-color: #edddcb;
 background-image: url(../images/bxf6-hero.jpg);
 background-repeat: no-repeat;
 background-attachment: fixed;
