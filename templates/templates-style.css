@@ -1,27 +1,47 @@
 /* naviagtion style begining */
+
+/* Color palette:
+#ef3f6b = pink
+#edddcb = beige
+#df8527 = orange
+#2c1210 = dark brown
+#D93427 = red
+*/
+
 .navigation {
-  background-color: #000000;
-  border: 1px solid #A76358;
+    background-color: #2C1210;
+    border: 1px groove #EDDDCB;
+}
+
+    .navigation ul {
+        list-style: none;
+        display: inline-block;
+    }
+
+        .navigation ul li {
+            float: left;
+            margin: 0 40px;
+        }
+
+            .navigation ul li a {
+                color: #EDDDCB;
+                font-family: Pacifico, cursive;
+                font-size: 24px;
+                text-decoration: none;
+                padding: 14px 16px;
+            }
+
+    .navigation li a:hover {
+        background-color: #D93427;
+        color: #EDDDCB;
+    }
+#cart-container{
+  width: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  border: 2px solid #db3434;
+  background-color: antiquewhite;
+  float: right;
   text-align: center;
 }
-.navigation ul{
-  list-style: none;
-  display: inline-block;
-}
-.navigation ul li{
-  float: left;
-  margin: 0 20px;
-}
-.navigation ul li a{
-  color: #6C4818;
-  font-family: Pacifico, cursive;
-  font-size: 24px;
-  text-decoration: none;
-  padding: 14px 16px;
-
-}
-.navigation li a:hover {
-  background-color: #714307;
-  color: white;
-}
-  /* navigation style ending */
+/* navigation style ending */
