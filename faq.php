@@ -1,12 +1,13 @@
+<?php
+    require "scripts/php/menuPageLoad.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <?php
         require "templates/head.php";
     ?>
+    <script type="text/javascript" src="scripts/faq.js" defer></script>
     <title>FAQ</title>
 </head>
 
@@ -20,8 +21,8 @@
     <h1 class="centerText">Frequently Asked Questions (FAQ)</h1>
 
 
-      <button type="button" class="collapsible">When are our operating hours?</button>
-        <div class="collapsible_div">
+      <button type="button" class="collapsible_faq">When are our operating hours?</button>
+        <div class="collapsible__faq_div">
           <ul>
             <li>Mon:7:00 AM - 2:00 PM</li>
             <li>Tue:7:00 AM - 2:00 PM</li>
@@ -37,8 +38,8 @@
         </div>
       <hr>
 
-      <button type="button" class="collapsible">Who's our coffee supplier?</button>
-        <div class="collapsible_div">
+      <button type="button" class="collapsible_faq">Who's our coffee supplier?</button>
+        <div class="collapsible__faq_div">
           <p>We work with Ohio based suppliers in order to provide the best quality coffee beans and products to our customers.</p>
           <p>Here are a list of our suppliers:</p>
             <ul>
@@ -51,30 +52,13 @@
         </div>
       <hr>
 
-      <button type="button" class="collapsible">What are the origins of Love You A Latte store?</button>
-        <div class="collapsible_div">
+      <button type="button" class="collapsible_faq">What are the origins of Love You A Latte store?</button>
+        <div class="collapsible__faq_div">
           <p>After a vacation visit to Columbia our founder Jim Bob, a Botanist, crossbreed the Colombian Arabica and Italian Robusta beans to give a rich smoother, sweeter earther taste with hits of honey and chocolate. After his retirement as a Botanist Jim and his wife Sarah Bob, decided to open a coffee shop named after their golden retriever Love.</p>
         </div>
       <hr>
 
     </div>
-
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
     
   </body>
 </html>
