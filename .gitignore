@@ -2,3 +2,4 @@
 .vscode/launch.json
 *.zip
 */*.zip
+/connection/

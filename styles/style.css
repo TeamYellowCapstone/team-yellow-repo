@@ -8,313 +8,313 @@
 */
 
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  background-color: #EDDDCB;
-  font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-  color: #2C1210;
+    background-color: #EDDDCB;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    color: #2C1210;
 }
 
 p {
-  font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-  text-decoration: none;
-  font-size: 18px;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    text-decoration: none;
+    font-size: 18px;
 }
 
 h1 {
-  text-decoration: underline overline;
-  text-decoration-style: solid;
+    text-decoration: underline overline;
+    text-decoration-style: solid;
 }
 
 h3 {
-      font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-      text-decoration: none;
-      font-size: 36px;
+        font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+        text-decoration: none;
+        font-size: 36px;
 }
 
 img {
-  border:25px inset #2c1210;
-}
+    border:25px inset #2c1210;
+ }
 
-.welcome_text {
-  position: relative;
-  text-align: center;
-  font-family: 'Pacifico', cursive;
-  font-size: 48pt;
+ .welcome_text {
+    position: relative;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 48pt;
 
 }
 
 button {
-  background-color: #ef3f6b;
-  color: #edddcb;
-  border: 1px groove #5e3a0c;
-  padding: 4px 5px 4px 6px;
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
 }
 
 .background-wrap::after {
-      flex: 1;
-      content: 'none';
-      background-image: url(../images/coffee_bean-01.png);
-      background-size: 200px;
-      opacity: 0.1;
-      background-repeat: repeat;
-      padding-top:  none;
-      padding-right: 100%;
-      padding-bottom: 1000px;
-      padding-left: 100%;
-      background-position:0;
-  }
+        flex: 1;
+        content: 'none';
+        background-image: url(../images/coffee_bean-01.png);
+        background-size: 200px;
+        opacity: 0.1;
+        background-repeat: repeat;
+        padding-top:  none;
+        padding-right: 100%;
+        padding-bottom: 1000px;
+        padding-left: 100%;
+        background-position:0;
+    }
 
 .background-wrap {
-  background-color: #EDDDCB;
+    background-color: #EDDDCB;
 }
 
 .submit {
-  background-color: #ef3f6b;
-  color: #edddcb;
-  border: 1px groove #5e3a0c;
-  padding: 4px 5px 4px 6px;
-  font-weight: bolder;
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
+    font-weight: bolder;
 }
 
 .cancel {
-  background-color: #ef3f6b;
-  color: #edddcb;
-  border: 1px groove #5e3a0c;
-  padding: 4px 5px 4px 6px;
-  font-weight: bolder;
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
+    font-weight: bolder;
 }
 
 label {
-  font-weight: bolder;
-  padding: 4px 5px 4px 6px;
+    font-weight: bolder;
+    padding: 4px 5px 4px 6px;
 }
 
 input {
-  background-color: #f0e9e1;
-  padding: 4px 5px 4px 6px;
-  font-weight: lighter;
-  cursor: text;
+    background-color: #f0e9e1;
+    padding: 4px 5px 4px 6px;
+    font-weight: lighter;
+    cursor: text;
 }
 
 .form {
-  max-width: 50%;
-  min-width: 20%;
-  background-color: #EDDDCB;
-  border: 1px solid #2c1210;
-  box-shadow: 2px 2px 2px gray;
-  color: #2C1210;
-  padding: 15px 10px 20px 10px;
+    max-width: 50%;
+    min-width: 20%;
+    background-color: #EDDDCB;
+    border: 1px solid #2c1210;
+    box-shadow: 2px 2px 2px gray;
+    color: #2C1210;
+    padding: 15px 10px 20px 10px;
 }
 
 .error {
-  background-color: #D93427;
-  color: #edddcb;
-  border: 1px groove #5e3a0c;
-  padding: 11px 10px 12px 10px;
-  font-size: 24pt;
+    background-color: #D93427;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 11px 10px 12px 10px;
+    font-size: 24pt;
 }
 
 .login-error {
-  background-color: #D93427;
-  color: #edddcb;
-  border: 1px groove #5e3a0c;
-  padding: 11px 10px 12px 10px;
-  font-size: 24pt;
+    background-color: #D93427;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 11px 10px 12px 10px;
+    font-size: 24pt;
 }
 
 .ast{
-  color:red;
+    color:red;
 }
 
 .collapsible {
-  background-color: #EDDDCB;
-  color: #edddcb;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 20px;
+    background-color: #EDDDCB;
+    color: #edddcb;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
 }
 
 .collapsible_faq {
-  background-color: #ef3f6b;
-  color: #edddcb;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 20px;
+    background-color: #ef3f6b;
+    color: #edddcb;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
 }
 
 .active, .collapsible_faq:hover {
-      background-color: #DF8527;
-      color: #EDDDCB;
-      }
+        background-color: #DF8527;
+        color: #EDDDCB;
+        }
 
 .collapsible__faq_div
 {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
 }
 
 .indent {
-  margin-left: 40px;
+    margin-left: 40px;
 }
 
 .centerText {
-  text-align: center;
-  font-size: 32pt;
+    text-align: center;
+    font-size: 32pt;
 }
 
 /* Menu item */
 .flex-box {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .menu-item {
-  border: 1px groove #5e3a0c;
-  min-width: 75px;
-  max-width: 300px;
-  margin-bottom: 2rem;
+    border: 1px groove #5e3a0c;
+    min-width: 75px;
+    max-width: 300px;
+    margin-bottom: 2rem;
 }
 
 .item-name {
-  background-color: #2C1210;
-  margin: auto;
-  line-height: 60px;
-  color: #EF3F6B;
+    background-color: #2C1210;
+    margin: auto;
+    line-height: 60px;
+    color: #EF3F6B;
 }
 
 .item-desc {
-  margin-left: 2px;
-  min-height: 100px;
+    margin-left: 2px;
+    min-height: 100px;
 }
 
 .item-size-container {
-  margin: auto;
-  max-width: 550px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+    margin: auto;
+    max-width: 550px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .item-size {
-  max-width: 150px;
+    max-width: 150px;
 }
 
-  .item-size > .radio-btn {
-      opacity: 0;
-      position: fixed;
-      width: 0px;
-  }
+    .item-size > .radio-btn {
+        opacity: 0;
+        position: fixed;
+        width: 0px;
+    }
 
-      .item-size > .radio-btn + label {
-          background-color: #EF3F6B;
-          padding: 4px;
-          border-radius: 8px;
-          border: 1px double #DF8527;
-          user-select: none;
-      }
+        .item-size > .radio-btn + label {
+            background-color: #EF3F6B;
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px double #DF8527;
+            user-select: none;
+        }
 
-          .item-size > .radio-btn + label:hover {
-              background-color: #EDDDCB;
-              cursor: pointer;
-              text-align: center;
-          }
+            .item-size > .radio-btn + label:hover {
+                background-color: #EDDDCB;
+                cursor: pointer;
+                text-align: center;
+            }
 
-      .item-size > .radio-btn:checked + label {
-          background-color: #D93427;
-      }
+        .item-size > .radio-btn:checked + label {
+            background-color: #D93427;
+        }
 
 .btn {
-  width: 100px;
-  display: block;
-  height: 40px;
-  margin: 5px auto;
-  border-radius: 5px;
-  border: 1px double #EDDDCB;
-  background-color: #DF8527;
-  color: #EDDDCB;
+    width: 100px;
+    display: block;
+    height: 40px;
+    margin: 5px auto;
+    border-radius: 5px;
+    border: 1px double #EDDDCB;
+    background-color: #DF8527;
+    color: #EDDDCB;
 }
 
-  .btn:hover {
-      background-color: #D93427;
-      cursor: pointer;
-  }
+    .btn:hover {
+        background-color: #D93427;
+        cursor: pointer;
+    }
 
 .brandLogo {
-  display: block;
-  width: 80px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+    display: block;
+    width: 80px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tbl {
-  margin: auto;
-  width: 600px;
-  border: 1px double #DF8527;
-  border-collapse: collapse;
-  text-align: left;
+    margin: auto;
+    width: 600px;
+    border: 1px double #DF8527;
+    border-collapse: collapse;
+    text-align: left;
 }
 th, td{
-border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
 tr:nth-child(even){
-background-color: darkgray;
+  background-color: darkgray;
 }
 th{
-background-color: #dbbeaf;
+  background-color: #dbbeaf;
 }
 #close{
-  color: white;
-  width: 20px;
-  line-height: 20px;
-  background: #dd3a3a;
-  text-align: center;
-  margin: 20px;
-  cursor: pointer;
-  float: right;
+    color: white;
+    width: 20px;
+    line-height: 20px;
+    background: #dd3a3a;
+    text-align: center;
+    margin: 20px;
+    cursor: pointer;
+    float: right;
 }
 #close span{
-text-align: center;
+  text-align: center;
 }
 .overlay{
-position: fixed;
-top: 0px;
-left: 0px;
-background-color: rgba(191, 191, 191, 0.5);
-width: 100vw;
-height: 100vh;
-display: none;;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(191, 191, 191, 0.5);
+  width: 100vw;
+  height: 100vh;
+  display: none;;
 }
 #display-cont{
-background-color: #EDDDCB;
-font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-color: #2C1210;
-position: absolute;
-top:50%;
-transform: translate(0, -50%);
-width:90vw;
-margin: 5vw;
-overflow-y: auto;
+  background-color: #EDDDCB;
+  font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+  color: #2C1210;
+  position: absolute;
+  top:50%;
+  transform: translate(0, -50%);
+  width:90vw;
+  margin: 5vw;
+  overflow-y: auto;
 }
 #display p{
 text-align: center;
 }
 .leftText{
-text-align: right;
-margin-right: 20px;
-margin-top: 60px;
+  text-align: right;
+  margin-right: 20px;
+  margin-top: 60px;
 }
