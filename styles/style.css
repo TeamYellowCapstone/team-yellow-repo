@@ -1,6 +1,7 @@
 /* Color palette:
 #ef3f6b = pink
 #edddcb = beige
+#f0e9e1 = ligther beige
 #df8527 = orange
 #2c1210 = dark brown
 #D93427 = red
@@ -14,21 +15,123 @@ body {
     background-color: #EDDDCB;
     font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
     color: #2C1210;
-    background-image: url(../images/coffee_bean-01.png);
-    background-size: 20px 20px;
-    /* [disabled]background-size: 20% 20%; */
-    background-repeat: repeat;
 }
 
-.content {
-    max-width: 1200px;
-    margin: auto;
-    background: #EDDDCB;
+p {
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+h1 {
+    text-decoration: underline overline;
+    text-decoration-style: solid;
+}
+
+h3 {
+        font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+        text-decoration: none;
+        font-size: 36px;
+}
+
+img {
+    border:25px inset #2c1210;
+ }
+
+ .welcome_text {
+    position: relative;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 48pt;
+
+}
+
+button {
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
+}
+
+.background-wrap::after {
+        flex: 1;
+        content: 'none';
+        background-image: url(../images/coffee_bean-01.png);
+        background-size: 200px;
+        opacity: 0.1;
+        background-repeat: repeat;
+        padding-top:  none;
+        padding-right: 100%;
+        padding-bottom: 1000px;
+        padding-left: 100%;
+        background-position:0;
+    }
+
+.background-wrap {
+    background-color: #EDDDCB;
+}
+
+.submit {
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
+    font-weight: bolder;
+}
+
+.cancel {
+    background-color: #ef3f6b;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 4px 5px 4px 6px;
+    font-weight: bolder;
+}
+
+label {
+    font-weight: bolder;
+    padding: 4px 5px 4px 6px;
+}
+
+input {
+    background-color: #f0e9e1;
+    padding: 4px 5px 4px 6px;
+    font-weight: lighter;
+    cursor: text;
+}
+
+.form {
+    max-width: 50%;
+    min-width: 20%;
+    background-color: #EDDDCB;
+    border: 1px solid #2c1210;
+    box-shadow: 2px 2px 2px gray;
+    color: #2C1210;
+    padding: 15px 10px 20px 10px;
+}
+
+.error {
+    background-color: #D93427;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 11px 10px 12px 10px;
+    font-size: 24pt;
+}
+
+.login-error {
+    background-color: #D93427;
+    color: #edddcb;
+    border: 1px groove #5e3a0c;
+    padding: 11px 10px 12px 10px;
+    font-size: 24pt;
+}
+
+.ast{
+    color:red;
 }
 
 .collapsible {
     background-color: #EDDDCB;
-    color: Black;
+    color: #edddcb;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -38,11 +141,24 @@ body {
     font-size: 20px;
 }
 
-    .active, .collapsible:hover {
+.collapsible_faq {
+    background-color: #ef3f6b;
+    color: #edddcb;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+}
+
+.active, .collapsible_faq:hover {
         background-color: #DF8527;
         color: #EDDDCB;
         }
-.collapsible_div
+
+.collapsible__faq_div
 {
     padding: 0 18px;
     display: none;
@@ -55,7 +171,6 @@ body {
 }
 
 .centerText {
-    font-family: 'Pacifico', cursive;
     text-align: center;
     font-size: 32pt;
 }

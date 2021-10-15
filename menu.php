@@ -18,7 +18,6 @@
         ?>
         <div class="content menu">
             <h1 class="centerText"><u>Our Menu</u></h1>
-             <p><span class="centerText"><img src="images/loveyoualatte_logo.png" alt="" width="47" height="51" class="brandLogo" id="brand_logo" align="middle"/></span></p>
             <div class="menu-item-container flex-box">
                 <div class="menu-item" id="item1">
                     <h2 class="item-name centerText">Brewed Coffe</h2>
