@@ -1,3 +1,6 @@
+<?php
+    require "scripts/php/menuPageLoad.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

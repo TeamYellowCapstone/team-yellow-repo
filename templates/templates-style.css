@@ -16,6 +16,7 @@
     .navigation ul {
         list-style: none;
         display: inline-block;
+        width: 100%;
     }
 
         .navigation ul li {
@@ -35,13 +36,24 @@
         background-color: #D93427;
         color: #EDDDCB;
     }
+#fname{
+    margin: inherit;
+    display: inline;
+}
 #cart-container{
-  width: 30px;
-  line-height: 30px;
-  border-radius: 50%;
-  border: 2px solid #db3434;
-  background-color: antiquewhite;
-  float: right;
-  text-align: center;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    border: 2px solid #db3434;
+    background-color: antiquewhite;
+    text-align: center;
+}
+.cart-cont-li{
+    float: right;
+    margin-right: 5px;
+}
+.right{
+    float: right !important;
+    
 }
 /* navigation style ending */
