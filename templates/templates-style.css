@@ -10,7 +10,6 @@
 
 .navigation {
     background-color: #2C1210;
-    border: 1px groove #EDDDCB;
 }
 
     .navigation ul {
@@ -26,7 +25,6 @@
 
             .navigation ul li a {
                 color: #EDDDCB;
-                font-family: Pacifico, cursive;
                 font-size: 24px;
                 text-decoration: none;
                 padding: 14px 16px;
