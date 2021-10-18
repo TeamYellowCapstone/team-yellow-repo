@@ -6,29 +6,24 @@
     if($conn->error){
         die("Connection Error". $conn->mysqli_error);
     } 
-    $cookie = $_COOKIE["sessID"];
-    $query = "SELECT ProductName, SizeName, Quantity, Price, PricePercentage
-                FROM Cart INNER JOIN
-                Product_Item ON Cart.ItemID = Product_Item.ItemID
-                INNER JOIN
-                Product_Size ON Cart.ItemID = Product_Size.SizeID
-                WHERE SessionID = ?;";
-    $result = runQuery($query, $cookie, "s", $conn);
-    //not in use currently
-    if($result->num_rows > 0){
-        while($row = $result->fetch_assoc()){
-            $arrlength = count($_SESSION["cart"]);
-            $_SESSION["cart"][$arrlength] = array("name"=>$row["ProductName"],"size"=>$row["SizeName"], 
-            "price"=>$row["Price"],"percentage"=>$row["PricePercentage"]);
+    $user = isset($_SESSION["UserID"]) ? $_SESSION["UserID"] : 0;
+    //get qty from db cart if logged in
+    if($user != 0){
+        $query = "SELECT SUM(Quantity) AS Qty FROM Cart WHERE UserID = ?;";
+        $result = runQuery($query, $user, "i", $conn);
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            setcookie("cartQty", $row["Qty"], strtotime("+30 days"),"/");
         }
     }
-
-    //get total qty in the cart
-    $query = "SELECT SUM(Quantity) AS Qty FROM Cart WHERE SessionID = ?;";
-    $result = runQuery($query, $cookie, "s", $conn);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        setcookie("cartQty", $row["Qty"], strtotime("+30 days"),"/");
+    //get qty from session if user not logged in yet
+    else{
+        $qty = 0;
+        $cart = $_SESSION["cart"];
+        foreach($cart as $item){
+            $qty = $qty + $item["qty"];
+        }
+        setcookie("cartQty", $qty, strtotime("+30 days"),"/");
     }
 
     $conn->close();

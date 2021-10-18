@@ -50,17 +50,16 @@
                             $currentTime =  time();//unix timestamp
                             $elapsedMinute = ($currentTime - $lastTime->getTimeStamp())/60 ; //difference in minutes
                             //if the user is already on the list and it has 3 attempts within 15 minutes block the user
-                            if($row["NumberOfAttempts"] == 3 && $elapsedMinute < 1){
+                            if($row["NumberOfAttempts"] == 3 && $elapsedMinute < 15){
                                 $blocked = TRUE;
                                 //error to be displayed
-                                $_SESSION["wait"] = "Please wait at least 15 minutes.";
+                                $_SESSION["wait"] = "Please wait at least ".round((15 -$elapsedMinute))." minutes.";
                             }
-                            else if($row["NumberOfAttempts"] == 3 && $elapsedMinute >= 1){
+                            else if($row["NumberOfAttempts"] == 3 && $elapsedMinute >= 15){
                                 $blocked = FALSE;
                                 $delete_query = "DELETE FROM Failed_Attempts WHERE UserIP = ?;";
                                 $delete_result = queryResult($conn,$IP,$delete_query);
                                 unset($_SESSION["wait"]);
-
                             }
                         }
                     }
@@ -71,7 +70,7 @@
                     //unset the error about 15 minute
                     unset($_SESSION["wait"]);
                     //get matching username from the db
-                    $query = "SELECT FirstName, Password FROM Employee WHERE UserName = ?;";
+                    $query = "SELECT UserID, FirstName, Password, RoleID FROM User WHERE UserName = ?;";
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("s",$uname);
                     if($stmt->execute()){
@@ -84,7 +83,9 @@
                                 if(password_verify($pwrd,$row["Password"])){
                                     $fname = $row["FirstName"];
                                     $_SESSION["FirstName"] = $fname;
-                                    $_SESSION["role"] = "employee";
+                                    $_SESSION["UserID"] = $row["UserID"];
+                                    $_SESSION["role"] = $row["RoleID"];
+                                    include_once "scripts/php/moveCart.php";
                                     unset($_SESSION["uname"]);
                                     unset($_SESSION["pwrd"]);
                                     $blocked = FALSE;
@@ -120,14 +121,6 @@
                                                         header("Location: login.php");
                                                         return;
                                                     }
-                                                    // //if time passed is more than 15 minute remove ip from db
-                                                    // else{
-                                                    //     $delete_query = "DELETE FROM Failed_Attempts WHERE UserIP = ?;";
-                                                    //     $delete_result = queryResult($conn,$IP,$delete_query);
-                                                    //     unset($_SESSION["wait"]);
-                                                    //     header("Location: login.php");
-                                                    //     return;
-                                                    // }
                                                 }
                                             }
                                             
@@ -218,11 +211,8 @@
                     ?>>
                 </div>
                 <div>
-                    <label>
-                        <input type="checkbox" checked="checked" name="remember"> Remember me
-                    </label>
+                    <label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
                         <input type="submit" value="Login" name="login">
-                    
                 </div>
                 <div>
                     <p>Don't Have account? <a href="signup.php">Sign Up</a></p>
