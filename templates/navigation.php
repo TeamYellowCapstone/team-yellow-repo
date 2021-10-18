@@ -4,7 +4,15 @@
         <li><a href="menu.php">Menu</a></li>
         <li><a href="faq.php">Faq</a></li>
         <li><a href="contact.php">Contact Us</a></li>
-        <li><a href="login.php">Login</a></li>
+        <?php
+            if(isset($_SESSION["role"])){
+                echo "<li><a href='logout.php'>Logout</a></li>";
+            }
+            else{
+                echo "<li><a href='login.php'>Login</a></li>";
+            }
+        ?>
+        
         <li class="right">
         <?php
         

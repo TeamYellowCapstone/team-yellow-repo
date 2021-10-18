@@ -10,4 +10,7 @@
     if(!isset($_COOKIE["cartQty"])){
         setcookie("cartQty", 0,strtotime("+30 days"),"/");
     }
+    if(!isset($_SESSION["UserID"])){
+        $_SESSION["UserID"] = 0;
+    }
 ?>
