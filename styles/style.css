@@ -60,10 +60,10 @@ button {
         background-size: 200px;
         opacity: 0.1;
         background-repeat: repeat;
-        padding-top:  none;
         padding-right: 100%;
         padding-bottom: 1000px;
-        padding-left: 100%;
+        padding-right: 100%;
+        padding-bottom: 1000px;
         background-position:0;
     }
 
