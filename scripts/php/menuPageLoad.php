@@ -13,19 +13,17 @@
         $result = runQuery($query, $user, "i", $conn);
         if($result->num_rows > 0){
             $row = $result->fetch_assoc();
-            setcookie("cartQty", $row["Qty"], strtotime("+30 days"),"/");
+            $_SESSION["cartQty"] = $row["Qty"];
         }
     }
     //get qty from session if user not logged in yet
     else{
-        $qty = 0;
+        $_SESSION["cartQty"] = 0;
         $cart = $_SESSION["cart"];
         foreach($cart as $item){
-            $qty = $qty + $item["qty"];
+            $_SESSION["cartQty"] = $_SESSION["cartQty"] + $item["qty"];
         }
-        setcookie("cartQty", $qty, strtotime("+30 days"),"/");
     }
-
     $conn->close();
     function runQuery($sqlQuery,$value,$type,$conn){
         $sql = $sqlQuery;

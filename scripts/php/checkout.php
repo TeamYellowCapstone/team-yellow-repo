@@ -1,6 +1,7 @@
 <?php
+    // require "menuPageLoad.php";
     require "../../templates/sessions_and_cookies.php";
-    require_once "../../connection/connection.php";
+    require "../../connection/connection.php";
 
 
     if($conn->error){
@@ -45,11 +46,10 @@
                     if(isset($_SESSION["cart"])){
                         $_SESSION["cart"] = array();
                     }
+                    if(isset($_SESSION["cartQty"])){
+                        $_SESSION["cartQty"] = 0;
+                    }
                     //set the user identifier to the new session and set cartqty to 0
-                    setcookie("cartQty",0,time() -3600,"/");
-                    setcookie("sessID",0,time() -3600,"/");
-                    setcookie("cartQty",0,strtotime("+30 days"),"/");
-                    setcookie("sessID",session_id(),strtotime("+30 days"),"/");
                 
                 }
                 else{
@@ -118,13 +118,6 @@
     }
     $conn->close();
     echo $message;
-// use ebdb;
-// SELECT ProductName, Price + (Price * PricePercentage/100) AS CurrPrice, SizeName, Quantity, (( Price + (Price * PricePercentage/100)) * Quantity) AS Subtotal, SUM(( Price + (Price * PricePercentage/100)) * Quantity) AS Total FROM Cart 
-// INNER JOIN Product_Item ON
-// Product_Item.ItemID = Cart.ItemID
-// INNER JOIN Product_Size ON
-// Product_Size.SizeID = Cart.SizeID
-// WHERE UserID = 52;
 
 ?>
 

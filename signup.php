@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    require "scripts/php/menuPageLoad.php";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["create"])){
@@ -12,7 +12,7 @@
             $email;
             //validate all inputs
             if(getValidData($fname, $lname, $uname, $email, $pwrd, $pwrd2, $phn)){
-                include_once "connection/connection.php";
+                require "connection/connection.php";
                 if($conn->connect_error){
                     die("connection failed");
                 }
@@ -329,6 +329,9 @@
                 </div >
             </form >
         </div >
+        <div class="background-wrap">
+            
+        </div>
 
     </body >
 
