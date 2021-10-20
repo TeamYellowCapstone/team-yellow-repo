@@ -178,15 +178,15 @@
         ?>
         <div class="login-form form">
         <h1> Login </h1>
-        <p>Please enter your information below to login.</p>
+        <p class="center-text">Please enter your information below to login.</p>
             <form method="POST" action="login.php">
                 <?php
                     if(isset($_SESSION["loginErr"])){
-                        echo "<p>".$_SESSION["loginErr"]."</p>";
+                        echo "<p class='error center-text'>".$_SESSION["loginErr"]."</p>";
                         unset($_SESSION["loginErr"]);
                     }
                     if(isset($_SESSION["wait"])){
-                        echo "<p>".$_SESSION["wait"]."</p>";
+                        echo "<p class='error center-text'>".$_SESSION["wait"]."</p>";
                         unset($_SESSION["wait"]);
                     }
                 ?>
@@ -211,8 +211,8 @@
                     ?>>
                 </div>
                 <div>
-                    <label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
-                        <input type="submit" value="Login" name="login">
+                    <label><input type="checkbox" checked="checked" name="remember" class="chk-btn"> Remember me</label>
+                        <input type="submit" value="Login" name="login" class="btn">
                 </div>
                 <div>
                     <p>Don't Have account? <a href="signup.php">Sign Up</a></p>

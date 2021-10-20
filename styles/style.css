@@ -89,12 +89,12 @@ button {
     background-color: #EDDDCB;
 }
 
-.submit {
+/* .submit {
     background-color: #ef3f6b;
     color: #edddcb;
     border: 1px groove #5e3a0c;
     padding: 4px 5px 4px 6px;
-    font-weight: bolder;
+    
 }
 
 .cancel {
@@ -103,14 +103,14 @@ button {
     border: 1px groove #5e3a0c;
     padding: 4px 5px 4px 6px;
     font-weight: bolder;
-}
+} */
 
 label {
     font-weight: bolder;
     padding: 4px 5px 4px 6px;
 }
 
-input {
+input:not(.btn) {
     background-color: #f0e9e1;
     padding: 4px 5px 4px 6px;
     font-weight: lighter;
@@ -129,26 +129,30 @@ input {
 }
 .form div{
     margin: 20px auto;
+    width: max-content;
 }
-.form div input{
-    margin-right: 2px;
+.form div label{
+    display: inline-block;
+    text-align: right;
+    width: 150px;
 }
-
+.form div input:not(.btn,.chk-btn){
+    line-height: 20px;
+    min-width: 300px;
+}
 .error {
-    background-color: #D93427;
-    color: #edddcb;
-    border: 1px groove #5e3a0c;
+    color: #ff0000;
     padding: 11px 10px 12px 10px;
-    font-size: 24pt;
+    font-size: 16pt;
+}
+ul.error {
+    width: fit-content;
+    margin: auto;
+}
+.center-text{
+    text-align: center;
 }
 
-.login-error {
-    background-color: #D93427;
-    color: #edddcb;
-    border: 1px groove #5e3a0c;
-    padding: 11px 10px 12px 10px;
-    font-size: 24pt;
-}
 
 .ast{
     color:red;
@@ -274,13 +278,22 @@ input {
     border: 1px double #EDDDCB;
     background-color: #DF8527;
     color: #EDDDCB;
+    font-family:inherit;
+    font-size: 16px;
+    font-weight: bolder;
 }
 
     .btn:hover {
         background-color: #D93427;
         cursor: pointer;
     }
+a[class="btn cancel"]{
+    line-height: 40px;
+    margin: auto;
+    text-decoration: none;
+    text-align: center;
 
+}
 .brandLogo {
     display: block;
     width: 80px;
