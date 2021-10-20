@@ -86,7 +86,7 @@
                         break;
                     case "notstrong":
                         $_SESSION["errorMsg"] = "Password should contain at least";
-                        $_SESSION["pwrd_msg"] = "<ul class='error login-error'>
+                        $_SESSION["pwrd_msg"] = "<ul class='error'>
                             <li>One UPPER CASE letter</li>
                             <li>One lower case letter</li>
                             <li>One of these characters ! # _ $ characters and</li>
@@ -249,12 +249,12 @@
         ?>
         <div class="signup-form form">
             <h1> Sign Up </h1>
-            <p>Please enter the required information below.</p>
+            <p class="center-text">Please enter the required information below.</p>
             <form method="POST" action="signup.php">
                 <?php
                 //dipslay error if there is one
                     if(isset($_SESSION["errorMsg"])){
-                        echo "<p class='error login-error'>".$_SESSION["errorMsg"]."</p>";
+                        echo "<p class='error center-text'>".$_SESSION["errorMsg"]."</p>";
                         if(isset($_SESSION["pwrd_msg"])){
                             echo $_SESSION["pwrd_msg"];
                             unset($_SESSION["pwrd_msg"]);
@@ -263,8 +263,8 @@
                     }
                 ?>
                 <div >
-                    <label for="fname" > First Name: </label >
-                    <input type="text" id="fname" name="fname" placeholder="First Name" <?php 
+                    <label for="fname1" > First Name: </label >
+                    <input type="text" id="fname1" name="fname" placeholder="First Name" <?php 
                         if(isset($_SESSION["fname"])){
                             echo "value=".$_SESSION["fname"];
                             unset($_SESSION["fname"]);
