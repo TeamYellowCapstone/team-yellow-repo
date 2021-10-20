@@ -14,8 +14,7 @@
         <?php
                 require "templates/navigation.php";
             ?>
-        <div class="background-wrap">
-            <div class= "welcome_text">
+        <div class= "welcome_text">
             <h1> Welcome! </h1>
             <img src="images/bxf6-hero.jpg" alt="cup of coffee with latte foam art" width="50%" >
             <p> We've progressed from beans simmered in a shelled nut roaster to a variety of smooth, tasty mixtures sold across the country. </p>
@@ -25,7 +24,9 @@
             <h3> Becoming Successful </h3>
             <p> We competed for the title of "some espresso in Columbus," and when our silky smooth flavor won us the title, we changed our name to Love You a Latte. </p>
             </br>
-            </div>
+        </div>
+        <div class="background-wrap">
+            
         </div>
     </body>
 </html>

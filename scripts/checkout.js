@@ -1,6 +1,6 @@
 let dispCont = document.getElementsByClassName("overlay")[0];
 let disp = document.getElementById("display");
-
+let cartQtyDisplay =  document.getElementById("qty");
 let chkoutBtn = document.getElementById("checkout-btn");
 chkoutBtn.addEventListener("click", function(){
     ajax_checkout("scripts/php/checkout.php?log="+log());//pass local time as GET parameter
@@ -44,6 +44,7 @@ function ajax_checkout(url){
                 disp.innerHTML = xHttp.response;
                 dispCont.style.display = "block";
                 cartQtyDisplay.innerHTML = 0;
+                btn.click();
             }
             else if(cartQtyDisplay.innerHTML == 0){
                 alert("Cart is empty!");

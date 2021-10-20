@@ -21,16 +21,15 @@
                     echo $_SESSION["FirstName"];
                     echo "</a></p>";
                 }
-                    echo "<div class='cart-cont-li'><div id='cart-container'>
-                            <div class='cart-display'>
-                                <span id='qty'>";
-                    if(isset($_COOKIE["cartQty"])){
-                        echo $_COOKIE["cartQty"];
-                    }
-                    else{
-                        echo 0;
-                    }
-                    echo "</span></div></div>";
+                echo "<a href='cart.php' id='a-cart'><div id='cart-container'>
+                            <span id='qty'>";
+                if(isset($_SESSION["cartQty"])){
+                    echo $_SESSION["cartQty"];
+                }
+                else{
+                    echo 0;
+                }
+                echo "</span></div></a>";
         ?>
         </li>
     </ul>

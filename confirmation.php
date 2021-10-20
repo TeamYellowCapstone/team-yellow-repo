@@ -20,14 +20,9 @@
                 echo "<p>You can log in <a href='login.php'>here</a></p>";
                 unset($_SESSION["acct"]);
             }
-            $lastTime = new DateTime("2021-10-12 11:21:00"); 
-            $currentTime =  new DateTime("2021-10-12 12:21:00");
-            $elapsedMinute = $lastTime->diff($currentTime);
-            echo "prev: ".$lastTime->format("i")." now: ".$currentTime->format("i")." diff: ".$elapsedMinute->format("%i");
-            $lastTime = new DateTime("2021-10-12 12:21:05");
-            $currentTime =  new DateTime("2021-10-12 12:35:00");
-            $elapsedMinute = ($currentTime->getTimeStamp()) - ($lastTime->getTimeStamp()) ;
-            echo "<br>prev: ".$currentTime->format("H-i-s")." now: ".$lastTime->format("H-i-s")." diff: ".$elapsedMinute/60;
         ?>
+        <div class="background-wrap">
+            
+            </div>
     </body>
 </html>

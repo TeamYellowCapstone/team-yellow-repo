@@ -18,6 +18,7 @@
         $currSize = $_GET["size"];
         $user = isset($_SESSION["UserID"]) ? $_SESSION["UserID"] : 0;
 
+        //if logged in
         if($user !=0){
             //before adding item to cart check if there is the same item with same size and session
             $query_select = "SELECT * FROM Cart WHERE UserID = ? AND ItemID = ? AND SizeID = ?;";
@@ -35,7 +36,7 @@
                 $stmt->bind_param("iii",$user,$currID,$currSize);
                 $stmt->execute();
                 $stmt->close();
-                setcookie("cartQty", $_COOKIE["cartQty"] + 1,strtotime("+30 days"),"/");//update cookie to display qty
+                $_SESSION["cartQty"] += 1;//update cookie to display qty
                 $message = "The quantity of the current item has been updated.";
             }
             //if item doesn't exist in the db add the item to the db
@@ -47,7 +48,7 @@
                 $stmt->bind_param("iiii",$user,$currID,$currSize,$qty);
                 $stmt->execute();
                 $stmt->close();
-                setcookie("cartQty", $_COOKIE["cartQty"] + 1,strtotime("+30 days"),"/");
+                $_SESSION["cartQty"] += 1;//update cookie to display qty
                 $message = "Item has been added to the cart.";
             }
             else{

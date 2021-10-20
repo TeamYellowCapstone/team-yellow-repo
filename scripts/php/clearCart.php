@@ -17,7 +17,7 @@
     $stmt->execute();
     if($stmt){
         //update qty to display
-        setcookie("cartQty",0, strtotime("+30 days"),"/");
+        unset($_SESSION["cartQty"]);
         //cleare session
         unset($_SESSION["cart"]);
         $message = "Your cart has been cleared!";

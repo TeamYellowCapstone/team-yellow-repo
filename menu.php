@@ -24,8 +24,8 @@
         require "templates/head.php";
     ?>
     <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
-    <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
-    <script type="text/javascript" src="scripts/checkout.js" defer></script>
+    <!-- <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
+    <script type="text/javascript" src="scripts/checkout.js" defer></script> -->
     <title>Menu</title>
     </head>
     <body>
@@ -57,23 +57,12 @@
                     }
                 ?>
             </div>
-            <button class="btn" id="clear-cart">Clear Cart</button>
-            <button class="btn" id="checkout-btn">Checkout</button>
+            <!-- <button class="btn" id="clear-cart">Clear Cart</button>
+            <button class="btn" id="checkout-btn">Checkout</button> -->
         </div>
-        <div class="overlay">
-            <div id="display-cont">
-                <div id="close"><span>&cross;</span></div>
-                <div id="display"></div>
-                <button class='btn close-btn' id='close-btn'>Close</button>
-
-            </div>
+        <div class="background-wrap">
+        
         </div>
-
-        <?php
-            // echo "<pre>";
-            // print_r($product);
-            // echo "</pre>"
-        ?>
 
     </body>
 </html>

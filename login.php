@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    require "scripts/php/menuPageLoad.php";
 
     if($_SERVER["REQUEST_METHOD"] = "POST"){
         if(isset($_POST["login"])){
@@ -30,7 +30,7 @@
             }
 
             if(!isset($_SESSION["loginErr"])){
-                include_once "connection/connection.php";
+                include "connection/connection.php";
 
                 if($conn->connect_error){
                     die("Connection error");
@@ -218,6 +218,9 @@
                     <p>Don't Have account? <a href="signup.php">Sign Up</a></p>
                 </div>
             </form>
+        </div>
+        <div class="background-wrap">
+            
         </div>
 
     </body>
