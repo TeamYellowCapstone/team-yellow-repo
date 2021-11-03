@@ -1,5 +1,6 @@
 <?php
     require "scripts/php/menuPageLoad.php";
+    require "scripts/php/sanitizeAndValidate.php";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["create"])){
@@ -7,11 +8,21 @@
             $lname;
             $uname;
             $pwrd;
-            $pwrd2;
+            $pwrd2 = $_POST["pwrd2"];
             $phn;
             $email;
+            validateName($fname, "fname");
+            validateName($lname, "lname");
+            validateUsername($uname, "uname");
+            validateEmail($email, "email");
+            validatePassword($pwrd,"pwrd");
+            validatePhone($phn,"phno");
+            passwordMatch($pwrd, $pwrd2);
             //validate all inputs
-            if(getValidData($fname, $lname, $uname, $email, $pwrd, $pwrd2, $phn)){
+            if(validateName($fname, "fname") && validateName($lname, "lname")
+             && validateUsername($uname, "uname") && validateEmail($email, "email")
+              && validatePassword($pwrd,"pwrd") && validatePhone($phn,"phno")
+              && passwordMatch($pwrd, $pwrd2)){
                 require "connection/connection.php";
                 if($conn->connect_error){
                     die("connection failed");
@@ -105,138 +116,9 @@
 
         }
     }
-    // check wether the given input element is empty and returns boolean
-    function isEmpty($elementName){
-        $empty = FALSE;
-        if(isset($_POST[$elementName])){
-            if(strlen($_POST[$elementName]) == 0 || preg_match("/^[\s]+$/",$_POST[$elementName])){
-                $_SESSION["errorMsg"] = "<span class='ast'>* </span>is a required field!";
-                $empty = TRUE;
-            }
-        }
-        return $empty;
-    }
-    //name should only contain letters from a-z only if not return false
-    function alphaOnly($elementName){
-        $is_alpha = TRUE;
-        $pattern = "/^[A-Za-z]*$/";
-        if(!preg_match($pattern,$_POST[$elementName])){
-            $_SESSION["errorMsg"] = "Name field can only contain the letters from A-Z!";
-            $is_alpha = FALSE;
-        }
-        return $is_alpha;
-    }
-
-    //validates password to make sure it is more than 8 char long and it is combination of uppercase and lowercase letters
-    // and it has numbers and !#_$ chars
-    function isValidPassword($password){
-        $is_valid;
-        $pattern1 = "/[^A-Za-z0-9!#_$]+/"; //only these are allowed
-        $pattern2 = "/[A-Z]+/"; //atleast 1 uppercase
-        $pattern3 = "/[0-9]+/"; //atleast 1 number 
-        $pattern4 = "/[!#_$]+/"; // one of these chars
-        $pattern5 = "/[a-z]+/"; // one lowercase
-        if( !preg_match($pattern1,$password) &&
-            preg_match($pattern2,$password) &&
-            preg_match($pattern3,$password) &&
-            preg_match($pattern4,$password) &&
-            preg_match($pattern5,$password) &&
-            strlen($password) >= 8){
-                $is_valid = TRUE;
-        }
-        else{
-            $is_valid = FALSE;
-        }
-        return $is_valid;
-    }
-
-    //will return true if all input data are valid and sanitized
-    //if one of the input is wrong we will store error code based on the error
-    //error codes: fname, lname, uname, alphanum, email, invalidemail, nomatch, notstrong, pwrd,and phn
-    function getValidData(&$fname, &$lname, &$uname, &$email, &$pwrd, &$pwrd2, &$phn){
-        $valid = TRUE;
-        unset($_SESSION["err"]);
-        //first name
-        if(!isEmpty("fname") && alphaOnly("fname")){
-            $fname = trim($_POST["fname"]);
-            $_SESSION["fname"] = $fname;
-        }
-        else{
-            $_SESSION["err"] = "fname";
-            $valid = FALSE;
-        }
-        //last name
-        if(!isEmpty("lname") && alphaOnly("lname")){
-            $lname = trim($_POST["lname"]);
-            $_SESSION["lname"] = $lname;
-        }
-        else{
-            $_SESSION["err"] = !isset($_SESSION["err"])? "lname" : $_SESSION["err"];
-            $valid = FALSE;
-        }
-        //user name
-        if(!isEmpty("uname")){
-            $uname = trim($_POST["uname"]);
-            $_SESSION["uname"] = $uname;
-            //if not alphnumeric
-            if(!ctype_alnum($uname)){
-                $_SESSION["err"] = !isset($_SESSION["err"])? "alphanum" : $_SESSION["err"];
-                $valid = FALSE;
-            }
-        }
-        else{
-            $_SESSION["err"] = !isset($_SESSION["err"])? "uname" : $_SESSION["err"];
-            $valid = FALSE;
-        }
-        //email
-        if(!isEmpty("email")){
-            //use php built-in function to sanitize and validate email
-            $email = filter_var($_POST["email"],FILTER_SANITIZE_EMAIL);
-            if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-                $_SESSION["err"] = !isset($_SESSION["err"])? "invalidemail" : $_SESSION["err"];
-                $valid = FALSE;
-            }
-            $_SESSION["email"] = $email;
-        }
-        else{
-            $_SESSION["err"] = !isset($_SESSION["err"])? "email" : $_SESSION["err"];
-            $valid = FALSE;
-        }
-        //password
-        if(!isEmpty("pwrd") && !isEmpty("pwrd2")){
-            $pwrd = $_POST["pwrd"];
-            $pwrd2 = $_POST["pwrd2"];
-            $_SESSION["pwrd"] = $pwrd;
-            $_SESSION["pwrd2"] = $pwrd2;
-            if(isValidPassword($pwrd)){
-                if($pwrd !== $pwrd2){
-                    $_SESSION["err"] = !isset($_SESSION["err"])? "nomatch" : $_SESSION["err"];
-                    $valid = FALSE;
-                }
-            }
-            else{
-                $_SESSION["err"] = !isset($_SESSION["err"])? "notstrong" : $_SESSION["err"];
-                $valid = FALSE;
-            }
-        }
-        else{
-            $_SESSION["err"] = !isset($_SESSION["err"])? "pwrd" : $_SESSION["err"];
-            $valid = FALSE;
-        }
-        //phone numbers
-        if(ctype_digit($_POST["phno"]) || isEmpty("phno")){
-            $phn = trim($_POST["phno"]);
-            $_SESSION["phn"] = $phn;
-        }
-        else{
-            $_SESSION["err"] = !isset($_SESSION["err"])? "phn" : $_SESSION["err"];
-            $valid = FALSE;
-        }
-        return $valid;
-    }
 ?>
 
-<html>
+<html lang="en">
     <head>
         <?php
             require "templates/head.php";
@@ -315,9 +197,9 @@
                 <div >
                     <label for="phno" > Phone number: </label >
                     <input type="text" id="phno" name="phno" placeholder="Enter your phone number" <?php 
-                        if(isset($_SESSION["phn"])){
-                            echo "value=".$_SESSION["phn"];
-                            unset($_SESSION["phn"]);
+                        if(isset($_SESSION["phno"])){
+                            echo "value=".$_SESSION["phno"];
+                            unset($_SESSION["phno"]);
                         }?>>
                 </div >
                 <div >

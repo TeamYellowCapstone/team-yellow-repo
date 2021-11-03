@@ -31,8 +31,8 @@
                 if($stmt->execute()){
                     $id = $conn->insert_id;
                     //add detail to checkout detail table
-                    $query_insert = "INSERT INTO Checkout_Detail (ItemID, SizeID, Quantity, CheckoutID)
-                    SELECT ItemID, SizeID, Quantity, CheckoutID FROM Cart, Checkout WHERE Cart.UserID = ? AND Checkout.CheckoutID = ?;";
+                    $query_insert = "INSERT INTO Checkout_Detail (MasterSKU, SizeID, Quantity, CheckoutID)
+                    SELECT MasterSKU, SizeID, Quantity, CheckoutID FROM Cart, Checkout WHERE Cart.UserID = ? AND Checkout.CheckoutID = ?;";
                     $add_stmt = $conn->prepare($query_insert);
                     $add_stmt->bind_param("ii",$user,$id);
                     $add_stmt->execute();
@@ -67,7 +67,7 @@
                         INNER JOIN Checkout_Detail ON
                         Checkout.CheckoutID = Checkout_Detail.CheckoutID
                         INNER JOIN Product_Item ON
-                        Checkout_Detail.ItemID = Product_Item.ItemID
+                        Checkout_Detail.MasterSKU = Product_Item.MasterSKU
                         INNER JOIN Product_Size ON
                         Checkout_Detail.SizeID = Product_Size.SizeID
                         WHERE Checkout.UserID = ? AND Checkout.TimeStamp = ?;";
