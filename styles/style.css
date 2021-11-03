@@ -118,7 +118,7 @@ input:not(.btn) {
 }
 
 .form {
-    max-width: 50%;
+    max-width:min-content;
     min-width: 20%;
     background-color: #EDDDCB;
     border: 1px solid #2c1210;
@@ -356,4 +356,20 @@ text-align: center;
   text-align: right;
   margin-right: 20px;
   margin-top: 60px;
+}
+
+.main-radio-btn{
+    opacity: 0;
+    position: fixed;
+    width: 0px;
+}
+.txt-area{
+    line-height: 20px;
+    min-width: 300px;
+    min-height: 150px;
+    max-height: 500px;
+}
+.search-box{
+    display: inline-block;
+    margin: auto;
 }

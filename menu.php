@@ -18,7 +18,7 @@
     $conn->close();
 ?>
 <!Doctype html>
-<html>
+<html lang="en">
     <head>
     <?php
         require "templates/head.php";
@@ -38,15 +38,15 @@
                 <?php
                     foreach($products as $product){
                         echo "
-                        <div class='menu-item' id='item".$product['ItemID']."'>
+                        <div class='menu-item' id='item".$product['MasterSKU']."'>
                             <h2 class='item-name centerText'>".$product['ProductName']."</h2>
                             <p class='item-desc'>".$product["Description"]."</p>
                             <div class='item-size-container'>";
                             foreach ($productSize as $size){
                                 echo "
                                 <div class='item-size'>
-                                    <input class='radio radio-btn size' type='radio' name='size".$product['ItemID']."' id='". strtolower($size['SizeName']).$product['ItemID']."' value={$size['SizeID']}>
-                                    <label for='". strtolower($size['SizeName']).$product['ItemID']."'>".substr($size['SizeName'],0,1)."</label>
+                                    <input class='radio radio-btn size' type='radio' name='size".$product['MasterSKU']."' id='". strtolower($size['SizeName']).$product['MasterSKU']."' value={$size['SizeID']}>
+                                    <label for='". strtolower($size['SizeName']).$product['MasterSKU']."'>".substr($size['SizeName'],0,1)."</label>
                                 </div>";                                
                             } 
                             echo 

@@ -9,9 +9,9 @@
         if($conn->error){
             die("Connection Error: ". mysqli_error);
         }
-        $query = "SELECT Price, PricePercentage FROM Product_Item, Product_Size WHERE ItemID = ? and SizeID = ?;";
+        $query = "SELECT Price, PricePercentage FROM Product_Item, Product_Size WHERE MasterSKU = ? and SizeID = ?;";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ii",$currID, $sizeID);
+        $stmt->bind_param("si",$currID, $sizeID);
         $stmt->execute();
         $result = $stmt->get_result();
         if($result->num_rows == 1){

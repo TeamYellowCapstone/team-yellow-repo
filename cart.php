@@ -6,12 +6,23 @@
         die("Connection Error");
     }
     $user = isset($_SESSION["UserID"]) ? $_SESSION["UserID"] : 0;
-    // $query = "SELECT Product_Item.ProductName, Product_Item.Price, Product_Size.PricePercentage, Product_Size.SizeName, Cart.Quantity FROM Cart 
-    //             INNER JOIN Product_Item ON
-    //             Product_Item.ItemID = Cart.ItemID
-    //             INNER JOIN Product_Size ON
-    //             Product_Size.SizeID = Cart.SizeID
-    //             WHERE Cart.UserID = ?;";
+    if($_SERVER["REQUEST_METHOD"] == "GET"){
+        if(isset($_GET["item"])){
+            $id = $_GET["item"];
+            $query = "DELETE FROM Cart WHERE CartID = ? AND UserID = ?;";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("ii",$id,$user);
+            $stmt->execute();
+            $stmt->close();
+            $conn->close();
+            $_SESSION["remove_item"] = "Item has been removed";
+            header ("Location: cart.php");
+            return;
+        }
+    }
+
+    
+    
     $cart_query = "SELECT * FROM CartView WHERE UserID = ?;";
     $cart_stmt = $conn->prepare($cart_query);
     $cart_stmt->bind_param("i",$user);
@@ -34,6 +45,7 @@
     ?> 
     <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
     <script type="text/javascript" src="scripts/checkout.js" defer></script>
+    <!-- <script type="text/javascript" src="scripts/remove-item.js" defer></script> -->
     <title>Cart</title>
 </head>
 
@@ -43,49 +55,16 @@
         ?>
         <h1 class="centerText">Your Latte</h1>
         <?php
-            if(isset($_SESSION["cartQty"])){
-                if($_SESSION["cartQty"] == 0){
-                    echo "<p class='centerText'>Your cart is empty!</p>";
-                }
-                else{
-                    $cartQty = 0;
-                    $cartTotal = 0;
-                    echo "<table class='tbl'> 
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>'";
-                    foreach($cart_result as $item){
-                        echo "<tr>
-                                <td>".$item["ProductName"]."</td>
-                                <td>".$item["SizeName"]."</td>
-                                <td>".$item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)."</td>
-                                <td>".$item["Quantity"]."</td>
-                                <td>".($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"]."</td>
-                            <tr>";
-                            $cartQty += $item["Quantity"];
-                            $cartTotal += ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"];
-                    }
-                    echo "<tr>
-                            <td colspan='3'></td>
-                            <td>".$cartQty."</td>
-                            <td>".$cartTotal."</td>
-                        </tr>
-                        </tbody>
-                        </table>";
-                }
+            if(isset($_SESSION["remove_item"])){
+                echo "<p>".$_SESSION["remove_item"]."</p>";
+                unset($_SESSION["remove_item"]);
             }
-            else{
-                    echo "<p class='centerText'>Your cart is empty!</p>";
-            }
-
         ?>
+        <!-- start display items here -->
+        <div id="cart-display">
+            <?php require_once "scripts/php/displayCartItems.php";?>
+        </div>
+        <!-- end display items here -->
         <button class="btn" id="clear-cart">Clear Cart</button>
         <button class="btn" id="checkout-btn">Checkout</button>
         <div class="overlay">

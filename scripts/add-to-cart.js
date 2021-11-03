@@ -31,7 +31,8 @@ function update_price(){
     let currentItemId = parent.parentNode.getAttribute("id");
     currentItemId = currentItemId.substring(4);
     let currSize = this.value;
-    console.log(currSize);
+    this.setAttribute("selected",true);
+    //console.log(currSize);
     ajax_price(price,"scripts/php/getPrice.php?id="+currentItemId+"&size="+currSize);
 }
 //ajax used to add item

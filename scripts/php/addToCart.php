@@ -21,19 +21,19 @@
         //if logged in
         if($user !=0){
             //before adding item to cart check if there is the same item with same size and session
-            $query_select = "SELECT * FROM Cart WHERE UserID = ? AND ItemID = ? AND SizeID = ?;";
+            $query_select = "SELECT * FROM Cart WHERE UserID = ? AND MasterSKU = ? AND SizeID = ?;";
 
             $stmt = $conn->prepare($query_select);
-            $stmt->bind_param("iii",$user,$currID,$currSize);
+            $stmt->bind_param("isi",$user,$currID,$currSize);
             $stmt->execute();
             $stmt->store_result();
 
             //from the above request if item, size and session exists in the database update the qty
             if($stmt->num_rows == 1){
-                $query_update = "UPDATE Cart SET Quantity = Quantity + 1 WHERE UserID = ? AND ItemID = ? AND SizeID = ?;";
+                $query_update = "UPDATE Cart SET Quantity = Quantity + 1 WHERE UserID = ? AND MasterSKU = ? AND SizeID = ?;";
                 $stmt->close();
                 $stmt = $conn->prepare($query_update);
-                $stmt->bind_param("iii",$user,$currID,$currSize);
+                $stmt->bind_param("isi",$user,$currID,$currSize);
                 $stmt->execute();
                 $stmt->close();
                 $_SESSION["cartQty"] += 1;//update cookie to display qty
@@ -41,11 +41,11 @@
             }
             //if item doesn't exist in the db add the item to the db
             else if($stmt->num_rows == 0){
-                $query_insert = "INSERT INTO Cart (UserID, ItemID, SizeID, Quantity) VALUES (?,?,?,?);";
+                $query_insert = "INSERT INTO Cart (UserID, MasterSKU, SizeID, Quantity) VALUES (?,?,?,?);";
                 $stmt->close();
                 $stmt = $conn->prepare($query_insert);
                 $qty = 1;
-                $stmt->bind_param("iiii",$user,$currID,$currSize,$qty);
+                $stmt->bind_param("isii",$user,$currID,$currSize,$qty);
                 $stmt->execute();
                 $stmt->close();
                 $_SESSION["cartQty"] += 1;//update cookie to display qty

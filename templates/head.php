@@ -10,8 +10,19 @@
     header_remove("Server");
     header_remove("X-Powered-By");
 ?>
-<link href="styles/style.css" type="text/css" rel="stylesheet">
-<link href="templates/templates-style.css" type="text/css" rel="stylesheet">
+<?php
+    if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
+        echo "<link href='../styles/style.css' type='text/css' rel='stylesheet'>
+        <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>";
+    }
+    else{
+        echo "<link href='styles/style.css' type='text/css' rel='stylesheet'>
+        <link href='templates/templates-style.css' type='text/css' rel='stylesheet'>";
+    }
+?>
+<!-- <link href="styles/style.css" type="text/css" rel="stylesheet">
+<link href="templates/templates-style.css" type="text/css" rel="stylesheet"> -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
