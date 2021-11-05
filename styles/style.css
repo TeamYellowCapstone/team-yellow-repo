@@ -220,7 +220,14 @@ ul.error {
     color: #2c1210;
     border: solid #2c1210;
 }
-
+.menu-item-img{
+    width: 300px;
+    border: none !important;
+}
+.catagory-name, .catagory-line{
+    width: 100%;
+    text-align: center;
+}
 .item-name {
     background-color: #2C1210;
     margin: auto;
@@ -370,6 +377,6 @@ text-align: center;
     max-height: 500px;
 }
 .search-box{
-    display: inline-block;
+    display: block;
     margin: auto;
 }
