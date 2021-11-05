@@ -29,7 +29,7 @@
                         //print catagory name and display/fetch items in the catagory
                         $msg = $msg. "<h2 class='catagory-name'>".$prod_cat."</h2><hr class='catagory-line'>";
                         while($row = $prod_result->fetch_assoc()){
-                            $msg = $msg. "<a href='details.php?itemid=".$row['MasterSKU']."'>
+                            $msg = $msg. "<a href='details.php?itemid=".$row['MasterSKU']."' class='menu-item-link'>
                                     <div class='menu-item' id='item".$row['MasterSKU']."'>
                                         <h2 class='item-name centerText'>".$row['ProductName']."</h2>
                                         <div><img src='images/".getImage($conn,$row["ImgID"])."' alt='' class='img menu-item-img'></div>
@@ -52,7 +52,7 @@
     echo $msg;
     //get image location and pass to image src
     function getImage($conn,$id){
-        $img;
+        $img = "uploads/placeHolder.png";
         $img_query = "SELECT ImgName, ImgLocation FROM Image 
                         INNER JOIN Product_Item ON
                         Product_Item.ImgID = Image.ImgID

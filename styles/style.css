@@ -228,6 +228,17 @@ ul.error {
     width: 100%;
     text-align: center;
 }
+.dept-links{
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+.dep-opt{
+   display: inline-block !important;
+}
+.menu-item-link{
+    text-decoration: none;
+}
 .item-name {
     background-color: #2C1210;
     margin: auto;

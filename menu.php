@@ -47,12 +47,14 @@
         ?>
         <div class="content menu">
             <h1 class="centerText"><u>Our Menu</u></h1>
-            <a href='#all' class='dep-opt false-link'>All</a>
-            <?php 
-                foreach($department as $dep){
-                    echo "<a href='#".$dep."' class='dep-opt false-link'>".$dep."</a>";
-                }
-            ?>
+            <div class="dept-links">
+                <a href='#all' class='dep-opt false-link btn'>All</a>
+                <?php 
+                    foreach($department as $dep){
+                        echo "<a href='#".$dep."' class='dep-opt false-link btn'>".$dep."</a>";
+                    }
+                ?>
+            </div>
             <div class="menu-item-container flex-box" id="menu">
                 
             </div>
