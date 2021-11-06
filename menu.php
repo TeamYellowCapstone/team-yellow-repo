@@ -22,10 +22,6 @@
             array_push($department, $row["Department"]);
         }
     }
-    //"SELECT MasterSKU, ProductName, Description, Price, ImgID, Department, Catagory FROM Product_Item WHERE IsMenuItem = 1;"
-    if($catQuery = $conn->query($query)){
-        $items = $result->fetch_all(MYSQLI_ASSOC);
-    }
     //$items = array();
     $conn->close();
 ?>
