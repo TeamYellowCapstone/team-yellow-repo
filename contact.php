@@ -1,12 +1,14 @@
+<?php
+    require "scripts/php/menuPageLoad.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css"	type="text/css"	rel="stylesheet">
-    <title>Contact</title>
-</head>
+    <head>
+        <?php
+            require "templates/head.php";
+        ?> 
+        <title>Contact</title>
+    </head>
 
     <body>
         <?php
@@ -15,7 +17,7 @@
 
         <div class="content">
         <h1  class="centerText"><u>Contact Us</u></h1>
-
+        <img src="images/heart_latte_art.jpg" alt="Latte art with heart shaped art" width="50%" >
         <h2 class="indent">Adress</h2>
             <ul class="content">
                 <li class="indent">550 E Spring St, Columbus, OH 43215</li>
@@ -31,6 +33,9 @@
                 <li class="indent"><a href="mailto:mheywood@cscc.edu">mheywood@cscc.edu</a></li>
             </ul>
         <br>
+        </div>
+        <div class="background-wrap">
+            
         </div>
 
     </body>
