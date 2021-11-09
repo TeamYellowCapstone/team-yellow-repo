@@ -17,7 +17,7 @@
 
         <div class="content">
         <h1  class="centerText"><u>Contact Us</u></h1>
-
+        <img src="images/heart_latte_art.jpg" alt="Latte art with heart shaped art" width="50%" >
         <h2 class="indent">Adress</h2>
             <ul class="content">
                 <li class="indent">550 E Spring St, Columbus, OH 43215</li>
