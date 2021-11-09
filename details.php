@@ -18,10 +18,6 @@
             $detail_result = $detail_stmt->get_result();
             $detail_stmt->close();
             $row;
-            //$query = "SELECT * FROM Product_Size;";
-            //if($result = $conn->query($query)){
-               // $productSize = $result->fetch_all(MYSQLI_ASSOC);
-            //}
             if($detail_result->num_rows > 0){
                 $row = $detail_result->fetch_assoc();
                 if($row["IsMenuItem"] != 1){
@@ -29,7 +25,7 @@
                     return;
                 }
                 //get options
-                $option_query = "SELECT ProductName, MasterSKU FROM Product_Item WHERE Department = ? AND Catagory = ?;";
+                $option_query = "SELECT ProductName FROM Product_Item WHERE Department = ? AND Catagory = ?;";
                 $option_stmt = $conn->prepare($option_query);
                 $dept = "Options";
                 $cat = "Creamer";
@@ -37,8 +33,6 @@
                 $option_stmt->execute();
                 $option_result = $option_stmt->get_result();
                 $option_stmt->close();
-
-
                 //Get Product Size
                 $size_query = "SELECT * FROM Product_Size;";
                 $size_result = $conn->query($size_query);
@@ -53,12 +47,6 @@
                 $price_stmt->execute();
                 $price_result = $price_stmt->get_result();
                 $price_stmt->close();
-
-                
-  
-                //$price_query = "SELECT * FROM Product_Size WHERE SizeID = ?;";
-                //$price_query = $conn->prepare($price_query);
-                //$imgID = $row["ImgID"];
 
                 //get Image
                 $image_query = "SELECT * FROM ImageView WHERE ImgID = ?;";
@@ -97,6 +85,7 @@
     <script type="text/javascript" src="scripts/faq.js" defer></script>
     <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
     <title>Detail</title>
+
 </head>
 
   <body>
@@ -104,7 +93,6 @@
     <?php
       require "templates/navigation.php";
     ?>
-
     <div class="centerText">
         <?php
             if(isset($_SESSION["itemAdded"])){
@@ -144,9 +132,7 @@
                 </div>
                 </form>";
                 //<button class='btn add-to-cart'>Add to Cart</button>
-        ?>
-
-        
+        ?>        
     </div>
     
   </body>
