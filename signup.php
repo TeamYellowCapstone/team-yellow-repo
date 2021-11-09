@@ -27,22 +27,35 @@
                 if($conn->connect_error){
                     die("connection failed");
                 }
+
+                // For Credential table that stores the UserName and Password
                 $query = "INSERT INTO Credential (UserName, Password) VALUES (?,?);";
                 $stmt = $conn->prepare($query);
                 // hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
                 $stmt->bind_param("ss",$uname,$hashed_pwrd);
-                $stmt->execute();
-                $lastid = $stmt->insert_id;
-                $stmt->close();
+                if($stmt->execute()){
+                    $lastid = $stmt->insert_id;
+                    $stmt->close();
+                }else{
+                    if($conn->errno == 1062){
+                        //get the name of duplicated column
+                        $err = preg_replace("/^[\s\S]*'Credential./","", $conn->error);
+                        if($err=="UserName_UNIQUE'"){
+                            $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
+                        }    
+                    }
+                }
+              
 
+                // Uses user table to get FirstName, LastName, Phone, Email, CredentialID as well as use the query above
                 $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID) VALUES (?,?,?,?,?);";
                 $stmt = $conn->prepare($query);
                 $phn = $phn == "" ? NULL : $phn;
                 $stmt->bind_param("ssssi",$fname,$lname,$phn,$email,$lastid);
                 
                 
-                if($stmt->execute()){
+                if($stmt->execute() && !isset($_SESSION["errorMsg"])){
                     //remove all session keys
                     unset($_SESSION["fname"]);
                     unset($_SESSION["lname"]);
@@ -66,17 +79,11 @@
                         $err = preg_replace("/^[\s\S]*'User./","", $conn->error);
                         //for each column store a corressponding error msg
                         switch ($err) {
-                            case "UserName_UNIQUE'":
-                                $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
-                                break;
                             case "Email_UNIQUE'":
                                 $_SESSION["errorMsg"] = "The email address ".$_SESSION["email"]." is already registered";
                                 break;
                             case "Phone_UNIQUE'":
                                 $_SESSION["errorMsg"] = "The phone number ".$_SESSION["phn"]." is already registered";
-                                break;
-                            default:
-                                $_SESSION["errorMsg"] = "Connection error!";
                                 break;
                         }
                     }

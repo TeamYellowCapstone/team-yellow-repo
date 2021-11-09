@@ -70,7 +70,7 @@
                 $image_stmt->close();
                 if($image_result->num_rows > 0){
                     $img_row = $image_result->fetch_assoc();
-                    $imgSrc = $img_row["ImgLocation"] ."/". $img_row["ImgName"];
+                    $imgSrc =  "images"."/".$img_row["ImgLocation"] ."/". $img_row["ImgName"];
                 }
                 else{
                     $imgSrc = "uploads/placeHolder.png";
@@ -112,16 +112,20 @@
                 unset($_SESSION["itemAdded"]);
             }
             echo "<h1 id='".$itemid."'>".$row["ProductName"]."</h1>";
+            echo "<img src='" .$imgSrc. "' height='300' width='300'> ";
+
             echo "<p id='desc'>".$row["Description"]."</p>";
-            echo "<img src=".$imgSrc.">";
             
-            echo "<br>";
-            echo "<p>Creamer Options:</p>";
+
+            
             echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
+            echo "<p>Creamer Options:</p>";
+            echo "<div class='creamer-options'>";
             foreach ($option_result as $option) {
                 echo "<input type='checkbox' name = 'creamers[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
                 echo "<label for='".$option["ProductName"]."'>".$option["ProductName"]."</label>";
             }
+            echo "</div>";
             echo "<div class='item-size'>";
             echo "<input type='hidden' name='itemid' value='".$itemid."'>";
             foreach ($product_size as $size){

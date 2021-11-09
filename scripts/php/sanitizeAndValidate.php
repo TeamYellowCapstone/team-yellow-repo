@@ -23,6 +23,7 @@
         }
         return $is_alpha;
     }
+    //user name should only contain lower case letters from a-z
     function lowerOnly($elementName, $patt = "/^[a-z]*$/"){
         $is_alpha = TRUE;
         $pattern = $patt;
