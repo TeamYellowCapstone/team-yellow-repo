@@ -70,7 +70,10 @@
                     //unset the error about 15 minute
                     unset($_SESSION["wait"]);
                     //get matching username from the db
-                    $query = "SELECT UserID, FirstName, Password, RoleID FROM User WHERE UserName = ?;";
+                    $query = "SELECT User.UserID, FirstName, Password, RoleID FROM Credential
+                                Inner JOIN User ON
+                                Credential.CredentialID = User.CredentialID 
+                                WHERE UserName = ?;";
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("s",$uname);
                     if($stmt->execute()){

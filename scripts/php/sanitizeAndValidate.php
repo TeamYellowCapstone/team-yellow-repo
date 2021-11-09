@@ -23,6 +23,15 @@
         }
         return $is_alpha;
     }
+    function lowerOnly($elementName, $patt = "/^[a-z]*$/"){
+        $is_alpha = TRUE;
+        $pattern = $patt;
+        if(!preg_match($pattern,$_POST[$elementName])){
+            $_SESSION["errorMsg"] = "Field can only contain lowercase letters from a-z!";
+            $is_alpha = FALSE;
+        }
+        return $is_alpha;
+    }
     //
 
     //validates password to make sure it is more than 8 char long and it is combination of uppercase and lowercase letters
@@ -116,8 +125,8 @@
             $name = trim($_POST[$inputName]);
             $_SESSION[$inputName] = $name;
             //if not alphnumeric
-            if(!ctype_alnum($name)){
-                $_SESSION["err"] = !isset($_SESSION["err"])? "alphanum" : $_SESSION["err"];
+            if(!ctype_lower($name)){
+                $_SESSION["err"] = !isset($_SESSION["err"])? "alphalower" : $_SESSION["err"];
                 return FALSE;
             }
             return TRUE;
@@ -216,12 +225,12 @@
             $valid = FALSE;
         }
         //user name
-        if(!isEmpty("uname")){
+        if(!isEmpty("uname") && lowerOnly("uname")){
             $uname = trim($_POST["uname"]);
             $_SESSION["uname"] = $uname;
             //if not alphnumeric
-            if(!ctype_alnum($uname)){
-                $_SESSION["err"] = !isset($_SESSION["err"])? "alphanum" : $_SESSION["err"];
+            if(!ctype_lower($uname)){
+                $_SESSION["err"] = !isset($_SESSION["err"])? "alphalower" : $_SESSION["err"];
                 $valid = FALSE;
             }
         }

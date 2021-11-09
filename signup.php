@@ -27,12 +27,20 @@
                 if($conn->connect_error){
                     die("connection failed");
                 }
-                $query = "INSERT INTO User (FirstName, LastName, UserName, Password, Phone, Email) VALUES (?,?,?,?,?,?);";
+                $query = "INSERT INTO Credential (UserName, Password) VALUES (?,?);";
                 $stmt = $conn->prepare($query);
                 // hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
+                $stmt->bind_param("ss",$uname,$hashed_pwrd);
+                $stmt->execute();
+                $lastid = $stmt->insert_id;
+                $stmt->close();
+
+                $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID) VALUES (?,?,?,?,?);";
+                $stmt = $conn->prepare($query);
                 $phn = $phn == "" ? NULL : $phn;
-                $stmt->bind_param("ssssss",$fname,$lname,$uname,$hashed_pwrd,$phn,$email);
+                $stmt->bind_param("ssssi",$fname,$lname,$phn,$email,$lastid);
+                
                 
                 if($stmt->execute()){
                     //remove all session keys
@@ -88,6 +96,9 @@
                         break;
                     case "alphanum":
                         $_SESSION["errorMsg"] = "Username can only contain numbers and letters.";
+                        break;
+                    case "alphalower":
+                        $_SESSION["errorMsg"] = "Username can only contain lowercase letters";
                         break;
                     case "invalidemail":
                         $_SESSION["errorMsg"] = "Email address format is invalid!";
