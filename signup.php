@@ -29,24 +29,6 @@
                 }
                 // hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
-                $stmt->bind_param("ss",$uname,$hashed_pwrd);
-                if($stmt->execute()){
-                    $lastid = $stmt->insert_id;
-                    $stmt->close();
-                }else{
-                    if($conn->errno == 1062){
-                        //get the name of duplicated column
-                        $err = preg_replace("/^[\s\S]*'Credential./","", $conn->error);
-                        if($err=="UserName_UNIQUE'"){
-                            $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
-                        }    
-                    }
-                }
-              
-
-                // Uses user table to get FirstName, LastName, Phone, Email, CredentialID as well as use the query above
-                $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID) VALUES (?,?,?,?,?);";
-                $stmt = $conn->prepare($query);
                 $phn = $phn == "" ? NULL : $phn;
                 $_SESSION["phn"] = $phn;
                 //check for existence
