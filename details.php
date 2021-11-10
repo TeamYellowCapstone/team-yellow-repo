@@ -1,5 +1,5 @@
 <?php
-    require "templates/sessions_and_cookies.php";
+    require "scripts/php/menuPageLoad.php";
     $imgSrc = "";
     $msg = "";
 
@@ -25,7 +25,7 @@
                     return;
                 }
                 //get options
-                $option_query = "SELECT ProductName FROM Product_Item WHERE Department = ? AND Catagory = ?;";
+                $option_query = "SELECT ProductName, MasterSKU FROM Product_Item WHERE Department = ? AND Catagory = ?;";
                 $option_stmt = $conn->prepare($option_query);
                 $dept = "Options";
                 $cat = "Creamer";
