@@ -1,11 +1,12 @@
-let dispCont = document.getElementsByClassName("overlay")[0];
 let disp = document.getElementById("display");
-let cartQtyDisplay =  document.getElementById("qty");
 let chkoutBtn = document.getElementById("checkout-btn");
-chkoutBtn.addEventListener("click", function(){
-    ajax_checkout("scripts/php/checkout.php?log="+log());//pass local time as GET parameter
+if(chkoutBtn != null){
+    chkoutBtn.addEventListener("click", function(){
+        ajax_checkout("scripts/php/checkout.php?log="+log());//pass local time as GET parameter
+    
+    });
+}
 
-});
 
 //create current local time
 function log( ){
@@ -25,16 +26,6 @@ function log( ){
     return formattedTime;
 }
 
-let closeBtnCross = document.getElementById("close");
-closeBtnCross.addEventListener("click",function(){
-    disp.innerHTML = "";
-    dispCont.style.display = "none";
-});
-let closeBtn = document.getElementById("close-btn");
-closeBtn.addEventListener("click",function(){
-    disp.innerHTML = "";
-    dispCont.style.display = "none";
-});
 function ajax_checkout(url){
     let xHttp = new XMLHttpRequest();
 
@@ -42,15 +33,7 @@ function ajax_checkout(url){
         if(xHttp.readyState == 4 && xHttp.status == 200){
             if(xHttp.responseText != "Error"){
                 disp.innerHTML = xHttp.response;
-                dispCont.style.display = "block";
-                cartQtyDisplay.innerHTML = 0;
-                btn.click();
-            }
-            else if(cartQtyDisplay.innerHTML == 0){
-                alert("Cart is empty!");
-            }
-            else{
-                alert(xHttp.responseText);
+                disp.style.display = "block";
             }
         }
     }

@@ -1,7 +1,10 @@
 let btn = document.getElementById("clear-cart");
-btn.addEventListener("click",function(){
-    ajax_request_delete();
-});
+if(btn != null){
+    btn.addEventListener("click",function(){
+        ajax_request_delete();
+    });
+}
+
 
 function ajax_request_delete(){
     let xHttp = new XMLHttpRequest();

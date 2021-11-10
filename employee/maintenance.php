@@ -31,7 +31,7 @@
             <input type="radio" value="add" id="add-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "add" ? " checked" : ""?>>
             <label class="main-radio-lbl btn" for="update-item">Update Item</label>
             <input type="radio" value="update" id="update-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "update" ? " checked" : ""?>>
-
+            <a href="../signup.php" class="btn btn-link">Add Employee</a>
         </div>
         <!-- Add item display begins here -->
        
@@ -90,6 +90,31 @@
                             echo "value=".$_SESSION["price"];
                             unset($_SESSION["price"]);
                         }?>> <span class="ast" > *</span >
+                </div >
+                <div >
+                    <label for="dept" > Department: </label >
+                    <input type="text" id="dept" name="dept" placeholder="Department Name" <?php 
+                        if(isset($_SESSION["dept"])){
+                            echo "value=".$_SESSION["dept"];
+                            unset($_SESSION["dept"]);
+                        }?>> <span class="ast" > *</span >
+                </div >
+                <div >
+                    <label for="category" > Category: </label >
+                    <input type="text" id="category" name="category" placeholder="Category" <?php 
+                        if(isset($_SESSION["category"])){
+                            echo "value=".$_SESSION["category"];
+                            unset($_SESSION["category"]);
+                        }?>> <span class="ast" > *</span >
+                </div >
+                <div >
+                    <label for="is-menu" >
+                        <input type="checkbox" class="chk-btn" id="is-menu" name="ismenu" <?php 
+                        if(isset($_SESSION["is-menu"])){
+                            echo $_SESSION["is-menu"] == true ? "checked" : "";
+                            unset($_SESSION["is-menu"]);
+                        }?>> Check if this is a Menu Item.</label >
+                    <span class="ast" > *</span >
                 </div >
                 <div >
                     <?php

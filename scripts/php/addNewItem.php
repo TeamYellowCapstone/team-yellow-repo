@@ -15,7 +15,7 @@
                     die("Connection Error");
                 }
 
-                $search_query = "SELECT MasterSKU, ProductName, Description, Price FROM Product_Item WHERE MasterSKU = ? OR ProductName =? LIMIT 1;";
+                $search_query = "SELECT MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem FROM Product_Item WHERE MasterSKU = ? OR ProductName =? LIMIT 1;";
                 $stmt = $conn->prepare($search_query);
                 $stmt->bind_param("ss",$searchKey,$searchKey);
                 $stmt->execute();
@@ -27,6 +27,9 @@
                         $_SESSION["pname"] = $row["ProductName"];
                         $_SESSION["desc"] = $row["Description"];
                         $_SESSION["price"] = $row["Price"];
+                        $_SESSION["dept"] = $row["Department"];
+                        $_SESSION["category"] = $row["Catagory"];
+                        $_SESSION["is-menu"] = $row["IsMenuItem"]  == 1 ? true : false;
                     }
 
                 }
@@ -39,35 +42,34 @@
             }
         }
         else{
-            if(isset($_POST["add"])){
-
-            }
-            else{
-
-            }
             $sku; $pname; $desc; $price;
             validateSKU($sku,"sku");
             validateNameWithSpace($pname, "pname");
             validateString($desc, "desc");
             validatePrice($price, "price");
+            validateNameWithSpace($dept, "dept");
+            validateNameWithSpace($category, "category");
             if(validateSKU($sku,"sku") && validateNameWithSpace($pname, "pname")
-            && validateString($desc, "desc") && validatePrice($price, "price")){
+            && validateString($desc, "desc") && validatePrice($price, "price")
+            && validateNameWithSpace($category, "category") && validateNameWithSpace($dept, "dept")){
                 require_once "../../connection/connection.php";
                 if($conn->connect_error){
                     die("Connection Error");
                 }
-
-                $add_query = "INSERT INTO Product_Item (MasterSKU, ProductName, Description, Price) VALUES (?,?,?,?);";
-                $update_query = "UPDATE Product_Item SET MasterSKU = ?, ProductName = ?, Description = ?, Price = ? WHERE MasterSKU = ?;";
+                $is_menu = isset($_POST["ismenu"]) ? 1 : 0;
+                $_SESSION["is-menu"] = $is_menu;
+                $add_query = "INSERT INTO Product_Item (MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem) VALUES (?,?,?,?,?,?,?);";
+                $update_query = "UPDATE Product_Item SET MasterSKU = ?, ProductName = ?, Description = ?, Price = ?, Department = ?, 
+                                Catagory = ?, IsMenuItem = ? WHERE MasterSKU = ?;";
                 $action = $_SESSION["action"];
                 if(isset($_POST["add"])){
                     $stmt = $conn->prepare($add_query);
-                    $stmt->bind_param("sssd",$sku, $pname, $desc, $price);
+                    $stmt->bind_param("sssdssi",$sku, $pname, $desc, $price, $dept, $category, $is_menu);
                 }
                 else{
                     $stmt = $conn->prepare($update_query);
                     $oldSKU = $_SESSION["oldSku"];
-                    $stmt->bind_param("sssds",$sku, $pname, $desc, $price,$oldSKU);
+                    $stmt->bind_param("sssdssis",$sku, $pname, $desc, $price, $dept, $category, $is_menu,$oldSKU);
                 }
                 if($stmt->execute()){
                     $_SESSION["success"] = "Item has been added successfully!";
@@ -75,6 +77,9 @@
                     unset($_SESSION["desc"]);
                     unset($_SESSION["pname"]);
                     unset($_SESSION["price"]);
+                    unset($_SESSION["category"]);
+                    unset($_SESSION["dept"]);
+                    unset($_SESSION["is-menu"]);
                 }
                 else{
                     if($conn->errno == 1062){
