@@ -7,7 +7,6 @@ for (i=0; i<add_btn.length; i++){
 
 //assign event for updating price when item size is selected
 let size_btn = document.getElementsByClassName("radio-btn size");
-console.log(size_btn);
 for (i=0; i<size_btn.length; i++){
     size_btn[i].addEventListener("change",update_price);
     
@@ -32,7 +31,6 @@ function update_price(){
     currentItemId = currentItemId.getAttribute("id");
     let currSize = this.value;
     this.setAttribute("selected",true);
-    //console.log(currSize);
     ajax_price(price,"scripts/php/getPrice.php?id="+currentItemId+"&size="+currSize);
 }
 //ajax used to add item

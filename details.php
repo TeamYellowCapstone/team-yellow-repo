@@ -1,5 +1,5 @@
 <?php
-    require "templates/sessions_and_cookies.php";
+    require "scripts/php/menuPageLoad.php";
     $imgSrc = "";
     $msg = "";
 
@@ -18,10 +18,6 @@
             $detail_result = $detail_stmt->get_result();
             $detail_stmt->close();
             $row;
-            //$query = "SELECT * FROM Product_Size;";
-            //if($result = $conn->query($query)){
-               // $productSize = $result->fetch_all(MYSQLI_ASSOC);
-            //}
             if($detail_result->num_rows > 0){
                 $row = $detail_result->fetch_assoc();
                 if($row["IsMenuItem"] != 1){
@@ -37,8 +33,6 @@
                 $option_stmt->execute();
                 $option_result = $option_stmt->get_result();
                 $option_stmt->close();
-
-
                 //Get Product Size
                 $size_query = "SELECT * FROM Product_Size;";
                 $size_result = $conn->query($size_query);
@@ -53,12 +47,6 @@
                 $price_stmt->execute();
                 $price_result = $price_stmt->get_result();
                 $price_stmt->close();
-
-                
-  
-                //$price_query = "SELECT * FROM Product_Size WHERE SizeID = ?;";
-                //$price_query = $conn->prepare($price_query);
-                //$imgID = $row["ImgID"];
 
                 //get Image
                 $image_query = "SELECT * FROM ImageView WHERE ImgID = ?;";
@@ -97,6 +85,7 @@
     <script type="text/javascript" src="scripts/faq.js" defer></script>
     <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
     <title>Detail</title>
+
 </head>
 
   <body>
@@ -104,9 +93,9 @@
     <?php
       require "templates/navigation.php";
     ?>
-
     <div class="centerText">
         <?php
+        
             if(isset($_SESSION["itemAdded"])){
                 echo "<p>".$_SESSION["itemAdded"]."</p>";
                 unset($_SESSION["itemAdded"]);
@@ -119,11 +108,15 @@
 
             
             echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
+            ?>
+            <img src="images/creamer.png" alt="creamer" height='75' width='75' >
+            <?php
+            
             echo "<p>Creamer Options:</p>";
             echo "<div class='creamer-options'>";
             foreach ($option_result as $option) {
                 echo "<input type='checkbox' name = 'creamers[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
-                echo "<label for='".$option["ProductName"]."'>".$option["ProductName"]."</label>";
+                echo "<label for='".$option["ProductName"]."'>&hearts;".$option["ProductName"]."</label>";
             }
             echo "</div>";
             echo "<div class='item-size'>";
@@ -144,9 +137,7 @@
                 </div>
                 </form>";
                 //<button class='btn add-to-cart'>Add to Cart</button>
-        ?>
-
-        
+        ?>        
     </div>
     
   </body>

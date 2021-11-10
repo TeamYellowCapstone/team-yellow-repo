@@ -1,7 +1,7 @@
 <?php
-$parent = "";
+$currentLocation = $currentLocation == null ? "" : $currentLocation;
 if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
-    $parent = "../";
+    $currentLocation = "../";
 }
 
 
@@ -10,23 +10,23 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
     <ul>
         <?php
         echo "
-        <li><a href=".$parent."index.php>Home</a></li>
-        <li><a href=".$parent."menu.php>Menu</a></li>
-        <li><a href=".$parent."faq.php>Faq</a></li>
-        <li><a href=".$parent."contact.php>Contact Us</a></li>
+        <li><a href=".$currentLocation."index.php>Home</a></li>
+        <li><a href=".$currentLocation."menu.php>Menu</a></li>
+        <li><a href=".$currentLocation."faq.php>Faq</a></li>
+        <li><a href=".$currentLocation."contact.php>Contact Us</a></li>
         ";
-            if(isset($_SESSION["role"])){
-                echo "<li><a href=".$parent."logout.php>Logout</a></li>";
+            if(isset($_SESSION["role"]) && $_SESSION["role"] != 3 ){
+                echo "<li><a href=".$currentLocation."logout.php>Logout</a></li>";
             }
             else{
-                echo "<li><a href=".$parent."login.php>Login</a></li>";
+                echo "<li><a href=".$currentLocation."login.php>Login</a></li>";
             }
         ?>
         
         <li class="right">
         <?php
         
-                if(isset($_SESSION["FirstName"])){
+                if(isset($_SESSION["FirstName"]) && $_SESSION["role"] != 3){
                     $location = "index.php";
                     if(isset($_SESSION["role"])){
                         if($_SESSION["role"] == 1){
@@ -36,11 +36,11 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
                             $location = "user/index.php";
                         }
                     }
-                    echo "<p id='fname'><a href=".$parent.$location.">";
+                    echo "<p id='fname'><a href=".$currentLocation.$location.">";
                     echo $_SESSION["FirstName"];
                     echo "</a></p>";
                 }
-                echo "<a href=".$parent."cart.php id='a-cart'><div id='cart-container'>
+                echo "<a href=".$currentLocation."cart.php id='a-cart'><div id='cart-container'>
                             <span id='qty'>";
                 if(isset($_SESSION["cartQty"])){
                     echo $_SESSION["cartQty"];

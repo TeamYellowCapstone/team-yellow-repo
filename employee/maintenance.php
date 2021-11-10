@@ -31,7 +31,7 @@
             <input type="radio" value="add" id="add-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "add" ? " checked" : ""?>>
             <label class="main-radio-lbl btn" for="update-item">Update Item</label>
             <input type="radio" value="update" id="update-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "update" ? " checked" : ""?>>
-
+            <a href="../signup.php" class="btn btn-link">Add Employee</a>
         </div>
         <!-- Add item display begins here -->
        

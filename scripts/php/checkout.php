@@ -79,7 +79,7 @@
                 //create at table in a loop to display the receipt
                 $message = '<p class="leftText"> <b>Receipt</b>: '.$id.'&emsp;&emsp;<b>Time</b>: '.$time.'</p>'
                             .'<p class="centerText" id="chk-detail">Checkout Detail</p>'
-                            .'<table class="tbl"> 
+                            .'<table class="tbl">
                                 <thead>
                                     <tr>
                                         <th>Item</th>
@@ -101,6 +101,11 @@
                         ."</tr>";
                     }
                     $message = $message . "</tbody></table>";
+                    if($_SESSION["role"] == 3){
+                        session_unset();
+                        session_destroy();
+                    }
+                    
                 }
                 else{
                     $message = "Error";
@@ -114,7 +119,8 @@
         }
     }
     else{
-        $message = "Please Log in First";
+        header("Location: ../../signin.php");
+        return;
     }
     $conn->close();
     echo $message;

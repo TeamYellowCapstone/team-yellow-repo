@@ -81,7 +81,7 @@
                         if(!$match_found){
                             addItem($conn,$user,$currID,$currSize,$creamer_option);
                             header("Location: ../../details.php?itemid=".$currID);
-                                return;
+                            return;
                         }
                     }                    
                     //if item doesn't exist in the db add the item to the db
@@ -92,19 +92,69 @@
                     }
                     else{
                         $message = "Error Adding Item";
+                        header("Location: ../../details.php?itemid=".$currID);
+                        return;
                     }
                 }
                 else{
-                    //{"idsize"=>{id,size,qty,price},""=>{}}
-                    if(isset($_SESSION["cart"][$currID.",".$currSize])){
-                        $_SESSION["cart"][$currID.",".$currSize]["qty"] += 1; 
-                        $_SESSION["itemAdded"] = "The quantity of the current item has been updated";
+                    sort($creamer_option);
+                    $get_product_query = "SELECT * FROM ProductItemsView WHERE MasterSKU = ? AND SizeID = ?";
+                    $get_product_stmt = $conn->prepare($get_product_query);
+                    $get_product_stmt->bind_param("si",$currID, $currSize);
+                    $get_product_stmt->execute();
+                    $get_product_result = $get_product_stmt->get_result();
+                    $get_product_stmt->close();
+                    if($get_product_result->num_rows > 0){
+                        $row_item = $get_product_result->fetch_assoc();
+                        $sizeid = $currID.",".$currSize;
+                        //cart=>{"idsize"=>{id,size,productname, sizename,qty,price,option=>{}},""=>{}}
+                        $found = FALSE;
+                        $matched = FALSE;
+                        foreach($_SESSION["cart"] as $item_key => $item_value){
+                            $key = array_keys($item_value)[0];
+                            if($key == $sizeid){
+                                $found =TRUE;
+                                foreach ($item_value as $item) {
+                                    $currentOption = $item["option"];
+                                    sort($currentOption);
+                                    //same item with same option exists update so the old
+                                    if($currentOption == $creamer_option){
+                                        $c = $_SESSION["cart"][$item_key];
+                                        $b = $_SESSION["cart"][$item_key][$key];
+                                        $a=$_SESSION["cart"][$item_key][$key]["qty"];
+
+                                        $_SESSION["cart"][$item_key][$key]["qty"] += 1; 
+                                        $_SESSION["itemAdded"] = "The quantity of the current item has been updated";
+                                        $_SESSION["cartQty"] += 1;//update cookie to display qty
+                                        $matched = TRUE;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                            
+                        //same item with different option exists so add new one
+                        if($found && !$matched){
+                            array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
+                        "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
+                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$creamer_option)));
+                            $_SESSION["itemAdded"] = "Item has been added to cart.";
+                            $_SESSION["cartQty"] += 1;//update cookie to display qty
+                        }
+                        
+                        //item doesnot exists in cart so add new one
+                        if(!$found && !$matched){
+                            array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
+                            "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
+                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$creamer_option)));
+                            $_SESSION["itemAdded"] = "Item has been added to cart.";
+                            $_SESSION["cartQty"] += 1;//update cookie to display qty
+                        }
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
                     else{
-                        $_SESSION["cart"][$currID.",".$currSize] = array("id"=>$currID,"size"=>$currSize,"qty"=>1,"price"=>12);
-                        $_SESSION["itemAdded"] = "Item has been added to cart.";
+                        $message = "Error Adding Item";
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
@@ -133,7 +183,6 @@
         $stmt->close();
         $_SESSION["cartQty"] += 1;//update cookie to display qty
         $_SESSION["itemAdded"] = "Item has been added to cart.";
-        $query_insert_option = "INSERT INTO Cart_Options (OptionMasterSKU, CartID) VALUES (?,?);";
         if(count($creamer_option) != 0){
             $query_insert_option = "INSERT INTO Cart_Options (OptionMasterSKU, CartID) VALUES (?,?);";
             foreach($creamer_option as $creamer){
