@@ -1,5 +1,5 @@
 <?php
-    require "templates/sessions_and_cookies.php";
+    require "scripts/php/menuPageLoad.php";
     $imgSrc = "";
     $msg = "";
 
@@ -25,7 +25,7 @@
                     return;
                 }
                 //get options
-                $option_query = "SELECT ProductName FROM Product_Item WHERE Department = ? AND Catagory = ?;";
+                $option_query = "SELECT ProductName, MasterSKU FROM Product_Item WHERE Department = ? AND Catagory = ?;";
                 $option_stmt = $conn->prepare($option_query);
                 $dept = "Options";
                 $cat = "Creamer";
@@ -33,6 +33,20 @@
                 $option_stmt->execute();
                 $option_result = $option_stmt->get_result();
                 $option_stmt->close();
+                //Get Product Size
+                $size_query = "SELECT * FROM Product_Size;";
+                $size_result = $conn->query($size_query);
+                $product_size = $size_result->fetch_all(MYSQLI_ASSOC);
+
+                // Get Size
+                $price_query = "SELECT Price, PricePercentage FROM Product_Item, Product_Size WHERE MasterSKU = ? and SizeID = ?;";
+                $price_stmt = $conn->prepare($price_query);
+                $currID = "id";
+                $sizeID = "size";
+                $price_stmt->bind_param("si",$currID, $sizeID);
+                $price_stmt->execute();
+                $price_result = $price_stmt->get_result();
+                $price_stmt->close();
 
                 //get Image
                 $image_query = "SELECT * FROM ImageView WHERE ImgID = ?;";
@@ -44,7 +58,7 @@
                 $image_stmt->close();
                 if($image_result->num_rows > 0){
                     $img_row = $image_result->fetch_assoc();
-                    $imgSrc = $img_row["ImgLocation"] ."/". $img_row["ImgName"];
+                    $imgSrc =  "images"."/".$img_row["ImgLocation"] ."/". $img_row["ImgName"];
                 }
                 else{
                     $imgSrc = "uploads/placeHolder.png";
@@ -69,7 +83,9 @@
         require "templates/head.php";
     ?>
     <script type="text/javascript" src="scripts/faq.js" defer></script>
-    <title>FAQ</title>
+    <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
+    <title>Detail</title>
+
 </head>
 
   <body>
@@ -77,19 +93,46 @@
     <?php
       require "templates/navigation.php";
     ?>
-    <h1 class="centerText">Product Detail</h1>
-    <div>
+    <div class="centerText">
         <?php
-            echo "<h2>".$row["ProductName"]."</h2>";
-            echo "<img src=".$imgSrc.">";
-            echo "<br>";
-            echo "<p>Creamer Options:</p>";
-            foreach ($option_result as $option) {
-                echo $option["ProductName"];
-                echo "<br>";
+            if(isset($_SESSION["itemAdded"])){
+                echo "<p>".$_SESSION["itemAdded"]."</p>";
+                unset($_SESSION["itemAdded"]);
             }
-        ?>
-        
+            echo "<h1 id='".$itemid."'>".$row["ProductName"]."</h1>";
+            echo "<img src='" .$imgSrc. "' height='300' width='300'> ";
+
+            echo "<p id='desc'>".$row["Description"]."</p>";
+            
+
+            
+            echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
+            echo "<p>Creamer Options:</p>";
+            echo "<div class='creamer-options'>";
+            foreach ($option_result as $option) {
+                echo "<input type='checkbox' name = 'creamers[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
+                echo "<label for='".$option["ProductName"]."'>".$option["ProductName"]."</label>";
+            }
+            echo "</div>";
+            echo "<div class='item-size'>";
+            echo "<input type='hidden' name='itemid' value='".$itemid."'>";
+            foreach ($product_size as $size){
+                echo "
+                    <input class='radio radio-btn size' type='radio' name='size' id='". strtolower($size['SizeName'])."' value={$size['SizeID']}>
+                    <label for='". strtolower($size['SizeName'])."'>".substr($size['SizeName'],0,1)."</label>";
+                                               
+            }
+            echo  "</div>";
+       
+             
+                 
+            echo "<p class='item-price'>Price: ".$row["Price"]."</p>
+                </div>
+                <input type='submit' class='btn ad-to-cart'>
+                </div>
+                </form>";
+                //<button class='btn add-to-cart'>Add to Cart</button>
+        ?>        
     </div>
     
   </body>

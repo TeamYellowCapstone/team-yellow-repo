@@ -27,54 +27,72 @@
                 if($conn->connect_error){
                     die("connection failed");
                 }
-                $query = "INSERT INTO User (FirstName, LastName, UserName, Password, Phone, Email) VALUES (?,?,?,?,?,?);";
-                $stmt = $conn->prepare($query);
+
                 // hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
                 $phn = $phn == "" ? NULL : $phn;
-                $stmt->bind_param("ssssss",$fname,$lname,$uname,$hashed_pwrd,$phn,$email);
-                
-                if($stmt->execute()){
-                    //remove all session keys
-                    unset($_SESSION["fname"]);
-                    unset($_SESSION["lname"]);
-                    unset($_SESSION["uname"]);
-                    unset($_SESSION["email"]);
-                    unset($_SESSION["pwrd"]);
-                    unset($_SESSION["pwrd2"]);
-                    unset($_SESSION["phn"]);
-                    //assign session for success to be used on the confisrmation page
-                    $_SESSION["acct"] = "successful";
-                    $stmt->close();
-                    $conn->close();
-                    //move to new page to show confirmation
-                    header("Location: confirmation.php");
-                    return;
-                }
-                else{
-                    //error 1062 is for duplicate entry
-                    if($conn->errno == 1062){
-                        //get the name of duplicated column
-                        $err = preg_replace("/^[\s\S]*'User./","", $conn->error);
-                        //for each column store a corressponding error msg
-                        switch ($err) {
-                            case "UserName_UNIQUE'":
-                                $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
-                                break;
-                            case "Email_UNIQUE'":
-                                $_SESSION["errorMsg"] = "The email address ".$_SESSION["email"]." is already registered";
-                                break;
-                            case "Phone_UNIQUE'":
-                                $_SESSION["errorMsg"] = "The phone number ".$_SESSION["phn"]." is already registered";
-                                break;
-                            default:
-                                $_SESSION["errorMsg"] = "Connection error!";
-                                break;
-                        }
+                $_SESSION["phn"] = $phn;
+                //check for existence
+                $user_exists_query = "SELECT UserName, Phone, Email FROM UserView WHERE UserName = ? OR Phone = ? OR Email = ?;";
+                $user_exists_stmt = $conn->prepare($user_exists_query);
+                $user_exists_stmt->bind_param("sss",$uname,$phn,$email);
+                $user_exists_stmt->execute();
+                $user_exists_result = $user_exists_stmt->get_result();
+                if($user_exists_result->num_rows > 0){//user exist
+                    $user_exists_stmt->close();
+                    $row = $user_exists_result->fetch_assoc();
+                    if($row["UserName"] == $uname){
+                        $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
+                    }
+                    elseif($row["Email"] == $email){
+                        $_SESSION["errorMsg"] = "The Email address ".$_SESSION["email"]." already exists.";
+                    }
+                    else{
+                        $_SESSION["errorMsg"] = "The Phone number ".$_SESSION["phn"]." already exists.";
                     }
                 }
-                $stmt->close();
-                $conn->close();
+                
+                else{//user does not exists
+                        $user_exists_stmt->close();
+                        // For Credential table that stores the UserName and Password
+                        $query = "INSERT INTO Credential (UserName, Password) VALUES (?,?);";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bind_param("ss",$uname,$hashed_pwrd);
+                        if($stmt->execute()){
+                            $lastid = $stmt->insert_id;
+                            $stmt->close();                    
+
+                        // Uses user table to get FirstName, LastName, Phone, Email, CredentialID as well as use the query above
+                        $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID, RoleID) VALUES (?,?,?,?,?,?);";
+                        $stmt = $conn->prepare($query);
+                        $roleid = $_SESSION["role"]  == 3 ? 2 : $_SESSION["role"];
+                        $stmt->bind_param("ssssii",$fname,$lname,$phn,$email,$lastid,$roleid);
+                        
+                        
+                        if($stmt->execute()){
+                            //remove all session keys
+                            unset($_SESSION["fname"]);
+                            unset($_SESSION["lname"]);
+                            unset($_SESSION["uname"]);
+                            unset($_SESSION["email"]);
+                            unset($_SESSION["pwrd"]);
+                            unset($_SESSION["pwrd2"]);
+                            unset($_SESSION["phn"]);
+                            unset($_SESSION["errorMsg"]);
+                            $_SESSION["role"] = $roleid;
+                            //assign session for success to be used on the confisrmation page
+                            $_SESSION["acct"] = "successful";
+                            $stmt->close();
+                            $conn->close();
+                            //move to new page to show confirmation
+                            header("Location: confirmation.php");
+                            return;
+                        }
+                        $stmt->close();
+                        $conn->close();
+                    }
+                }
+                
             }
             //if one of the input is invalid store the error in session key errMsg
             else{
@@ -88,6 +106,9 @@
                         break;
                     case "alphanum":
                         $_SESSION["errorMsg"] = "Username can only contain numbers and letters.";
+                        break;
+                    case "alphalower":
+                        $_SESSION["errorMsg"] = "Username can only contain lowercase letters";
                         break;
                     case "invalidemail":
                         $_SESSION["errorMsg"] = "Email address format is invalid!";

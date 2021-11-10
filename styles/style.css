@@ -36,6 +36,7 @@ h3 {
 
 img {
     border:25px inset #2c1210;
+    
  }
 
 thead, table, tr, th {
@@ -202,7 +203,7 @@ ul.error {
 
 .centerText {
     text-align: center;
-    font-size: 32pt;
+
 }
 
 /* Menu item */
@@ -261,12 +262,14 @@ ul.error {
 
 .item-size {
     max-width: 150px;
+    user-select: none;
 }
 
     .item-size > .radio-btn {
         opacity: 0;
         position: fixed;
         width: 0px;
+        
     }
 
         .item-size > .radio-btn + label {
@@ -275,12 +278,13 @@ ul.error {
             border-radius: 8px;
             border: 1px double #DF8527;
             user-select: none;
+            text-align: center;
         }
 
             .item-size > .radio-btn + label:hover {
                 background-color: #EDDDCB;
                 cursor: pointer;
-                text-align: center;
+                
             }
 
         .item-size > .radio-btn:checked + label {
@@ -390,4 +394,20 @@ text-align: center;
 .search-box{
     display: block;
     margin: auto;
+}
+
+.add-to-cart-form{
+    min-width: 300px;
+    max-width: 600px;
+}
+.creamer-options{
+    max-width: 100%;
+
+}
+.creamer-options label{
+    width: min-content !important;
+    margin-right: 5px;
+}
+.creamer-options input{
+    min-width: 5px !important;
 }
