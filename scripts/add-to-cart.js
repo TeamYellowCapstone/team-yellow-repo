@@ -2,7 +2,7 @@ let cartQtyDisplay =  document.getElementById("qty");
 //assign event for add item btn
 let add_btn = document.getElementsByClassName("add-to-cart");
 for (i=0; i<add_btn.length; i++){
-    add_btn[i].addEventListener("click",addItem);
+    // add_btn[i].addEventListener("click",addItem);
 }
 
 //assign event for updating price when item size is selected
@@ -14,10 +14,10 @@ for (i=0; i<size_btn.length; i++){
 
 //add item function get the parent of the button, item ID, and use that id and size pass it to GET request
 function addItem(){
-    let parent = this.parentNode;
-    let currentItemId = parent.getAttribute("id");
-    currentItemId = currentItemId.substring(4);
-    let currentSize = parent.querySelectorAll('.radio:checked')[0].value;
+    let currentItemId = document.getElementsByTagName("h1")[0];
+    currentItemId = currentItemId.getAttribute("id");
+    let currentSize = document.getElementsByClassName("item-size")[0]
+    currentSize = currentSize.querySelectorAll('.radio:checked')[0].value;
     let url = "scripts/php/addToCart.php?id=" + currentItemId + "&size=" + currentSize;
     ajax_request(url);
 }
@@ -38,7 +38,7 @@ function ajax_request(url){
     let xHttp = new XMLHttpRequest();
     xHttp.onreadystatechange = function(){
         if(xHttp.status == 200 && xHttp.readyState == 4){
-            alert(xHttp.responseText);
+            //alert(xHttp.responseText);
             if(xHttp.responseText != "Error Adding Item"){
                 cartQtyDisplay.innerHTML = +cartQtyDisplay.innerHTML + 1;
             }

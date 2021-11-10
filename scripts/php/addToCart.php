@@ -158,7 +158,6 @@
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
-                    
                 }
                 
             }
