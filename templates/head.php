@@ -11,13 +11,14 @@
     header_remove("X-Powered-By");
 ?>
 <?php
+    $currentLocation = $currentLocation == null ? "" : $currentLocation;
     if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
         echo "<link href='../styles/style.css' type='text/css' rel='stylesheet'>
         <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>";
     }
     else{
-        echo "<link href='styles/style.css' type='text/css' rel='stylesheet'>
-        <link href='templates/templates-style.css' type='text/css' rel='stylesheet'>";
+        echo "<link href='".$currentLocation."styles/style.css' type='text/css' rel='stylesheet'>
+        <link href='".$currentLocation."templates/templates-style.css' type='text/css' rel='stylesheet'>";
     }
 ?>
 <!-- <link href="styles/style.css" type="text/css" rel="stylesheet">

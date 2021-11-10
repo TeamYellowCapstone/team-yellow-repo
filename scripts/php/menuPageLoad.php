@@ -18,10 +18,11 @@
     }
     //get qty from session if user not logged in yet
     else{
-        $_SESSION["cartQty"] = 0;
+        $cartQty = 0;
         $cart = $_SESSION["cart"];
-        foreach($cart as $item){
-            $_SESSION["cartQty"] = $_SESSION["cartQty"] + $item["qty"];
+        foreach($cart as $value => $item){
+            $key = array_keys($item)[0];
+            $cartQty = $cartQty + $item[$key]["qty"];
         }
     }
     $conn->close();
