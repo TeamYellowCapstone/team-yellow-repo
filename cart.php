@@ -25,8 +25,10 @@
 
     //fetch cart item
     $cart_result;
+    $cart_option_result;
     if($user == 0){
         $cart_result = array();
+        $cart_option_result = array();
         foreach($_SESSION["cart"] as $value => $item){
             $key = array_keys($item)[0];
             array_push($cart_result,array("ProductName"=>$item[$key]["ProductName"],"SizeName"=>$item[$key]["SizeName"],
@@ -39,13 +41,15 @@
         $cart_stmt->bind_param("i",$user);
         $cart_stmt->execute();
         $cart_result = $cart_stmt->get_result();
-        if($cart_result->num_rows > 0){
-            
-        }
-        else{
-    
-        }
         $cart_stmt->close();
+
+        $cart_option_query = "SELECT * FROM CartOptionView WHERE UserID = ?;";
+        $cart_stmt = $conn->prepare($cart_option_query);
+        $cart_stmt->bind_param("i",$user);
+        $cart_stmt->execute();
+        $cart_option_result = $cart_stmt->get_result();
+        $cart_stmt->close();
+
     }
     
     $conn->close();

@@ -22,13 +22,24 @@
                 //get item ID, SizeID, and UserID
                 $currID = $_GET["itemid"];
                 $currSize = $_GET["size"];
-                $creamer_option;
-                if(isset($_GET["creamers"])){
-                    
-                    $creamer_option = $_GET["creamers"];
-                }
-                else{
-                    $creamer_option = array();
+                $item_options = array();
+
+                $option_name_query = "SELECT DISTINCT Catagory FROM Product_Item WHERE Department = ?";
+                $option_name_stmt = $conn->prepare($option_name_query);
+                $dept = "Options";
+                $option_name_stmt->bind_param("s", $dept);
+                $option_name_stmt->execute();
+                $option_name_result = $option_name_stmt->get_result();
+                $option_name_stmt->close();
+                $all_selected_options = array();
+                foreach($option_name_result as $result){
+                    //if this option is set then add to option array
+                    $catagory = strtolower($result["Catagory"]);
+                    if(isset($_GET[$catagory])){
+                        $item_options[$catagory] = $_GET[$catagory];
+                        $all_selected_options = array_merge($all_selected_options, array_values($_GET[$catagory]));
+                        //array_push($all_selected_options, array_values($_GET[$catagory]));
+                    }
                 }
                 $user = isset($_SESSION["UserID"]) ? $_SESSION["UserID"] : 0;
         
@@ -63,9 +74,9 @@
                             }
                             $options = $options[0] == null ? array() : $options;
                             sort($options);
-
-                            sort($creamer_option);
-                            if($options === $creamer_option){
+                            
+                            sort($all_selected_options);
+                            if($options === $all_selected_options){
                                 //from the above request if item, size and option exists in the database update the qty
                                 $query_update = "UPDATE Cart SET Quantity = Quantity + 1 WHERE CartID = ?;";
                                 $stmt = $conn->prepare($query_update);
@@ -79,14 +90,14 @@
                             }
                         }
                         if(!$match_found){
-                            addItem($conn,$user,$currID,$currSize,$creamer_option);
+                            addItem($conn,$user,$currID,$currSize,$all_selected_options);
                             header("Location: ../../details.php?itemid=".$currID);
                             return;
                         }
                     }                    
                     //if item doesn't exist in the db add the item to the db
                     else if($cart_id_result->num_rows == 0){
-                        addItem($conn,$user,$currID,$currSize,$creamer_option);
+                        addItem($conn,$user,$currID,$currSize,$all_selected_options);
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
@@ -97,7 +108,7 @@
                     }
                 }
                 else{
-                    sort($creamer_option);
+                    sort($all_selected_options);
                     $get_product_query = "SELECT * FROM ProductItemsView WHERE MasterSKU = ? AND SizeID = ?";
                     $get_product_stmt = $conn->prepare($get_product_query);
                     $get_product_stmt->bind_param("si",$currID, $currSize);
@@ -118,10 +129,7 @@
                                     $currentOption = $item["option"];
                                     sort($currentOption);
                                     //same item with same option exists update so the old
-                                    if($currentOption == $creamer_option){
-                                        $c = $_SESSION["cart"][$item_key];
-                                        $b = $_SESSION["cart"][$item_key][$key];
-                                        $a=$_SESSION["cart"][$item_key][$key]["qty"];
+                                    if($currentOption == $all_selected_options){
 
                                         $_SESSION["cart"][$item_key][$key]["qty"] += 1; 
                                         $_SESSION["itemAdded"] = "The quantity of the current item has been updated";
@@ -137,7 +145,7 @@
                         if($found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                         "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$creamer_option)));
+                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
                         }
@@ -146,10 +154,11 @@
                         if(!$found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                             "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$creamer_option)));
+                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
                         }
+                        array_push($_SESSION["options"], array($item_options));
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
@@ -173,7 +182,7 @@
         header("Location: ../../menu.php");
         return;
     }
-    function addItem($conn,$user,$currID,$currSize,$creamer_option){
+    function addItem($conn,$user,$currID,$currSize,$all_selected_options){
         $query_insert_item = "INSERT INTO Cart (UserID, MasterSKU, SizeID, Quantity) VALUES (?,?,?,?);";
         $stmt = $conn->prepare($query_insert_item);
         $qty = 1;
@@ -183,9 +192,9 @@
         $stmt->close();
         $_SESSION["cartQty"] += 1;//update cookie to display qty
         $_SESSION["itemAdded"] = "Item has been added to cart.";
-        if(count($creamer_option) != 0){
+        if(count($all_selected_options) != 0){
             $query_insert_option = "INSERT INTO Cart_Options (OptionMasterSKU, CartID) VALUES (?,?);";
-            foreach($creamer_option as $creamer){
+            foreach($all_selected_options as $creamer){
                 $stmt = $conn->prepare($query_insert_option);
                 $stmt->bind_param("si",$creamer,$lastid);
                 $stmt->execute();

@@ -88,6 +88,7 @@
                                     $_SESSION["FirstName"] = $fname;
                                     $_SESSION["UserID"] = $row["UserID"];
                                     $_SESSION["role"] = $row["RoleID"];
+                                    $_SESSION["UserName"] = $uname;
                                     include_once "scripts/php/moveCart.php";
                                     unset($_SESSION["uname"]);
                                     unset($_SESSION["pwrd"]);
