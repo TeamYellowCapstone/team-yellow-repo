@@ -1,8 +1,12 @@
 <?php
+//load neccessary files
     require "scripts/php/menuPageLoad.php";
     require "scripts/php/sanitizeAndValidate.php";
 
+    //if page loaded with post data perform an action that data
     if($_SERVER["REQUEST_METHOD"] == "POST"){
+        //if account button is pressed get the post data and validate it, and if everything is valid
+        //and the user is new create new account using the post data
         if(isset($_POST["create"])){
             $fname;
             $lname;
@@ -11,6 +15,7 @@
             $pwrd2 = $_POST["pwrd2"];
             $phn;
             $email;
+            //these method called here to initiate
             validateName($fname, "fname");
             validateName($lname, "lname");
             validateUsername($uname, "uname");
@@ -18,7 +23,7 @@
             validatePassword($pwrd,"pwrd");
             validatePhone($phn,"phno");
             passwordMatch($pwrd, $pwrd2);
-            //validate all inputs
+            //call the above methods again to validate all inputs
             if(validateName($fname, "fname") && validateName($lname, "lname")
              && validateUsername($uname, "uname") && validateEmail($email, "email")
               && validatePassword($pwrd,"pwrd") && validatePhone($phn,"phno")
@@ -29,27 +34,10 @@
                 }
                 // hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
-                $stmt->bind_param("ss",$uname,$hashed_pwrd);
-                if($stmt->execute()){
-                    $lastid = $stmt->insert_id;
-                    $stmt->close();
-                }else{
-                    if($conn->errno == 1062){
-                        //get the name of duplicated column
-                        $err = preg_replace("/^[\s\S]*'Credential./","", $conn->error);
-                        if($err=="UserName_UNIQUE'"){
-                            $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
-                        }    
-                    }
-                }
-              
-
-                // Uses user table to get FirstName, LastName, Phone, Email, CredentialID as well as use the query above
-                $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID) VALUES (?,?,?,?,?);";
-                $stmt = $conn->prepare($query);
+                //if phone field is empty set it to null (needed for db)
                 $phn = $phn == "" ? NULL : $phn;
                 $_SESSION["phn"] = $phn;
-                //check for existence
+                //check if the username, phone, or email address exists in db using userview
                 $user_exists_query = "SELECT UserName, Phone, Email FROM UserView WHERE UserName = ? OR Phone = ? OR Email = ?;";
                 $user_exists_stmt = $conn->prepare($user_exists_query);
                 $user_exists_stmt->bind_param("sss",$uname,$phn,$email);
@@ -58,6 +46,7 @@
                 if($user_exists_result->num_rows > 0){//user exist
                     $user_exists_stmt->close();
                     $row = $user_exists_result->fetch_assoc();
+                    //assign the appropriate error msg
                     if($row["UserName"] == $uname){
                         $_SESSION["errorMsg"] = "User name ".$_SESSION["uname"]." already exists.";
                     }
@@ -68,7 +57,6 @@
                         $_SESSION["errorMsg"] = "The Phone number ".$_SESSION["phn"]." already exists.";
                     }
                 }
-                
                 else{//user does not exists
                         $user_exists_stmt->close();
                         // For Credential table that stores the UserName and Password
@@ -82,12 +70,13 @@
                         // Uses user table to get FirstName, LastName, Phone, Email, CredentialID as well as use the query above
                         $query = "INSERT INTO User (FirstName, LastName, Phone, Email, CredentialID, RoleID) VALUES (?,?,?,?,?,?);";
                         $stmt = $conn->prepare($query);
+                        //set the user role to appropriate privilege
                         $roleid = $_SESSION["role"]  == 3 ? 2 : $_SESSION["role"];
                         $stmt->bind_param("ssssii",$fname,$lname,$phn,$email,$lastid,$roleid);
                         
                         
                         if($stmt->execute()){
-                            //remove all session keys
+                            //remove all session keys related to the post data
                             unset($_SESSION["fname"]);
                             unset($_SESSION["lname"]);
                             unset($_SESSION["uname"]);
@@ -96,8 +85,7 @@
                             unset($_SESSION["pwrd2"]);
                             unset($_SESSION["phn"]);
                             unset($_SESSION["errorMsg"]);
-                            $_SESSION["role"] = $roleid;
-                            //assign session for success to be used on the confisrmation page
+                            //assign session for success to be used on the confirmation page
                             $_SESSION["acct"] = "successful";
                             $stmt->close();
                             $conn->close();

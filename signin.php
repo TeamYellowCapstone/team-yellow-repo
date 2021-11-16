@@ -30,7 +30,7 @@
                 }
                 $query = "INSERT INTO User (FirstName, LastName, UserName, Password, Phone, Email) VALUES (?,?,?,?,?,?);";
                 $stmt = $conn->prepare($query);
-                // hash the password using the defualt algorithm
+                //hash the password using the defualt algorithm
                 $hashed_pwrd = password_hash($pwrd,PASSWORD_DEFAULT);
                 $phn = $phn == "" ? NULL : $phn;
                 $stmt->bind_param("ssssss",$fname,$lname,$uname,$hashed_pwrd,$phn,$email);

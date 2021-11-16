@@ -9,14 +9,13 @@ for (i=0; i<add_btn.length; i++){
 let size_btn = document.getElementsByClassName("radio-btn size");
 for (i=0; i<size_btn.length; i++){
     size_btn[i].addEventListener("change",update_price);
-    
 }
 
 //add item function get the parent of the button, item ID, and use that id and size pass it to GET request
 function addItem(){
     let currentItemId = document.getElementsByTagName("h1")[0];
     currentItemId = currentItemId.getAttribute("id");
-    let currentSize = document.getElementsByClassName("item-size")[0]
+    let currentSize = document.getElementsByClassName("item-size")[0];
     currentSize = currentSize.querySelectorAll('.radio:checked')[0].value;
     let url = "scripts/php/addToCart.php?id=" + currentItemId + "&size=" + currentSize;
     ajax_request(url);

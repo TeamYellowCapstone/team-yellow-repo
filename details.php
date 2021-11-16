@@ -11,7 +11,8 @@
         }
         else{
             require "connection/connection.php";
-            $detail_query = "SELECT ProductName, Description, Price, ImgID, IsMenuItem FROM Product_Item WHERE MasterSKU = ? LIMIT 1;";
+            //check if item is menu item and if it is not kick user to menu page
+            $detail_query = "SELECT ProductName, Description, Price, ImgID, IsMenuItem, Type FROM Product_Item WHERE MasterSKU = ? LIMIT 1;";
             $detail_stmt = $conn->prepare($detail_query);
             $detail_stmt->bind_param("s", $itemid);
             $detail_stmt->execute();
@@ -24,21 +25,39 @@
                     header ("Location: menu.php");
                     return;
                 }
-                //get options
-                $option_query = "SELECT ProductName, MasterSKU FROM Product_Item WHERE Department = ? AND Catagory = ?;";
-                $option_stmt = $conn->prepare($option_query);
+
+                //get Option names
+                $option_name_query = "SELECT DISTINCT Catagory FROM Product_Item WHERE Department = ?";
+                $option_name_stmt = $conn->prepare($option_name_query);
                 $dept = "Options";
-                $cat = "Creamer";
-                $option_stmt->bind_param("ss", $dept, $cat);
-                $option_stmt->execute();
-                $option_result = $option_stmt->get_result();
-                $option_stmt->close();
+                $option_name_stmt->bind_param("s", $dept);
+                $option_name_stmt->execute();
+                $option_name_result = $option_name_stmt->get_result();
+                $option_name_stmt->close();
+
+
+                //get the actual options available for each option catagory
+                $option_result = array();
+                if($row["Type"] === "Coffee"){
+                    foreach($option_name_result as $product_option){
+                        $option_query = "SELECT ProductName, MasterSKU FROM Product_Item WHERE Department = ? AND Catagory = ?;";
+                        $option_stmt = $conn->prepare($option_query);
+                        $dept = "Options";
+                        $cat = $product_option["Catagory"];
+                        $option_stmt->bind_param("ss", $dept, $cat);
+                        $option_stmt->execute();
+                        $r = $option_stmt->get_result();
+                        $option_result[$product_option["Catagory"]] = $r->fetch_all(MYSQLI_ASSOC);
+                        $option_stmt->close();
+                    }
+                    
+                }
                 //Get Product Size
                 $size_query = "SELECT * FROM Product_Size;";
                 $size_result = $conn->query($size_query);
                 $product_size = $size_result->fetch_all(MYSQLI_ASSOC);
 
-                // Get Size
+                // Get Price
                 $price_query = "SELECT Price, PricePercentage FROM Product_Item, Product_Size WHERE MasterSKU = ? and SizeID = ?;";
                 $price_stmt = $conn->prepare($price_query);
                 $currID = "id";
@@ -95,6 +114,7 @@
     ?>
     <div class="centerText">
         <?php
+        
             if(isset($_SESSION["itemAdded"])){
                 echo "<p>".$_SESSION["itemAdded"]."</p>";
                 unset($_SESSION["itemAdded"]);
@@ -107,11 +127,17 @@
 
             
             echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
-            echo "<p>Creamer Options:</p>";
-            echo "<div class='creamer-options'>";
-            foreach ($option_result as $option) {
-                echo "<input type='checkbox' name = 'creamers[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
-                echo "<label for='".$option["ProductName"]."'>".$option["ProductName"]."</label>";
+            ?>
+            <img src="images/creamer.png" alt="creamer" height='75' width='auto' >
+            <?php
+            //$option_result = ["Creamer"=>["soy","2%"], "Sweetener"=>["sugar","honey]]
+            foreach ($option_result as $key => $value) {
+                echo "<h3>".$key.":</h3>";
+                echo "<div class='creamer-options'>";
+                foreach ($value as $option) {
+                    echo "<input type='checkbox' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
+                    echo "<label for='".$option["ProductName"]."'>".$option["ProductName"]."</label>";
+                }
             }
             echo "</div>";
             echo "<div class='item-size'>";
