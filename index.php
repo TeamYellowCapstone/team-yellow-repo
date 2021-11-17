@@ -14,9 +14,19 @@
         <?php
                 require "templates/navigation.php";
             ?>
-        <div class= "welcome_text">
-            <h1> Welcome! </h1>
-            <img src="images/bxf6-hero.jpg" alt="cup of coffee with latte foam art" width="50%" >
+        <div class= "center-text">
+            <h1 id="welcome">Welcome
+                <?php 
+                    if(isset($_SESSION["UserName"]) && isset($_SESSION["role"])){
+                        if($_SESSION["role"] == 2){
+                            echo "<span class='small-text'> " . $_SESSION["UserName"] . "</span>";
+                        }
+                    }
+                    echo "<span class='small-text'>!</span><br>";
+                ?>
+            </h1>
+            
+            <img src="images/bxf6-hero.jpg" alt="cup of coffee with latte foam art" width="35%" >
             <p> We've progressed from beans simmered in a shelled nut roaster to a variety of smooth, tasty mixtures sold across the country. </p>
             <h3> It All Began Here  </h3>
             <p> In Columbus,, we began as Sister`s Coffee, preparing shockingly smooth espresso with only a 12-pound shelled nut roaster. 
