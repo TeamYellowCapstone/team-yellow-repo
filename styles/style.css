@@ -430,3 +430,6 @@ text-align: center;
 .creamer-options input{
     min-width: 5px !important;
 }
+.inline-block{
+    display: inline-block
+}
