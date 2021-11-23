@@ -82,7 +82,6 @@
                 else{
                     $imgSrc = "images/uploads/placeHolder.png";
                 }
-
             }
             else{
                 header ("Location: menu.php");
