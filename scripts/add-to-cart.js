@@ -23,9 +23,8 @@ function addItem(){
 
 //This function will fetch the the sizeid and itemid to determine price of the item
 function update_price(){
-    let parent = this.parentNode;
-    parent = parent.parentNode;
-    let price = parent.querySelector(".item-price:last-child");
+    //let parent = document.getElementsByClassName("item-price")[0];
+    let price = document.getElementsByClassName("item-price")[0];
     let currentItemId = document.getElementsByTagName("h1")[0];
     currentItemId = currentItemId.getAttribute("id");
     let currSize = this.value;
