@@ -145,20 +145,24 @@
                         if($found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                         "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
+                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options,"CartID"=>count($_SESSION["cart"]))));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
+                            $_SESSION["options"][count($_SESSION["cart"])] = $item_options;
+                            //array_push($_SESSION["options"], array(count($_SESSION["cart"])-1 => array($item_options)));
                         }
                         
                         //item doesnot exists in cart so add new one
                         if(!$found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                             "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
+                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options,"CartID"=>count($_SESSION["cart"]))));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
+                            $_SESSION["options"][count($_SESSION["cart"])-1] = $item_options;
+                            //array_push($_SESSION["options"], array(count($_SESSION["cart"])-1 => array($item_options)));
                         }
-                        array_push($_SESSION["options"], array($item_options));
+                        
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }

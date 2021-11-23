@@ -28,11 +28,12 @@
     $cart_option_result;
     if($user == 0){
         $cart_result = array();
-        $cart_option_result = array();
+        $cart_option_result = $_SESSION["options"];
+        $counter = 0;
         foreach($_SESSION["cart"] as $value => $item){
             $key = array_keys($item)[0];
             array_push($cart_result,array("ProductName"=>$item[$key]["ProductName"],"SizeName"=>$item[$key]["SizeName"],
-            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],"PricePercentage"=>$item[$key]["PricePercentage"]));
+            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],"PricePercentage"=>$item[$key]["PricePercentage"],"CartID"=>$item[$key]["CartID"]));
         }
     }
     else{
