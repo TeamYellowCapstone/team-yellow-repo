@@ -144,10 +144,11 @@
             echo "<input type='hidden' name='itemid' value='".$itemid."'>";
             if($row["Department"] == "Drinks"){
                 foreach ($product_size as $size){
-                    echo "
+                    if($size['SizeID'] != 4){
+                        echo "
                         <input class='radio radio-btn size' type='radio' name='size' id='". strtolower($size['SizeName'])."' value={$size['SizeID']}>
                         <label for='". strtolower($size['SizeName'])."'>".substr($size['SizeName'],0,1)."</label>";
-                                                
+                    }                  
                 }
             }
             else{
