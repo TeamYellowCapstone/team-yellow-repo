@@ -31,7 +31,7 @@
     <?php
         require "templates/head.php";
     ?>
-    <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
+    <!-- <script type="text/javascript" src="scripts/add-to-cart.js" defer></script> -->
     <script type="text/javascript" src="scripts/load-product.js" defer></script>    
     <!-- <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
     <script type="text/javascript" src="scripts/checkout.js" defer></script> -->

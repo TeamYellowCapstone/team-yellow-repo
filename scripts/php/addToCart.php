@@ -32,14 +32,29 @@
                 $option_name_result = $option_name_stmt->get_result();
                 $option_name_stmt->close();
                 $all_selected_options = array();
+                $all_options = array();
+                if($_GET["size"] != 4){
                 foreach($option_name_result as $result){
                     //if this option is set then add to option array
                     $catagory = strtolower($result["Catagory"]);
-                    if(isset($_GET[$catagory])){
-                        $item_options[$catagory] = $_GET[$catagory];
-                        $all_selected_options = array_merge($all_selected_options, array_values($_GET[$catagory]));
-                        //array_push($all_selected_options, array_values($_GET[$catagory]));
+                    $price = $catagory == "syrup" ? 0.25 : 0;
+                    
+                    for($index = 0; $index < count($_GET[$catagory]); $index++){
+                        if($_GET["pump-".$catagory][$index] != 0){
+                            array_push($all_selected_options,array("mastersku" => $_GET[$catagory][$index], "pump" => $_GET["pump-".$catagory][$index], "price" => $price));
+                        }
+                        
                     }
+                    //array_push($all_selected_options,array($catagory=>array_values($all_options)));
+                    //$all_selected_options[$catagory] = array_values($all_options);
+                    //$all_selected_options = array_merge($all_selected_options, array_values($_GET[$catagory]));
+
+                    // if(isset($_GET[$catagory])){
+                    //     $item_options[$catagory] = $_GET[$catagory];
+                    //     $all_selected_options = array_merge($all_selected_options, array_values($_GET[$catagory]));
+                    //     //array_push($all_selected_options, array_values($_GET[$catagory]));
+                    // }
+                }
                 }
                 $user = isset($_SESSION["UserID"]) ? $_SESSION["UserID"] : 0;
         
@@ -47,8 +62,11 @@
                 if($user !=0){
                     //before adding item to cart check if there is the same item with same size
                     $get_cart_id = "SELECT CartID  FROM Cart WHERE UserID = ? AND MasterSKU = ? AND SizeID = ?;";
-                    $get_options = "SELECT OptionMasterSKU FROM Cart_Options INNER JOIN Cart ON
+                    //fix quantity
+                    $get_options = "SELECT OptionMasterSKU, Cart_Options.Quantity, Product_Item.Price FROM Cart_Options INNER JOIN Cart ON
                     Cart_Options.CartID = Cart.CartID
+                    INNER JOIN Product_Item ON
+                    Cart_Options.OptionMasterSKU = Product_Item.MasterSKU
                     WHERE Cart.CartID = ?;";
                     
         
@@ -70,14 +88,15 @@
                             $options = array();
                             //for each creamer options
                             for($i = 0; $i<count($get_array_result);$i++){
-                                array_push($options,$get_array_result[$i][0]);
+                                array_push($options,array("mastersku" => $get_array_result[$i][0], "pump" => $get_array_result[$i][1], "price" => $get_array_result[$i][2]));
                             }
-                            $options = $options[0] == null ? array() : $options;
+                            $options = count($options) == 0 ? array() : $options;
                             sort($options);
                             
                             sort($all_selected_options);
                             if($options === $all_selected_options){
                                 //from the above request if item, size and option exists in the database update the qty
+                                $match_found = TRUE;
                                 $query_update = "UPDATE Cart SET Quantity = Quantity + 1 WHERE CartID = ?;";
                                 $stmt = $conn->prepare($query_update);
                                 $stmt->bind_param("i",$row["CartID"]);
@@ -145,24 +164,20 @@
                         if($found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                         "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options,"CartID"=>count($_SESSION["cart"]))));
+                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
-                            $_SESSION["options"][count($_SESSION["cart"])] = $item_options;
-                            //array_push($_SESSION["options"], array(count($_SESSION["cart"])-1 => array($item_options)));
                         }
                         
                         //item doesnot exists in cart so add new one
                         if(!$found && !$matched){
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                             "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options,"CartID"=>count($_SESSION["cart"]))));
+                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
-                            $_SESSION["options"][count($_SESSION["cart"])-1] = $item_options;
-                            //array_push($_SESSION["options"], array(count($_SESSION["cart"])-1 => array($item_options)));
                         }
-                        
+                        //array_push($_SESSION["options"], array($item_options));
                         header("Location: ../../details.php?itemid=".$currID);
                         return;
                     }
@@ -197,10 +212,10 @@
         $_SESSION["cartQty"] += 1;//update cookie to display qty
         $_SESSION["itemAdded"] = "Item has been added to cart.";
         if(count($all_selected_options) != 0){
-            $query_insert_option = "INSERT INTO Cart_Options (OptionMasterSKU, CartID) VALUES (?,?);";
+            $query_insert_option = "INSERT INTO Cart_Options (OptionMasterSKU, Quantity, CartID) VALUES (?,?,?);";
             foreach($all_selected_options as $creamer){
                 $stmt = $conn->prepare($query_insert_option);
-                $stmt->bind_param("si",$creamer,$lastid);
+                $stmt->bind_param("sii",$creamer["mastersku"],$creamer["pump"],$lastid);
                 $stmt->execute();
                 $stmt->close();
             }

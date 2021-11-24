@@ -25,31 +25,39 @@
 
     //fetch cart item
     $cart_result;
-    $cart_option_result;
+    // $cart_option_result;
+    $option_price = 0;
     if($user == 0){
         $cart_result = array();
-        $cart_option_result = $_SESSION["options"];
-        $counter = 0;
+        $option_price = 0;
+        // $cart_option_result = array();
         foreach($_SESSION["cart"] as $value => $item){
             $key = array_keys($item)[0];
+            foreach($item[$key]["option"] as $price){
+                $option_price += $price["price"];
+            }
             array_push($cart_result,array("ProductName"=>$item[$key]["ProductName"],"SizeName"=>$item[$key]["SizeName"],
-            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],"PricePercentage"=>$item[$key]["PricePercentage"],"CartID"=>$item[$key]["CartID"]));
+            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],"PricePercentage"=>$item[$key]["PricePercentage"],
+            "OptionTotalPrice"=>$option_price));
+            
         }
     }
     else{
-        $cart_query = "SELECT * FROM CartView WHERE UserID = ?;";
+        $cart_query = "SELECT CartView.ID, CartView.ProductName, CartView.Price, PricePercentage, SizeName, CartView.Quantity, OptionTotalPrice FROM CartView 
+        INNER JOIN OptionPriceView ON CartView.ID = OptionPriceView.ID
+        WHERE CartView.UserID = ?;";
         $cart_stmt = $conn->prepare($cart_query);
         $cart_stmt->bind_param("i",$user);
         $cart_stmt->execute();
         $cart_result = $cart_stmt->get_result();
         $cart_stmt->close();
 
-        $cart_option_query = "SELECT * FROM CartOptionView WHERE UserID = ?;";
-        $cart_stmt = $conn->prepare($cart_option_query);
-        $cart_stmt->bind_param("i",$user);
-        $cart_stmt->execute();
-        $cart_option_result = $cart_stmt->get_result();
-        $cart_stmt->close();
+        // $cart_option_query = "SELECT * FROM CartOptionView WHERE UserID = ?;";
+        // $cart_stmt = $conn->prepare($cart_option_query);
+        // $cart_stmt->bind_param("i",$user);
+        // $cart_stmt->execute();
+        // $cart_option_result = $cart_stmt->get_result();
+        // $cart_stmt->close();
 
     }
     

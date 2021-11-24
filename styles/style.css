@@ -422,13 +422,15 @@ text-align: center;
 .option-name{
     background-color:rgba(191, 191, 191, 0.5);
 }
+
 .creamer-options{
     max-width: 100%;
 
 }
 .creamer-options label{
-    width: min-content !important;
     margin-right: 5px;
+    text-align: left !important;
+    width: unset !important;
 }
 .creamer-options input{
     min-width: 5px !important;

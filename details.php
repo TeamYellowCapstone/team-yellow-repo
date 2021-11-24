@@ -134,8 +134,8 @@
                 echo "<h3 class='collapsible-option option-name'>".$key." <span class='count'></span></h3>";
                 echo "<div class='creamer-options'>";
                 foreach ($value as $option) {
-                    echo "<input type='checkbox' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
-                    echo "<input type='hidden' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
+                    echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
+                    echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 id = 'pump-".$option["ProductName"]."'>";
                     echo "<label for='".$option["ProductName"]."' class='option-item'>".$option["ProductName"]."<span class='remove opt-btn'>-</span><span class='add opt-btn'>+</span></label>";
                 }
                 echo "</div>";
@@ -158,7 +158,8 @@
        
              
                  
-            echo "<p class='item-price'>Price: ".$row["Price"]."</p>
+            echo "<p class='item-price'>Price: $ ".$row["Price"]."</p>
+            <input type='hidden' class='opt-price' id='opt-price' value='0'>
                 <input type='submit' class='btn ad-to-cart'>
                 </div>
                 </form>";

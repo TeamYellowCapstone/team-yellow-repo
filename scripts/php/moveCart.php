@@ -16,9 +16,9 @@
                 if($cart_stmt->execute()){
                     $last_id = $cart_stmt->insert_id;
                     foreach($item[$uniquekey]["option"] as $option){
-                        $option_query = "INSERT INTO Cart_Options (OptionMasterSKU, CartID) VALUES (?,?);";
+                        $option_query = "INSERT INTO Cart_Options (OptionMasterSKU, CartID, Quantity) VALUES (?,?,?);";
                         $option_stmt = $conn->prepare($option_query);
-                        $option_stmt->bind_param("si",$option,$last_id);
+                        $option_stmt->bind_param("sii",$option["mastersku"],$last_id,$option["pump"]);
                         $option_stmt->execute();
                     }
                     
