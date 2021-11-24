@@ -108,6 +108,15 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
+                    <label for="quantity" > Quantity</label >
+                    <input type="number" class="qty-btn" id="quantity" min=0 name="quantity" <?php 
+                        if(isset($_SESSION["quantity"])){
+                            echo "value=".$_SESSION["quantity"];
+                            unset($_SESSION["quantity"]);
+                        }?>>
+                    <span class="ast" > *</span >
+                </div >
+                <div >
                     <label for="is-menu" >
                         <input type="checkbox" class="chk-btn" id="is-menu" name="ismenu" <?php 
                         if(isset($_SESSION["is-menu"])){
