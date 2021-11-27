@@ -6,37 +6,85 @@
         else{
             $cartQty = 0;
             $cartTotal = 0;
-            echo "<table class='tbl'> 
+            echo "<table class='tbl'>
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Size</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
+                            <td>Cart Detail</td>
+                            <td>Total Price</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>";
                     $row = 0;
             foreach($cart_result as $item){
                 echo "<tr>
-                        <td>".$item["ProductName"]."</td>
-                        <td>".$item["SizeName"]."</td>
-                        <td>".$item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)."</td>
-                        <td>".$item["Quantity"]."</td>
-                        <td>".$item["OptionTotalPrice"] + ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"]."</td>
-                        <td><a href='cart.php?item=".$item["ID"]."' class='btn ico-btn delete-item-btn' id=".$item["ID"]."><span class='material-icons'>
+                        <td>".$item["Quantity"]." X ".$item["SizeName"]." ".$item["ProductName"]." (".$item["Price"]."/item)";
+                        $optPrice = 0;
+                        if($user == 0){
+                            $option = $item["Options"];
+                        }
+                        else{
+                            $option = array();
+                            foreach($cart_option_result as $item_option){
+                                if($item_option["ID"] == $item["ID"]){
+                                    array_push($option, array("ProductName" => $item_option["ProductName"],"Catagory" => 
+                                    $item_option["Catagory"], "pump" => $item_option["Quantity"]));
+                                }
+                            }
+
+                        }
+                        $e =0; $s=0; $c=0; $p=0;
+                        $espersso = "Espersso ($ 0.25/shot): ";
+                        $syrup = "Syrup ($ 0.25/pump): ";
+                        $sweetener = "Sweetener: ";
+                        $creamer = "Creamer: ";
+                        foreach ($option as $key) {
+                            switch ($key["Catagory"]){
+                                case "Espersso":
+                                    $espersso .= $key["pump"] . " X " . $key["ProductName"]. " ";
+                                    $e++;
+                                    break;
+                                case "Syrup":
+                                    $syrup .= $key["pump"] . " X " . $key["ProductName"]. " ";
+                                    $optPrice += 0.25;
+                                    $p++;
+                                    break;
+                                case "Sweetener":
+                                    $sweetener .= $key["pump"] . " X " . $key["ProductName"]. " ";
+                                    $s++;
+                                    break;
+                                case "Creamer":
+                                    $c++;
+                                    $creamer .= $key["pump"] . " X " . $key["ProductName"]. " ";
+                                    break;
+                            }
+                        }
+
+                        if($e != 0){
+                            echo "<br>&emsp;&emsp;" .$espersso;
+                        }
+                        if($p != 0){
+                            echo "<br>&emsp;&emsp;" .$syrup;
+                        }
+                        if($s != 0){
+                            echo "<br>&emsp;&emsp;" .$sweetener;
+                        }
+                        if($c != 0){
+                            echo "<br>&emsp;&emsp;" .$creamer;
+                        }
+                        echo "</td><td>".$item["Quantity"]*$item["Price"] + $optPrice."</td>";
+                        echo "<td><a href='cart.php?item=".$item["ID"]."' class='btn ico-btn delete-item-btn' id=".$item["ID"]."><span class='material-icons'>
                         delete
                         </span>
                         </button></td>
                     <tr>";
                     $cartQty += $item["Quantity"];
-                    $cartTotal += $item["OptionTotalPrice"] + ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"];
+                    $cartTotal += $item["Quantity"]*$item["Price"] + $optPrice;
             }
             echo "<tr>
-                    <td colspan='3'></td>
-                    <td>".$cartQty."</td>
-                    <td>".$cartTotal."</td>
+                    <td></td>
+                    <td>Total Qty ".$cartQty."</td>
+                    <td>Sub Total $".$cartTotal."</td>
                 </tr>
                 </tbody>
                 </table>";

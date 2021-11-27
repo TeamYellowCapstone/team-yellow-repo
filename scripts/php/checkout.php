@@ -88,9 +88,9 @@
                 // $result = $stmt->get_result();
                 // $stmt->close();
 
-                $query = "SELECT CheckoutView.ID, CheckoutView.ProductName, CheckoutView.Price, PricePercentage, SizeName, CheckoutView.Quantity, OptionTotalPrice FROM CheckoutView 
-                INNER JOIN CheckoutOptionPriceView ON CheckoutView.ID = CheckoutOptionPriceView.ID
-                WHERE CheckoutView.CheckoutID = ?;";
+                $query = "SELECT DetailID, ProductName, Price, SizeName, ProductQuantity 
+                FROM ItemCheckoutDetail
+                WHERE CheckoutID = ?;";
                 $stmt = $conn->prepare($query);
                 $stmt->bind_param("i",$id);
                 $stmt->execute();
@@ -101,35 +101,32 @@
                 $cartTotal = 0;
                 $message = "'<p class='leftText'> <b>Receipt</b>: ".$id."&emsp;&emsp;<b>Time</b>: ".$time."</p>"
                 ."<p class='centerText' id='chk-detail'>Checkout Detail</p>"
-                ."<table class='tbl'>
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Size</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+                ."<table class='tbl'>"
+                    // ."<thead>
+                    //     <tr>
+                    //         <th>Item</th>
+                    //         <th>Size</th>
+                    //         <th>Price</th>
+                    //         <th>Quantity</th>
+                    //         <th>Total</th>
+                    //     </tr>
+                    // </thead>"
+                    ."<tbody>";
                     $row = 0;
 
                 if($result->num_rows > 0){
                     foreach($result as $item){
                         $message = $message. "<tr>
-                                <td>".$item["ProductName"]."</td>
-                                <td>".$item["SizeName"]."</td>
-                                <td>".$item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)."</td>
-                                <td>".$item["Quantity"]."</td>
-                                <td>".$item["OptionTotalPrice"] + ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"]."</td>
-                            <tr>";
-                            $cartQty += $item["Quantity"];
-                            $cartTotal += $item["OptionTotalPrice"] + ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"];
+                                <td colspan=4>".$item["ProductQuantity"]." X ".$item["SizeName"]." ".$item["ProductName"].
+                                " - $".$item["Price"]." each<br>".
+                                " Add anything here<td>something here</td><tr>";
+                            $cartQty += $item["ProductQuantity"];
+                            //$cartTotal += $item["OptionTotalPrice"] + ($item["Price"] + ($item["Price"]*$item["PricePercentage"]/100)) * $item["Quantity"];
                     }
                     $message = $message. "<tr>
                             <td colspan='3'></td>
                             <td>".$cartQty."</td>
-                            <td>".$cartTotal."</td>
+                            <td>"."</td>
                             </tbody></table>";
                     if($_SESSION["role"] == 3){
                         session_unset();

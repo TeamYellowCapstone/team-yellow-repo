@@ -37,27 +37,24 @@
                 $option_price += $price["price"];
             }
             array_push($cart_result,array("ProductName"=>$item[$key]["ProductName"],"SizeName"=>$item[$key]["SizeName"],
-            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],"PricePercentage"=>$item[$key]["PricePercentage"],
-            "OptionTotalPrice"=>$option_price));
-            
+            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>round(($item[$key]["Price"] * $item[$key]["PricePercentage"])+$item[$key]["Price"],2),
+            "Options"=>$item[$key]["option"]));
         }
     }
     else{
-        $cart_query = "SELECT CartView.ID, CartView.ProductName, CartView.Price, PricePercentage, SizeName, CartView.Quantity, OptionTotalPrice FROM CartView 
-        INNER JOIN OptionPriceView ON CartView.ID = OptionPriceView.ID
-        WHERE CartView.UserID = ?;";
+        $cart_query = "SELECT * FROM CartView WHERE CartView.UserID = ?;";
         $cart_stmt = $conn->prepare($cart_query);
         $cart_stmt->bind_param("i",$user);
         $cart_stmt->execute();
         $cart_result = $cart_stmt->get_result();
         $cart_stmt->close();
 
-        // $cart_option_query = "SELECT * FROM CartOptionView WHERE UserID = ?;";
-        // $cart_stmt = $conn->prepare($cart_option_query);
-        // $cart_stmt->bind_param("i",$user);
-        // $cart_stmt->execute();
-        // $cart_option_result = $cart_stmt->get_result();
-        // $cart_stmt->close();
+        $cart_option_query = "SELECT * FROM CartOptionView WHERE UserID = ?;";
+        $opt_stmt = $conn->prepare($cart_option_query);
+        $opt_stmt->bind_param("i",$user);
+        $opt_stmt->execute();
+        $cart_option_result = $opt_stmt->get_result();
+        $opt_stmt->close();
 
     }
     
