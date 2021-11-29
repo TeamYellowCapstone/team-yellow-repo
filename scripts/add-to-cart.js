@@ -71,6 +71,9 @@ function update_price_with_pump(){
     if((pumpCount.getAttribute("name")).substring(5) == "syrup[]" && pumpCount.value >= 0){
         addPrice = 0.25;
     }
+    if((pumpCount.getAttribute("name")).substring(5) == "addons[]" && pumpCount.value >= 0){
+        addPrice = 1.5;
+    }
     //price.innerHTML ="Price: $" + (+(price.innerHTML.substr(9)) + (addPrice * pumpCount.value));
     optionTotalPrice.value = +(optionTotalPrice.value) + (valueToAdd * addPrice);
     price.innerHTML ="Price: $ " + (+(price.innerHTML.substr(9)) + (valueToAdd * addPrice));

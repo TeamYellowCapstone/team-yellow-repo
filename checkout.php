@@ -11,16 +11,16 @@
         }
         
         //fetch cart item
-        $cart_query = "SELECT CartView.ID, CartView.ProductName, CartView.Price, PricePercentage, SizeName, CartView.Quantity, OptionTotalPrice FROM CartView 
-        INNER JOIN OptionPriceView ON CartView.ID = OptionPriceView.ID
-        WHERE CartView.UserID = ?;";
-        $cart_stmt = $conn->prepare($cart_query);
-        $cart_stmt->bind_param("i",$user);
-        $cart_stmt->execute();
-        $cart_result = $cart_stmt->get_result();
+        // $cart_query = "SELECT CartView.ID, CartView.ProductName, CartView.Price, PricePercentage, SizeName, CartView.Quantity, OptionTotalPrice FROM CartView 
+        // INNER JOIN OptionPriceView ON CartView.ID = OptionPriceView.ID
+        // WHERE CartView.UserID = ?;";
+        // $cart_stmt = $conn->prepare($cart_query);
+        // $cart_stmt->bind_param("i",$user);
+        // $cart_stmt->execute();
+        // $cart_result = $cart_stmt->get_result();
 
-        $cart_stmt->close();
-        $conn->close();
+        // $cart_stmt->close();
+        // $conn->close();
     }
 ?>
 <!DOCTYPE html>

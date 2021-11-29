@@ -208,7 +208,7 @@
             $qty = trim($_POST[$inputName]);
             $_SESSION[$inputName] = $qty;
             //if not numeric
-            if(!preg_match("/^[0-9]$/",$_POST[$inputName])){
+            if(!preg_match("/^[0-9]*$/",$_POST[$inputName])){
                 $_SESSION["err"] = !isset($_SESSION["err"])? "invalidQuantity" : $_SESSION["err"];
                 return FALSE;
             }

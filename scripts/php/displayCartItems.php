@@ -34,19 +34,20 @@
 
                         }
                         $e =0; $s=0; $c=0; $p=0;
-                        $espersso = "Espersso ($ 0.25/shot): ";
+                        $espersso = "Add-Ons ($ 1.5/shot): ";
                         $syrup = "Syrup ($ 0.25/pump): ";
                         $sweetener = "Sweetener: ";
                         $creamer = "Creamer: ";
                         foreach ($option as $key) {
                             switch ($key["Catagory"]){
-                                case "Espersso":
+                                case "AddOns":
                                     $espersso .= $key["pump"] . " X " . $key["ProductName"]. " ";
+                                    $optPrice += 1.5 * $key["pump"];
                                     $e++;
                                     break;
                                 case "Syrup":
                                     $syrup .= $key["pump"] . " X " . $key["ProductName"]. " ";
-                                    $optPrice += 0.25;
+                                    $optPrice += 0.25 * $key["pump"];
                                     $p++;
                                     break;
                                 case "Sweetener":
@@ -77,7 +78,7 @@
                         delete
                         </span>
                         </button></td>
-                    <tr>";
+                    </tr>";
                     $cartQty += $item["Quantity"];
                     $cartTotal += $item["Quantity"]*$item["Price"] + $optPrice;
             }

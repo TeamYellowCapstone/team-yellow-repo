@@ -38,10 +38,11 @@
                         //if this option is set then add to option array
                         $catagory = strtolower($result["Catagory"]);
                         $price = $catagory == "syrup" ? 0.25 : 0;
+                        $price = $catagory == "addons" ? 1.5 : $price;
                         
                         for($index = 0; $index < count($_GET[$catagory]); $index++){
                             if($_GET["pump-".$catagory][$index] != 0){
-                                array_push($all_selected_options,array("mastersku" => $_GET[$catagory][$index], "pump" => $_GET["pump-".$catagory][$index], "price" => $price));
+                                array_push($all_selected_options,array("mastersku" => $_GET[$catagory][$index], "pump" => $_GET["pump-".$catagory][$index], "price" => $price.""));
                             }
                             
                         }
@@ -84,9 +85,9 @@
                             }
                             $options = count($options) == 0 ? array() : $options;
                             sort($options);
-                            
+                            //getItemNames($conn,$all_selected_options);
                             sort($all_selected_options);
-                            if($options === $all_selected_options){
+                            if($options == $all_selected_options){
                                 //from the above request if item, size and option exists in the database update the qty
                                 $match_found = TRUE;
                                 $query_update = "UPDATE Cart SET Quantity = Quantity + 1 WHERE CartID = ?;";
@@ -132,6 +133,7 @@
                         //cart=>{"idsize"=>{id,size,productname, sizename,qty,price,option=>{}},""=>{}}
                         $found = FALSE;
                         $matched = FALSE;
+                        getItemNames($conn,$all_selected_options);
                         foreach($_SESSION["cart"] as $item_key => $item_value){
                             $key = array_keys($item_value)[0];
                             if($key == $sizeid){
