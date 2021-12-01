@@ -12,6 +12,7 @@
 ?>
 <?php
     $currentLocation = !isset($currentLocation) ? "" : $currentLocation;
+
     if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
         echo "<link href='../styles/style.css' type='text/css' rel='stylesheet'>
         <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>
