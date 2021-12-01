@@ -466,5 +466,8 @@ text-align: center;
     text-align: center;
     display: none;
     margin: 20px auto;
-    left: 50%;
+  left: 50%;
+}
+.inline-block{
+    display: inline-block
 }
