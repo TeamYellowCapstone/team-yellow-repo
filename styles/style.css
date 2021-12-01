@@ -419,16 +419,54 @@ text-align: center;
     min-width: 300px;
     max-width: 600px;
 }
+.option-name{
+    background-color:rgba(191, 191, 191, 0.5);
+}
+
 .creamer-options{
     max-width: 100%;
 
 }
 .creamer-options label{
-    width: min-content !important;
     margin-right: 5px;
+    text-align: left !important;
+    width: unset !important;
 }
 .creamer-options input{
     min-width: 5px !important;
+}
+.collapsible-option + div{
+    display: none;
+}
+.collapse-active + div{
+    display: block;
+}
+.option-item .opt-btn{
+    background-color: #e6bc8d;
+    border: 1px solid #5c4020;
+    color: #5c4020;
+    border-radius: 50%;
+    width: 20px;
+    line-height: 5px;
+    padding: 2px;
+    margin: 2px;
+    cursor: pointer;
+    user-select: none;
+}
+.msg-box{
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 3px 3px 3px 0px #654d4d ;
+    max-width: 400px;
+    max-height: 400px;
+    min-width: 100px;
+    min-height: 100px;
+    background-color: #2C1210;
+    color: white;
+    text-align: center;
+    display: none;
+    margin: 20px auto;
+  left: 50%;
 }
 .inline-block{
     display: inline-block

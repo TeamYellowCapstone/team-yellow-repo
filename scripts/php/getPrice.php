@@ -20,6 +20,26 @@
             $percentage = $row["PricePercentage"];
             $message = $price + $price*$percentage/100;
         }
+        $stmt->close();
+        $conn->close();
+    }
+    else if(isset($_GET["pump"])){
+        $pump = $_GET["pump"];
+        if($conn->error){
+            die("Connection Error: ". mysqli_error);
+        }
+        $query = "SELECT Price FROM Product_Item WHERE MasterSKU = ?;";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s",$pump);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            $price = $row["Price"];
+            $message = $price;
+        }
+        $stmt->close();
+        $conn->close();
     }
     else{
         $message = "Fail";

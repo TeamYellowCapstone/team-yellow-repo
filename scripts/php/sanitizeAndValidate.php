@@ -201,6 +201,24 @@
             return FALSE;
         }
     }
+
+    //validate a positive number
+    function validatePositiveNumber(&$qty, $inputName){
+        if(!isEmpty($inputName)){
+            $qty = trim($_POST[$inputName]);
+            $_SESSION[$inputName] = $qty;
+            //if not numeric
+            if(!preg_match("/^[0-9]*$/",$_POST[$inputName])){
+                $_SESSION["err"] = !isset($_SESSION["err"])? "invalidQuantity" : $_SESSION["err"];
+                return FALSE;
+            }
+            return TRUE;
+        }
+        else{
+            $_SESSION["err"] = !isset($_SESSION["err"])? $inputName : $_SESSION["err"];
+            return FALSE;
+        }
+    }
     //will return true if all input data are valid and sanitized
     //if one of the input is wrong we will store error code based on the error
     //error codes: fname, lname, uname, alphanum, email, invalidemail, nomatch, notstrong, pwrd,and phn

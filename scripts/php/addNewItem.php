@@ -15,7 +15,7 @@
                     die("Connection Error");
                 }
 
-                $search_query = "SELECT MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem FROM Product_Item WHERE MasterSKU = ? OR ProductName =? LIMIT 1;";
+                $search_query = "SELECT MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem, Quantity FROM Product_Item WHERE MasterSKU = ? OR ProductName =? LIMIT 1;";
                 $stmt = $conn->prepare($search_query);
                 $stmt->bind_param("ss",$searchKey,$searchKey);
                 $stmt->execute();
@@ -29,6 +29,7 @@
                         $_SESSION["price"] = $row["Price"];
                         $_SESSION["dept"] = $row["Department"];
                         $_SESSION["category"] = $row["Catagory"];
+                        $_SESSION["quantity"] = $row["Quantity"];
                         $_SESSION["is-menu"] = $row["IsMenuItem"]  == 1 ? true : false;
                     }
 
@@ -42,34 +43,36 @@
             }
         }
         else{
-            $sku; $pname; $desc; $price;
+            $sku; $pname; $desc; $price; $qty;
             validateSKU($sku,"sku");
             validateNameWithSpace($pname, "pname");
             validateString($desc, "desc");
             validatePrice($price, "price");
             validateNameWithSpace($dept, "dept");
             validateNameWithSpace($category, "category");
+            validatePositiveNumber($qty, "quantity");
             if(validateSKU($sku,"sku") && validateNameWithSpace($pname, "pname")
             && validateString($desc, "desc") && validatePrice($price, "price")
-            && validateNameWithSpace($category, "category") && validateNameWithSpace($dept, "dept")){
+            && validateNameWithSpace($category, "category") && validateNameWithSpace($dept, "dept")
+            && validatePositiveNumber($qty, "quantity")){
                 require_once "../../connection/connection.php";
                 if($conn->connect_error){
                     die("Connection Error");
                 }
                 $is_menu = isset($_POST["ismenu"]) ? 1 : 0;
                 $_SESSION["is-menu"] = $is_menu;
-                $add_query = "INSERT INTO Product_Item (MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem) VALUES (?,?,?,?,?,?,?);";
+                $add_query = "INSERT INTO Product_Item (MasterSKU, ProductName, Description, Price, Department, Catagory, IsMenuItem, Quantity) VALUES (?,?,?,?,?,?,?,?);";
                 $update_query = "UPDATE Product_Item SET MasterSKU = ?, ProductName = ?, Description = ?, Price = ?, Department = ?, 
-                                Catagory = ?, IsMenuItem = ? WHERE MasterSKU = ?;";
+                                Catagory = ?, IsMenuItem = ?, Quantity = ? WHERE MasterSKU = ?;";
                 $action = $_SESSION["action"];
                 if(isset($_POST["add"])){
                     $stmt = $conn->prepare($add_query);
-                    $stmt->bind_param("sssdssi",$sku, $pname, $desc, $price, $dept, $category, $is_menu);
+                    $stmt->bind_param("sssdssii",$sku, $pname, $desc, $price, $dept, $category, $is_menu,$qty);
                 }
                 else{
                     $stmt = $conn->prepare($update_query);
                     $oldSKU = $_SESSION["oldSku"];
-                    $stmt->bind_param("sssdssis",$sku, $pname, $desc, $price, $dept, $category, $is_menu,$oldSKU);
+                    $stmt->bind_param("sssdssiis",$sku, $pname, $desc, $price, $dept, $category, $is_menu, $qty,$oldSKU);
                 }
                 if($stmt->execute()){
                     $_SESSION["success"] = "Item has been added successfully!";
@@ -79,6 +82,7 @@
                     unset($_SESSION["price"]);
                     unset($_SESSION["category"]);
                     unset($_SESSION["dept"]);
+                    unset($_SESSION["quantity"]);
                     unset($_SESSION["is-menu"]);
                 }
                 else{
@@ -107,12 +111,16 @@
                     case "pname":
                     case "desc":
                     case "price":
+                    case "quantity":
                         break;
                     case "skuCode":
                         $_SESSION["errorMsg"] = "SKU can only follow the pattern 00X XX, where 0 is for number and X is character.";
                         break;
                     case "invalidPrice":
                         $_SESSION["errorMsg"] = "Price can only be a decimal number e.g 12.25 or 12 or 12.2";
+                        break;
+                    case "invalidQuantity":
+                        $_SESSION["errorMsg"] = "Quantity can only be a positive integer!";
                         break;
                 }
                 $_SESSION["succes"] = "fail";
