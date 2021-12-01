@@ -198,8 +198,6 @@
         unset($_SESSION["UserID"]);
         unset($_SESSION["UserName"]);
     }
-    session_unset();
-    session_destroy();
     $conn->close();
     echo $message;
 

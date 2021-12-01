@@ -138,7 +138,7 @@
     ?> 
     <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
     <!-- <script type="text/javascript" src="scripts/checkout.js" defer></script> -->
-    <script type="text/javascript" src="scripts/remove-item.js" defer></script>
+    <!-- <script type="text/javascript" src="scripts/remove-item.js" defer></script> -->
     <title>Cart</title>
 </head>
 
@@ -150,7 +150,7 @@
         <h1 class="centerText">Your Latte</h1>
         <?php
             if(isset($_SESSION["remove_item"])){
-                echo "<div id='remove-msg'>".$_SESSION["remove_item"]."</div>";
+                echo "<p>".$_SESSION["remove_item"]."<p>";
                 unset($_SESSION["remove_item"]);
             }
         ?>
