@@ -12,7 +12,7 @@
         else{
             require "connection/connection.php";
             //check if item is menu item and if it is not kick user to menu page
-            $detail_query = "SELECT ProductName, Description, Price, ImgID, Department, Catagory, IsMenuItem, Type FROM Product_Item WHERE MasterSKU = ? LIMIT 1;";
+            $detail_query = "SELECT ProductName, Description, Price, ImgID, Department, Catagory, IsMenuItem, Type, Quantity FROM Product_Item WHERE MasterSKU = ? LIMIT 1;";
             $detail_stmt = $conn->prepare($detail_query);
             $detail_stmt->bind_param("s", $itemid);
             $detail_stmt->execute();
@@ -22,6 +22,10 @@
             if($detail_result->num_rows > 0){
                 $row = $detail_result->fetch_assoc();
                 if($row["IsMenuItem"] != 1){
+                    header ("Location: menu.php");
+                    return;
+                }
+                if($row["Quantity"] == 0){
                     header ("Location: menu.php");
                     return;
                 }
@@ -40,7 +44,7 @@
                 $option_result = array();
                 if($row["Type"] === "Coffee"){
                     foreach($option_name_result as $product_option){
-                        $option_query = "SELECT ProductName, MasterSKU, Price FROM Product_Item WHERE Department = ? AND Catagory = ?;";
+                        $option_query = "SELECT ProductName, MasterSKU, Price, MaxAllowed, Quantity FROM Product_Item WHERE Department = ? AND Catagory = ?;";
                         $option_stmt = $conn->prepare($option_query);
                         $dept = "Options";
                         $cat = $product_option["Catagory"];
@@ -101,7 +105,7 @@
         require "templates/head.php";
     ?>
     <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
-    <script type="text/javascript" src="scripts/detail.js" defer></script>    
+    <script type="text/javascript" src="scripts/detail.js" defer></script>
     <title>Detail</title>
 
 </head>
@@ -131,18 +135,20 @@
             <?php
             //$option_result = ["Creamer"=>["soy","2%"], "Sweetener"=>["sugar","honey]]
             foreach ($option_result as $key => $value) {
-                if(($row["Catagory"] != "Iced" && $row["Catagory"] != "Hot") && $key == "Add Ons"){
+                if(($row["Catagory"] != "Iced" && $row["Catagory"] != "Hot") && $key == "AddOns"){
                     continue;
                 }
                 echo "<h3 class='collapsible-option option-name'>".$key." <span class='count'></span></h3>";
                 echo "<div class='creamer-options'>";
                 foreach ($value as $option) {
-                    echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
-                    echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 max=20 id = 'pump-".$option["ProductName"]."'>";
-                    echo "<label for='".$option["ProductName"]."' class='option-item'>".$option["ProductName"]."<span class='remove opt-btn'>-</span><span class='add opt-btn'>+</span></label>";
+                    if($option["Quantity"] > 0){
+                        echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
+                        echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 max=".min($option["Quantity"],$option["MaxAllowed"])." id = 'pump-".$option["ProductName"]."'>";
+                        echo "<label for='".$option["ProductName"]."' class='option-item'>".$option["ProductName"]."<span class='remove opt-btn'>-</span><span class='add opt-btn'>+</span></label>";
+                    }
+                    
                 }
                 echo "</div>";
-                
             }
             echo "<div class='item-size'>";
             echo "<input type='hidden' name='itemid' value='".$itemid."'>";

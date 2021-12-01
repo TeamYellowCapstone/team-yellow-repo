@@ -63,6 +63,10 @@ function update_price_with_pump(){
     }
     
     pumpCount.value = +pumpCount.value + valueToAdd;
+    if(parseInt(pumpCount.value) > parseInt(pumpCount.max)){
+        pumpCount.value = pumpCount.max;
+        return;
+    }
     if(pumpCount.value < 0){
         pumpCount.value = 0;
     }
@@ -74,12 +78,8 @@ function update_price_with_pump(){
     if((pumpCount.getAttribute("name")).substring(5) == "addons[]" && pumpCount.value >= 0){
         addPrice = 1.5;
     }
-    //price.innerHTML ="Price: $" + (+(price.innerHTML.substr(9)) + (addPrice * pumpCount.value));
     optionTotalPrice.value = +(optionTotalPrice.value) + (valueToAdd * addPrice);
     price.innerHTML ="Price: $ " + (+(price.innerHTML.substr(9)) + (valueToAdd * addPrice));
-    //console.log(item.value);
-    //console.log(valueToAdd);
-    //ajax_price(price,"scripts/php/getPrice.php?id="+currentItemId+"&size="+currSize);
 
 }
 //ajax used to add item

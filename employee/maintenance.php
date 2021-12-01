@@ -32,6 +32,7 @@
             <label class="main-radio-lbl btn" for="update-item">Update Item</label>
             <input type="radio" value="update" id="update-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "update" ? " checked" : ""?>>
             <a href="../signup.php" class="btn btn-link">Add Employee</a>
+            <button class="stock-btn btn">Out of Stock</button>
         </div>
         <!-- Add item display begins here -->
        
@@ -57,6 +58,9 @@
                     if(isset($_SESSION["success"])){
                         echo "<p class='success center-text'>".$_SESSION["success"]."</p>";
                         unset($_SESSION["success"]);
+                    }
+                    if(isset($_SESSION["quantity"]) && $_SESSION["quantity"] == 0){
+                        echo "<p class='error center-text'>This product is out of stock!</p>";
                     }
                 ?>
                 <div >

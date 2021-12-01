@@ -74,11 +74,20 @@
                             echo "<br>&emsp;&emsp;" .$creamer;
                         }
                         echo "</td><td>".$item["Quantity"]*$item["Price"] + $optPrice."</td>";
-                        echo "<td><a href='cart.php?item=".$item["ID"]."' class='btn ico-btn delete-item-btn' id=".$item["ID"]."><span class='material-icons'>
+                        if($user != 0){
+                            echo "<td><a href='cart.php?item=".$item["ID"]."' class='btn ico-btn delete-item-btn' id=".$item["ID"]."><span class='material-icons'>
+                            delete
+                            </span>
+                            </button></td>";
+                        }
+                        else{
+                             echo "<td><a href='cart.php?item=".array_keys($cart_result,$item)[0]."' class='btn ico-btn delete-item-btn' id=".array_keys($cart_result,$item)[0]."><span class='material-icons'>
                         delete
                         </span>
-                        </button></td>
-                    </tr>";
+                        </button></td>";
+                        }
+                       
+                    echo "</tr>";
                     $cartQty += $item["Quantity"];
                     $cartTotal += $item["Quantity"]*$item["Price"] + $optPrice;
             }

@@ -14,11 +14,14 @@
     $currentLocation = !isset($currentLocation) ? "" : $currentLocation;
     if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
         echo "<link href='../styles/style.css' type='text/css' rel='stylesheet'>
-        <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>";
+        <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>
+        <script type='text/javascript' src='../scripts/displayMessage.js' defer></script>";
+
     }
     else{
         echo "<link href='".$currentLocation."styles/style.css' type='text/css' rel='stylesheet'>
-        <link href='".$currentLocation."templates/templates-style.css' type='text/css' rel='stylesheet'>";
+        <link href='".$currentLocation."templates/templates-style.css' type='text/css' rel='stylesheet'>
+        <script type='text/javascript' src=".$currentLocation."'scripts/displayMessage.js' defer></script>";
     }
 ?>
 <!-- <link href="styles/style.css" type="text/css" rel="stylesheet">

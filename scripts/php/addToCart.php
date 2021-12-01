@@ -95,6 +95,19 @@
                                 $stmt->bind_param("i",$row["CartID"]);
                                 $stmt->execute();
                                 $stmt->close();
+                                reduceInventoryQty($conn, 1, $currID);
+                                //update inventory for options
+                                $query_option = "SELECT OptionMasterSKU, Quantity FROM Cart_Options WHERE CartID = ?;";
+                                $stmt_option = $conn->prepare($query_option);
+                                $stmt_option->bind_param("i", $row["CartID"]);
+                                
+                                if($stmt_option->execute()){
+                                    $option_result = $stmt_option->get_result();
+                                    foreach ($option_result as $result_key) {
+                                        reduceInventoryQty($conn, $result_key["Quantity"], $result_key["OptionMasterSKU"]);
+                                    }
+                                }
+                                $stmt_option->close();
                                 $_SESSION["cartQty"] += 1;//update cookie to display qty
                                 $_SESSION["itemAdded"] = "The quantity of the current item has been updated";
                                 header("Location: ../../details.php?itemid=".$currID);
@@ -103,6 +116,7 @@
                         }
                         if(!$match_found){
                             addItem($conn,$user,$currID,$currSize,$all_selected_options);
+                            
                             header("Location: ../../details.php?itemid=".$currID);
                             return;
                         }
@@ -204,6 +218,7 @@
         $stmt->execute();
         $lastid = $stmt->insert_id;
         $stmt->close();
+        reduceInventoryQty($conn, 1, $currID);
         $_SESSION["cartQty"] += 1;//update cookie to display qty
         $_SESSION["itemAdded"] = "Item has been added to cart.";
         if(count($all_selected_options) != 0){
@@ -213,15 +228,9 @@
                 $stmt->bind_param("sii",$creamer["mastersku"],$creamer["pump"],$lastid);
                 $stmt->execute();
                 $stmt->close();
+                reduceInventoryQty($conn, $creamer["pump"], $creamer["mastersku"]);
             }
         }
-        // else{
-        //     $query_insert_option = "INSERT INTO Cart_Options (CartID) VALUES (?);";
-        //     $stmt = $conn->prepare($query_insert_option);
-        //     $stmt->bind_param("i",$lastid);
-        //     $stmt->execute();
-        //     $stmt->close();
-        // }
 
     }
 
@@ -239,6 +248,13 @@
             }
             
         } 
+        $stmt->close();
+    }
+    function reduceInventoryQty($conn, $invQty, $sku){
+        $query = "UPDATE Product_Item SET Quantity = (Quantity - ?) WHERE MasterSKU = ? AND Quantity > 0;";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("is",$invQty,$sku);
+        $stmt->execute();
         $stmt->close();
     }
 ?>

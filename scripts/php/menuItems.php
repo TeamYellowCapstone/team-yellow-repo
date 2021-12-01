@@ -38,7 +38,7 @@
                                                                     </a>";
                             }
                             else{
-                                $msg = $msg. "<a href='details.php?itemid=".$row['MasterSKU']."' class='menu-item-link'>
+                                $msg = $msg. "<a href='#' class='menu-item-link'>
                                                                     <div class='menu-item' id='item".$row['MasterSKU']."'>
                                                                         <h2 class='item-name centerText'>".$row['ProductName']."</h2>
                                                                         <div><img src='images/uploads/outofstock.png' alt='' class='img menu-item-img'></div>
