@@ -39,13 +39,15 @@
                         $catagory = strtolower($result["Catagory"]);
                         $price = $catagory == "syrup" ? 0.25 : 0;
                         $price = $catagory == "addons" ? 1.5 : $price;
-                        
-                        for($index = 0; $index < count($_GET[$catagory]); $index++){
-                            if($_GET["pump-".$catagory][$index] != 0){
-                                array_push($all_selected_options,array("mastersku" => $_GET[$catagory][$index], "pump" => $_GET["pump-".$catagory][$index], "price" => $price.""));
-                            }
+                        if (isset($_GET[$catagory])){
+                            for($index = 0; $index < count($_GET[$catagory]); $index++){
+                                if($_GET["pump-".$catagory][$index] != 0){
+                                    array_push($all_selected_options,array("mastersku" => $_GET[$catagory][$index], "pump" => $_GET["pump-".$catagory][$index], "price" => $price.""));
+                                }
                             
+                            }
                         }
+                        
                         
                     }
                 }
@@ -56,10 +58,10 @@
                     //before adding item to cart check if there is the same item with same size
                     $get_cart_id = "SELECT CartID  FROM Cart WHERE UserID = ? AND MasterSKU = ? AND SizeID = ?;";
                     //fix quantity
-                    $get_options = "SELECT OptionMasterSKU, Cart_Options.Quantity, Product_Item.Price FROM Cart_Options INNER JOIN Cart ON
+                    $get_options = "SELECT OptionMasterSKU, Cart_Options.Quantity, Product_Price.Price FROM Cart_Options INNER JOIN Cart ON
                     Cart_Options.CartID = Cart.CartID
-                    INNER JOIN Product_Item ON
-                    Cart_Options.OptionMasterSKU = Product_Item.MasterSKU
+                    INNER JOIN Product_Price ON
+                    Cart_Options.OptionMasterSKU = Product_Price.MasterSKU
                     WHERE Cart.CartID = ?;";
                     
         
@@ -172,7 +174,7 @@
                             getItemNames($conn,$all_selected_options);
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                         "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                        "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
+                        "Price"=>$row_item["Price"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
                         }
@@ -182,7 +184,7 @@
                             getItemNames($conn,$all_selected_options);
                             array_push($_SESSION["cart"],array($currID.",".$currSize=>array("id"=>$currID,"size"=>$currSize,
                             "ProductName"=>$row_item["ProductName"],"SizeName"=>$row_item["SizeName"],"qty"=>1,
-                            "Price"=>$row_item["Price"],"PricePercentage"=>$row_item["PricePercentage"],"option"=>$all_selected_options)));
+                            "Price"=>$row_item["Price"],"option"=>$all_selected_options)));
                             $_SESSION["itemAdded"] = "Item has been added to cart.";
                             $_SESSION["cartQty"] += 1;//update cookie to display qty
                         }

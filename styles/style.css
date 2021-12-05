@@ -98,9 +98,9 @@ button {
     background-position:0;
     }
 
-img {
+/* img {
     margin: 25px;
-}
+} */
 
 .background-wrap {
     background-color: #EDDDCB;
@@ -419,8 +419,9 @@ text-align: center;
     min-width: 300px;
     max-width: 600px;
 }
-.option-name{
+.option-name-container{
     background-color:rgba(191, 191, 191, 0.5);
+    width: 100%;
 }
 
 .creamer-options{
@@ -470,4 +471,15 @@ text-align: center;
 }
 .inline-block{
     display: inline-block
+}
+.opt-name{
+    float: left;
+    clear: left;
+}
+.arrow-head{
+    float: right;
+    clear: right;
+}
+.option-name{
+    background-color: #EF3F6B;
 }
