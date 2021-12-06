@@ -80,6 +80,14 @@ function update_price_with_pump(){
     }
     optionTotalPrice.value = +(optionTotalPrice.value) + (valueToAdd * addPrice);
     price.innerHTML ="Price: $ " + (+(price.innerHTML.substr(9)) + (valueToAdd * addPrice));
+    let countID = pumpCount.getAttribute("id").substring(5);
+    let lblDisplay = document.getElementById(countID+"-count");
+    if(pumpCount.value > 0){
+        lblDisplay.innerHTML = pumpCount.value + " X ";
+    }
+    else{
+        lblDisplay.innerHTML = "";
+    }
 
 }
 //ajax used to add item
@@ -125,9 +133,7 @@ function optionPrices(){
     console.log(totalPrice);
 }
 var p=0;
-function setPrice(x){
-    msg = x
-}
+
 function ajax_pump_price(url){
     let x = new XMLHttpRequest();
     x.onreadystatechange = function(){

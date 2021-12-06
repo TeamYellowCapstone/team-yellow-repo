@@ -17,6 +17,7 @@
             $detail_stmt->bind_param("s", $itemid);
             $detail_stmt->execute();
             $detail_result = $detail_stmt->get_result();
+            
             $detail_stmt->close();
             $row;
             if($detail_result->num_rows > 0){
@@ -31,12 +32,11 @@
                 }
 
                 //get Option names
-                $option_name_query = "SELECT DISTINCT Catagory FROM Product_Item WHERE Department = ?";
+                $option_name_query = "SELECT * FROM OptionPrice;";
                 $option_name_stmt = $conn->prepare($option_name_query);
-                $dept = "Options";
-                $option_name_stmt->bind_param("s", $dept);
                 $option_name_stmt->execute();
                 $option_name_result = $option_name_stmt->get_result();
+                $option_price = $option_name_result->fetch_all(MYSQLI_ASSOC);
                 $option_name_stmt->close();
 
 
@@ -98,6 +98,7 @@
     <?php
         require "templates/head.php";
     ?>
+    <link rel="stylesheet" href="styles/detail.css">
     <script type="text/javascript" src="scripts/add-to-cart.js" defer></script>
     <script type="text/javascript" src="scripts/detail.js" defer></script>
     <title>Detail</title>
@@ -132,13 +133,15 @@
                 if(($row["Catagory"] != "Iced" && $row["Catagory"] != "Hot") && $key == "AddOns"){
                     continue;
                 }
-                echo "<h3 class='collapsible-option option-name'>".$key." <span class='count'></span></h3>";
+                echo "<div class='option-container'>";
+                //$price_per_pump = $option_price[array_keys($option_price,$key)[0]]["Price"] == 0 ? "" : "(";
+                echo "<h3 class='collapsible-option option-name'>".$key." <span class='count'></span><span class='arrow-head'></span></h3>";
                 echo "<div class='creamer-options'>";
                 foreach ($value as $option) {
                     if($option["Quantity"] > 0){
                         echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
                         echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 max=".min($option["Quantity"],$option["MaxAllowed"])." id = 'pump-".$option["ProductName"]."'>";
-                        echo "<label for='".$option["ProductName"]."' class='option-item'>".$option["ProductName"]."<span class='remove opt-btn'>-</span><span class='add opt-btn'>+</span></label>";
+                        echo "<label for='".$option["ProductName"]."' class='option-item'><span class='remove opt-btn'></span><span id='".$option["ProductName"]."-count'></span>".$option["ProductName"]."<span class='add opt-btn'></span></label>";
                     }
                     else{
                         echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
@@ -146,6 +149,7 @@
                     }
                     
                 }
+                echo "</div>";
                 echo "</div>";
             }
             echo "<div class='item-size'>";

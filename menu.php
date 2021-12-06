@@ -25,6 +25,7 @@
     <script type="text/javascript" src="scripts/load-product.js" defer></script>    
     <!-- <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
     <script type="text/javascript" src="scripts/checkout.js" defer></script> -->
+    <link rel="stylesheet" href="styles/menu.css">
     <title>Menu</title>
     </head>
     <body>

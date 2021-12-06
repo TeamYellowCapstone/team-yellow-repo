@@ -2,7 +2,7 @@ document.getElementsByTagName("body")[0].onload = function(){
     let collapsible_opt = document.getElementsByClassName("collapsible-option");
     for (let index = 0; index < collapsible_opt.length; index++) {
         collapsible_opt[index].addEventListener("click", function(){
-            removeClass(collapsible_opt);
+            //removeClass(collapsible_opt);
             collapsible_opt[index].classList.toggle("collapse-active");
         });
         
