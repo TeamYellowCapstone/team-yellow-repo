@@ -227,6 +227,11 @@ a[class="btn cancel"]{
     text-align: center;
 
 }
+a.btn{
+    text-decoration: none;
+    text-align: center;
+    line-height: inherit;
+}
 .brandLogo {
     display: block;
     width: 80px;
@@ -325,4 +330,58 @@ text-align: center;
 }
 .inline-block{
     display: inline-block
+}
+.home-wrapper{
+    width: 100%;
+    /* background-color: aquamarine; */
+    margin: 20px auto;
+}
+.home-img{
+    width: 100%;
+}
+.home-main{
+    min-height: 250px;
+    max-width: 1200px;
+    margin: auto;
+}
+.left-cont, .right-cont{
+    width: 50%;
+    max-width: 500px;
+    height: fit-content;
+}
+.left-cont{
+    transform: skew(-20deg);
+    /* background-color: blueviolet; */
+}
+.flex-box{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+.d-underline{
+    text-decoration: underline double;
+    /* color: goldenrod; */
+}
+.s{
+    text-decoration: line-through;
+    color: gray;
+}
+.cont-title{
+    font-size: 42px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+.home-p{
+    font-size: 24px;
+}
+@media only screen and (max-width: 1035px) {
+   /* .flex-box{
+        flex-flow: column;
+   } */
+   .left-cont, .right-cont{
+       width: 100%;
+       max-width: 75%;
+   }
+    
 }
