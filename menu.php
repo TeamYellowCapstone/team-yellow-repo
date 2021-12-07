@@ -5,16 +5,6 @@
     if($conn->connect_error){
         die("Connection Error");
     }
-    $products = array();
-    $productSize = array();
-    $query = "SELECT * FROM Product_Item;";
-    if($result = $conn->query($query)){
-        $products = $result->fetch_all(MYSQLI_ASSOC);
-    }
-    $query = "SELECT * FROM Product_Size;";
-    if($result = $conn->query($query)){
-        $productSize = $result->fetch_all(MYSQLI_ASSOC);
-    }
     $department = array();
     $department_query = "SELECT DISTINCT(Department) FROM Product_Item WHERE IsMenuItem = 1;";
     if($department_result = $conn->query($department_query)){
@@ -35,6 +25,7 @@
     <script type="text/javascript" src="scripts/load-product.js" defer></script>    
     <!-- <script type="text/javascript" src="scripts/clear-cart.js" defer></script>
     <script type="text/javascript" src="scripts/checkout.js" defer></script> -->
+    <link rel="stylesheet" href="styles/menu.css">
     <title>Menu</title>
     </head>
     <body>

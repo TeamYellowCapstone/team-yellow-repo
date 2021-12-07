@@ -128,7 +128,7 @@
                                 $creamer = "Creamer: ";
                                 foreach ($option as $key) {
                                     switch ($key["Catagory"]){
-                                        case "Add Ons":
+                                        case "AddOns":
                                             $espersso .= $key["pump"] . " X " . $key["ProductName"]. " ";
                                             $optPrice += 1.5 * $key["pump"];
                                             $e++;

@@ -87,14 +87,41 @@
                             unset($_SESSION["desc"]);
                         }?></textarea><span class="ast" > *</span >
                 </div >
-                <div >
-                    <label for="price" > Price: </label >
-                    <input type="text" id="price" name="price" placeholder="2.55" <?php 
-                        if(isset($_SESSION["price"])){
-                            echo "value=".$_SESSION["price"];
-                            unset($_SESSION["price"]);
-                        }?>> <span class="ast" > *</span >
-                </div >
+                <fieldset>
+                    <legend class="field-title">Price (Set the price for one or more item size)</legend>
+                    <div>
+                        <label for="small" >Small: </label >
+                        <input type="text" id="small" name="small" placeholder="2.55" <?php 
+                            if(isset($_SESSION["small"])){
+                                echo "value=".$_SESSION["small"];
+                                unset($_SESSION["small"]);
+                            }?>>
+                    </div>
+                    <div>
+                        <label for="medium" >Medium: </label >
+                        <input type="text" id="medium" name="medium" placeholder="2.55" <?php 
+                            if(isset($_SESSION["medium"])){
+                                echo "value=".$_SESSION["medium"];
+                                unset($_SESSION["medium"]);
+                            }?>>
+                    </div>
+                    <div>
+                        <label for="p-large" >Large: </label >
+                        <input type="text" id="large" name="large" placeholder="2.55" <?php 
+                            if(isset($_SESSION["large"])){
+                                echo "value=".$_SESSION["large"];
+                                unset($_SESSION["large"]);
+                            }?>> 
+                    </div>
+                    <div>
+                        <label for="p-regular" >Regular(one-size): </label >
+                        <input type="text" id="regular" name="regular" placeholder="2.55" <?php 
+                            if(isset($_SESSION["regular"])){
+                                echo "value=".$_SESSION["regular"];
+                                unset($_SESSION["regular"]);
+                            }?>> 
+                    </div>
+                </fieldset>
                 <div >
                     <label for="dept" > Department: </label >
                     <input type="text" id="dept" name="dept" placeholder="Department Name" <?php 

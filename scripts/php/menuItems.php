@@ -18,7 +18,7 @@
             if($cat_result->num_rows > 0){
                 //for each available catogories under this department
                 foreach ($cat_result as $cat) {
-                    $product_query = "SELECT MasterSKU, ProductName, Description, Price, ImgID, Quantity FROM Product_Item WHERE IsMenuItem = 1 AND Department like ? AND Catagory = ?;";
+                    $product_query = "SELECT * FROM MenuItem WHERE Department like ? AND Catagory = ?;";
                     $product_stmt = $conn->prepare($product_query);
                     $prod_cat = $cat["Catagory"];
                     $product_stmt->bind_param("ss",$dept,$prod_cat);

@@ -107,7 +107,7 @@
                 $option_price += $price["price"];
             }
             array_push($cart_result,array("ProductName"=>$item[$key]["ProductName"],"SizeName"=>$item[$key]["SizeName"],
-            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>round(($item[$key]["Price"] * $item[$key]["PricePercentage"]/100)+$item[$key]["Price"],2),
+            "ID"=>$item[$key]["id"],"Quantity"=>$item[$key]["qty"],"Price"=>$item[$key]["Price"],
             "Options"=>$item[$key]["option"]));
         }
     }

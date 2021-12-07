@@ -1,0 +1,116 @@
+
+
+.item-desc {
+    margin-left: 2px;
+    min-height: 100px;
+}
+
+.item-size-container {
+    margin: auto;
+    max-width: 550px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.item-size {
+    max-width: 150px;
+}
+
+    .item-size > .radio-btn {
+        opacity: 0;
+        position: fixed;
+        width: 0px;
+    }
+
+    .item-size > .radio-btn + label {
+        background-color: #EF3F6B;
+        padding: 4px;
+        border-radius: 8px;
+        border: 1px double #DF8527;
+        user-select: none;
+        text-align: center;
+    }
+
+        .item-size > .radio-btn + label:hover {
+            background-color: #EDDDCB;
+            cursor: pointer;
+            
+        }
+
+    .item-size > .radio-btn:checked + label {
+        background-color: #D93427;
+    }
+.add-to-cart-form{
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.creamer-options{
+    width: 100% !important;
+    height: 100%;
+
+}
+.creamer-options label{
+    margin-right: 5px;
+    text-align: left !important;
+    width: unset !important;
+}
+.creamer-options input{
+    min-width: 5px !important;
+}
+.collapsible-option + div{
+    display: none;
+}
+.collapse-active + div{
+    display: block;
+}
+.option-item .opt-btn{
+    box-sizing: content-box;
+    background-color: #e6bc8d;
+    border: 1px solid #5c4020;
+    color: black;
+    width: 25px;
+    line-height: 5px;
+    padding: 2px;
+    margin: 2px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 10px;
+}
+.opt-name{
+    float: left;
+    clear: left;
+}
+.opt-btn.add:after{
+    content: "\02795";
+}
+.opt-btn.remove:after{
+    content: "\02796";
+}
+.arrow-head{
+    float: right;
+    clear: right;
+    font-size: 16px;
+    line-height: 42px;
+}
+.arrow-head:after{
+    content: '\02795';
+}
+.collapse-active .arrow-head:after{
+    content: "\02796";
+}
+.option-container{
+    width: 100% !important;
+    margin: 36px;
+    background-color: #ef3f6b;
+    color: black;
+}
+.option-name{
+    background-color: #f4164e;
+    margin: 0px auto !important;
+}
+
+.option-item{
+    padding-bottom: 20px;
+}
