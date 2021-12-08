@@ -25,12 +25,12 @@
 
         <h2 class="indent">Phone</h2>
             <ul class="content">
-                <li class="indent">614-555-0110</li>
+                <li class="indent"><a href="tel:614-555-0110" class="cont-link">614-555-0110</a></li>
             </ul>
 
         <h2 class="indent">Email</h2>
             <ul class="content">
-                <li class="indent"><a href="mailto:mheywood@cscc.edu">mheywood@cscc.edu</a></li>
+                <li class="indent"><a href="mailto:mheywood@cscc.edu" class="cont-link">mheywood@cscc.edu</a></li>
             </ul>
         <br>
         </div>

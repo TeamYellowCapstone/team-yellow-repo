@@ -10,17 +10,21 @@
 
 .navigation {
     background-color: #2C1210;
+    width: 100%;
 }
 
     .navigation ul {
         list-style: none;
-        display: inline-block;
-        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: row;
+        margin-top: 0;
+        align-content: center;
     }
 
         .navigation ul li {
-            float: left;
-            margin: 0 40px;
+            margin: 0 20px;
+            height: 80px;
         }
 
             .navigation ul li a {
@@ -28,6 +32,7 @@
                 font-size: 24px;
                 text-decoration: none;
                 padding: 14px 16px;
+                line-height: 80px;
             }
 
     .navigation li a:hover {
@@ -42,6 +47,9 @@
     width: 30px;
     line-height: 30px;
     padding: 0px;
+    padding-top: 23px;
+    text-decoration: none;
+    font-size: 24px;
 }
 #cart-container {
     width: 30px;
@@ -52,12 +60,16 @@
     color: #2c1210;
     text-align: center;
     font-weight: bold;
-    float: right;
+    
+    /* float: right; */
     margin-right: 5px;
 }
 
 .right{
-    float: right !important;
+    /* float: right !important;
+    margin-right: 5px !important; */
+    justify-self: flex-end;
+    
     
 }
 /* navigation style ending */

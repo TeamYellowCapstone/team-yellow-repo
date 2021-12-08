@@ -40,8 +40,12 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
                     echo $_SESSION["FirstName"];
                     echo "</a></p>";
                 }
-                echo "<a href=".$currentLocation."cart.php id='a-cart'><div id='cart-container'>
-                            <span id='qty'>";
+                
+        ?>
+        </li>
+        <?php
+            echo "<a href=".$currentLocation."cart.php id='a-cart'  class='right'><div id='cart-container'>
+                <span id='qty'>";
                 if(isset($_SESSION["cartQty"])){
                     echo $_SESSION["cartQty"];
                 }
@@ -50,7 +54,6 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
                 }
                 echo "</span></div></a>";
         ?>
-        </li>
     </ul>
     
 </nav>
