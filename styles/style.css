@@ -13,6 +13,7 @@ html, body {
 
 body {
     background-color: #EDDDCB;
+    margin: 0;
     font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
     color: #2C1210;
 }
@@ -349,15 +350,13 @@ text-align: center;
     max-width: 500px;
     height: fit-content;
 }
-.left-cont{
-    transform: skew(-20deg);
-    /* background-color: blueviolet; */
-}
+
 .flex-box{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
+    
 }
 .d-underline{
     text-decoration: underline double;
@@ -375,6 +374,19 @@ text-align: center;
 .home-p{
     font-size: 24px;
 }
+input, textarea{
+    border-radius: 5px;
+    border: 1px solid #a59888;
+}
+.order-btn{
+    width: 150px;
+    height: 50px;
+    font-size: 32px;
+    line-height: 50px;
+}
+.home-img{
+    width: 50%;
+}
 @media only screen and (max-width: 1035px) {
    /* .flex-box{
         flex-flow: column;
@@ -383,5 +395,31 @@ text-align: center;
        width: 100%;
        max-width: 75%;
    }
+   .first{
+       order: 1;
+   }
+   .second{
+       order: 2;
+   }
+   .cont-title{
+       margin-bottom: 5px;
+       margin-top: 10px;
+   }
     
 }
+@media only screen and (max-width: 720px) {
+
+    .left-cont, .right-cont{
+        width: 100%;
+        max-width: 75%;
+    }
+    .input-lbl{
+        display: block !important;
+        width: fit-content !important;
+    }
+    .home-p{
+        width: 100%;
+        text-align: left;
+    }
+     
+ }

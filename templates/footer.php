@@ -7,6 +7,6 @@
             <li class="ico"><img class="ico-img img" src="images/ico/" alt=""></li>
             <li class="ico"><img class="ico-img img" src="images/ico/" alt=""></li>
         </ul>
-        <p class="links"> 2021 CSCC-Team Yellow</p>
+        <p class="links"> &copy; 2021 CSCC-Team Yellow</p>
     </div>
 </footer>

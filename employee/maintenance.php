@@ -64,7 +64,7 @@
                     }
                 ?>
                 <div >
-                    <label for="sku" > SKU: </label >
+                    <label for="sku" class="input-lbl"> SKU: </label >
                     <input type="text" id="sku" name="sku" placeholder="SKU" <?php 
                         if(isset($_SESSION["sku"])){
                             echo "value='".$_SESSION["sku"]."'";
@@ -72,7 +72,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="pname" > Product Name: </label >
+                    <label for="pname" class="input-lbl"> Product Name: </label >
                     <input type="text" id="pname" name="pname" placeholder="Product Name" <?php 
                         if(isset($_SESSION["pname"])){
                             echo "value='".$_SESSION["pname"]."'";
@@ -80,7 +80,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="desc" > Description: </label >
+                    <label for="desc" class="input-lbl"> Description: </label >
                     <textarea class="txt-area main-txt"id="desc" name="desc" placeholder="Product Description" ><?php 
                         if(isset($_SESSION["desc"])){
                             echo $_SESSION["desc"];
@@ -90,7 +90,7 @@
                 <fieldset>
                     <legend class="field-title">Price (Set the price for one or more item size)</legend>
                     <div>
-                        <label for="small" >Small: </label >
+                        <label for="small" class="input-lbl">Small: </label >
                         <input type="text" id="small" name="small" placeholder="2.55" <?php 
                             if(isset($_SESSION["small"])){
                                 echo "value=".$_SESSION["small"];
@@ -98,7 +98,7 @@
                             }?>>
                     </div>
                     <div>
-                        <label for="medium" >Medium: </label >
+                        <label for="medium" class="input-lbl">Medium: </label >
                         <input type="text" id="medium" name="medium" placeholder="2.55" <?php 
                             if(isset($_SESSION["medium"])){
                                 echo "value=".$_SESSION["medium"];
@@ -106,7 +106,7 @@
                             }?>>
                     </div>
                     <div>
-                        <label for="p-large" >Large: </label >
+                        <label for="p-large" class="input-lbl">Large: </label >
                         <input type="text" id="large" name="large" placeholder="2.55" <?php 
                             if(isset($_SESSION["large"])){
                                 echo "value=".$_SESSION["large"];
@@ -114,7 +114,7 @@
                             }?>> 
                     </div>
                     <div>
-                        <label for="p-regular" >Regular(one-size): </label >
+                        <label for="p-regular" class="input-lbl">Regular(one-size): </label >
                         <input type="text" id="regular" name="regular" placeholder="2.55" <?php 
                             if(isset($_SESSION["regular"])){
                                 echo "value=".$_SESSION["regular"];
@@ -123,7 +123,7 @@
                     </div>
                 </fieldset>
                 <div >
-                    <label for="dept" > Department: </label >
+                    <label for="dept" class="input-lbl"> Department: </label >
                     <input type="text" id="dept" name="dept" placeholder="Department Name" <?php 
                         if(isset($_SESSION["dept"])){
                             echo "value=".$_SESSION["dept"];
@@ -131,7 +131,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="category" > Category: </label >
+                    <label for="category" class="input-lbl"> Category: </label >
                     <input type="text" id="category" name="category" placeholder="Category" <?php 
                         if(isset($_SESSION["category"])){
                             echo "value=".$_SESSION["category"];
@@ -139,7 +139,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="quantity" > Quantity</label >
+                    <label for="quantity" class="input-lbl"> Quantity</label >
                     <input type="number" class="qty-btn" id="quantity" min=0 name="quantity" <?php 
                         if(isset($_SESSION["quantity"])){
                             echo "value=".$_SESSION["quantity"];
