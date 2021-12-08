@@ -147,10 +147,6 @@
                         echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
                         echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 max=0 id = 'pump-".$option["ProductName"]."'>";
                     }
-                    else{
-                        echo "<input type='hidden' class='option' name = '".strtolower($key)."[]' value = '".$option["MasterSKU"]."' id = '".$option["ProductName"]."'>";
-                        echo "<input type='hidden' class='pump' name = 'pump-".strtolower($key)."[]' value = 0 min = 0 max=0 id = 'pump-".$option["ProductName"]."'>";
-                    }
                     
                 }
                 echo "</div>";
