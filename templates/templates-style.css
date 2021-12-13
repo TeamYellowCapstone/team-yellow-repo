@@ -7,13 +7,21 @@
 #2c1210 = dark brown
 #D93427 = red
 */
-
+.logo{
+    float: left;
+    clear: left;
+    width: 64px;
+    height: 100%;
+}
+.logo-img{
+    width: 64px;
+}
 .navigation {
     background-color: #2C1210;
     width: 100%;
 }
 
-    .navigation ul {
+    .navigation-item-container {
         list-style: none;
         display: flex;
         justify-content: flex-start;
@@ -22,12 +30,12 @@
         align-content: center;
     }
 
-        .navigation ul li {
+    .navigation-item-container li {
             margin: 0 20px;
             height: 80px;
         }
 
-            .navigation ul li a {
+        .navigation-item-container li a {
                 color: #EDDDCB;
                 font-size: 24px;
                 text-decoration: none;
@@ -35,9 +43,9 @@
                 line-height: 80px;
             }
 
-    .navigation li a:hover {
-        background-color: #D93427;
-        color: #EDDDCB;
+            .navigation-item-container li:hover {
+                background-color: #D93427;
+                color: #EDDDCB;
     }
 #fname{
     margin: inherit;
@@ -71,5 +79,62 @@
     justify-self: flex-end;
     
     
+}
+.menu-icon{
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+@media only screen and (max-width: 1024px) {
+    .menu-icon{
+        display: inline-block;
+    }
+    .top, .bottom, .middle{
+        margin: 5px 0;
+        width: 30px;
+        height: 5px;
+        background-color: black;
+        transition: 0.4s;
+    }
+    .on .top{
+        -webkit-transform: rotate(-45deg) translate(-9px, 7px);
+        transform: rotate(-45deg) translate(-9px, 7px);
+    }
+    .on .middle{
+        opacity: 0;
+    }
+    .on .bottom {
+        -webkit-transform: rotate(45deg) translate(-7px, -6px);
+        transform: rotate(45deg) translate(-7px, -6px);
+    }
+    .navigation-item-container{
+        flex-flow: column;
+        width: 100%;
+        padding: 0px;
+        display: none;
+        transition: 0.5s;
+    }
+    .navigation-item-container.show{
+        display: flex;
+    }
+    .navigation-item-container li, .navigation-item-container #a-cart{
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-left: 0px;
+    }
+    #a-cart{
+        padding: auto;
+    }
+    #cart-container{
+        margin: auto;
+    }
+    .logo{
+        width: 100%;
+        background-color: #2C1210;
+        margin-bottom: 16px;
+    }
 }
 /* navigation style ending */
