@@ -7,7 +7,8 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
 
 ?>
 <nav class="navigation">
-    <ul>
+    <div class="logo"><a><img class="logo-img img" src="<?php echo $currentLocation;?>images/ico/GitHub-Mark.png"></a></div>
+    <ul class="navigation-item-container">
         <?php
         echo "
         <li><a href=".$currentLocation."index.php>Home</a></li>
@@ -55,5 +56,10 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
                 echo "</span></div></a>";
         ?>
     </ul>
+    <div class="menu-icon" id="menu-bar">
+        <div class="top"></div>
+        <div class="middle"></div>
+        <div class="bottom"></div>            
+    </div>
     
 </nav>

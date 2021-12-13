@@ -17,7 +17,8 @@
 <head>
     <?php
         require ("../templates/head.php");
-    ?> 
+    ?>
+    <link href="../styles/maintenance.css" rel="stylesheet">
     <script src="scripts/js/switchTab.js" defer></script>
     <title>Maintenenance</title>
 </head>
@@ -156,7 +157,7 @@
                         }?>> Check if this is a Menu Item.</label >
                     <span class="ast" > *</span >
                 </div >
-                <div >
+                <div class="flex-box">
                     <?php
                         if($_SESSION["action"] == "add"){
                             echo "<input class='submit btn' type='submit' name='add' value='Add' >";
@@ -167,9 +168,6 @@
                     ?>
                     
                     <a href="index.php" class="btn cancel">Cancel</a>
-                </div >
-                <div >
-                    
                 </div >
             </form >
         </div >
