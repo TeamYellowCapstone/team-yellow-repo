@@ -3,6 +3,6 @@
     if(isset($_SESSION["action"])){
         $_SESSION["action"] = $_SESSION["action"] == "add" ? "update" : "add";
     }
-    echo "good";
+    echo "success";
 
 ?>
