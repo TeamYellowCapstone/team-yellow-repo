@@ -75,16 +75,18 @@
                         }
                         echo "</td><td>".$item["Quantity"]*$item["Price"] + $optPrice."</td>";
                         if($user != 0){
-                            echo "<td><a href='cart.php?item=".$item["ID"]."' class='btn ico-btn delete-item-btn' id=".$item["ID"]."><span class='material-icons'>
-                            delete
-                            </span>
-                            </button></td>";
+                            echo "<td><a href='cart.php?item=".$item["ID"]."&action=remove' class='ico-btn'>
+                            <span class='remove'></span></a>
+                            <a href='cart.php?item=".$item["ID"]."&action=add' class='ico-btn'>
+                            <span class='add'></span></a>
+                            </td>";
                         }
                         else{
-                             echo "<td><a href='cart.php?item=".array_keys($cart_result,$item)[0]."' class='btn ico-btn delete-item-btn' id=".array_keys($cart_result,$item)[0]."><span class='material-icons'>
-                        delete
-                        </span>
-                        </button></td>";
+                             echo "<td><a href='cart.php?item=".array_keys($cart_result,$item)[0]."&action=remove' class='ico-btn'>
+                             <span class='remove'></span></a>
+                        <a href='cart.php?item=".array_keys($cart_result,$item)[0]."&action=add' class='ico-btn'>
+                        <span class='add'></span></a>
+                        </td>";
                         }
                        
                     echo "</tr>";

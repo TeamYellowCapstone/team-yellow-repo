@@ -24,7 +24,7 @@
     }
 
     .item-size > .radio-btn + label {
-        background-color: #EF3F6B;
+        background-color: #EDDDCB;
         padding: 4px;
         border-radius: 8px;
         border: 1px double #DF8527;
@@ -33,14 +33,17 @@
     }
 
         .item-size > .radio-btn + label:hover {
-            background-color: #EDDDCB;
+            background-color: #EF3F6B;
             cursor: pointer;
             
         }
 
     .item-size > .radio-btn:checked + label {
-        background-color: #D93427;
+        background-color: #EF3F6B;
     }
+.size-btn{
+    width: 30px !important;
+}
 .add-to-cart-form{
     min-width: 300px;
     max-width: 600px;
@@ -109,6 +112,8 @@
 .option-name{
     background-color: #f4164e;
     margin: 0px auto !important;
+    cursor: pointer;
+    user-select: none;
 }
 
 .option-item{

@@ -150,7 +150,7 @@
                 </div >
                 <div >
                     <input class="submit btn" type="submit" name="create" value="Create" >
-                    <a href="index.php" class="btn cancel">Cancel</a>
+                    <a href="../index.php" class="btn cancel">Cancel</a>
                 </div >
                 <div >
                     

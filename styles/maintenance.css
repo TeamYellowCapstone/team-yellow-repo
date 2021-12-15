@@ -3,7 +3,7 @@
     flex-wrap: nowrap;
     overflow-x: scroll;
     max-width: 600px;
-    min-width: 500px;
+    min-width: 350px;
     height: 40px;
     padding: 0px;
     margin: auto;
@@ -23,7 +23,7 @@
     text-align: center;
     padding: 0px !important;
     width: 25% !important;
-    min-width: 125;
+    min-width: 125px;
     height: inherit !important;
 }
 a.btn{

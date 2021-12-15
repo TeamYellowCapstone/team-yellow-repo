@@ -1,0 +1,22 @@
+.remove, .add{
+    box-sizing: content-box;
+    background-color: #e6bc8d;
+    border: 1px solid #5c4020;
+    color: black;
+    width: 25px;
+    line-height: 5px;
+    padding: 2px;
+    margin: 2px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 10px;
+}
+.add::after{
+    content: "\02795";
+}
+.remove::after{
+    content: "\02796";
+}
+.ico-btn{
+    text-decoration: none;
+}

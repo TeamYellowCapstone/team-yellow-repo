@@ -1,4 +1,5 @@
 let btn = document.getElementById("clear-cart");
+let chkBtn = document.getElementById("checkout-btn");
 let cartQtyDisplay =  document.getElementById("qty");
 if(btn != null){
     btn.addEventListener("click",function(){
@@ -18,6 +19,8 @@ function ajax_request_delete(){
                 let tbl = document.getElementsByClassName("tbl")[0];
                 if(tbl != null){
                     tbl.remove();
+                    chkBtn.remove();
+                    btn.remove();
                 }
                 
             }
