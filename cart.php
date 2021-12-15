@@ -111,15 +111,18 @@
                                 $previous[$index][array_key_first($previous[$index])]["qty"] += $val;
                                 array_push($_SESSION["cart"],$previous[$index]);
                                 $_SESSION["cartQty"] += $val;
+                                $_SESSION["remove_item"] = $val == -1 ? "Item has been removed." : "Item quantity has been updated.";
                             }
                             else{
                                 if($val == -1){
                                     $_SESSION["cartQty"] -= 1;
+                                    $_SESSION["remove_item"] = "Item has been removed.";
                                 }
                                 else{
                                     $previous[$index][array_key_first($previous[$index])]["qty"] += $val;
                                     array_push($_SESSION["cart"],$previous[$index]);
                                     $_SESSION["cartQty"] += $val;
+                                    $_SESSION["remove_item"] = "Item quantity has been updated.";
                                 }
                             }
                         }

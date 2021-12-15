@@ -36,8 +36,6 @@
             <button class="stock-btn btn">Out of Stock</button>
         </div>
         <!-- Add item display begins here -->
-       
-        <!-- Add item display ends here -->
 
         <!-- Update item display begins here -->
         <div class="update-item-form form">

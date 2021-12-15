@@ -19,6 +19,7 @@
                 $stmt->execute();
                 $search_result = $stmt->get_result();
                 if($search_result->num_rows > 0){
+                    //if entry is found set its values to session for filling the input fields
                     while($row = $search_result->fetch_assoc()){
                         $_SESSION["sku"] = $row["MasterSKU"];
                         $_SESSION["oldSku"] = $row["MasterSKU"];
@@ -29,6 +30,7 @@
                         $_SESSION["quantity"] = $row["Quantity"];
                         $_SESSION["is-menu"] = $row["IsMenuItem"]  == 1 ? true : false;
                     }
+                    //get price values for the searched item
                     $size_query = "SELECT SizeID, Price FROM Product_Price WHERE MasterSKU = ?;";
                     $size_stmt = $conn->prepare($size_query);
                     $size_stmt->bind_param("s",$_SESSION["sku"],);
@@ -50,8 +52,10 @@
                 $conn->close();
             }
         }
+        // if task is not searching do the following
         else{
             $sku; $pname; $desc; $qty; $dept; $category;
+            //validate and assign input data
             validateSKU($sku,"sku");
             validateNameWithSpace($pname, "pname");
             validateString($desc, "desc");
@@ -63,6 +67,7 @@
             validatePrice($small, "small");
             validatePrice($large, "large");
             validatePrice($regular, "regular");
+            //if inputs are all valid
             if(validateSKU($sku,"sku") && validateNameWithSpace($pname, "pname")
             && validateString($desc, "desc") && validateNameWithSpace($category, "category")
             && validateNameWithSpace($dept, "dept") && validatePositiveNumber($qty, "quantity")){
@@ -88,8 +93,6 @@
                         $success = "Item has been added successfully!";
                         $stmt = $conn->prepare($add_query);
                         $stmt->bind_param("sssssii",$sku, $pname, $desc, $dept, $category, $is_menu,$qty);
-                        
-                        
                     }
                     else{
                         $success = "Item has been updated successfully!";
@@ -131,7 +134,7 @@
                                     $_SESSION["errorMsg"] = "Product Name already exists in the database.";
                                     break;
                                 default:
-                                $_SESSION["errorMsg"] = $err. "  ".$conn->errno;//"Connection error";
+                                    $_SESSION["errorMsg"] = "Error while conecting to the server.";//"Connection error";
                             }
                         }
                     }
@@ -167,6 +170,8 @@
         header("Location: ../../employee/maintenance.php");
         return;
     }
+
+    //add item size price
     function sizeAdd($conn, $query, $size, $sku){
         $size_stmt = $conn->prepare($query);
         for($index = 0; $index < count($size); $index++){
@@ -175,10 +180,10 @@
                 $size_stmt->bind_param("isd",$itemSizeID,$sku,$size[$index]);
                 $size_stmt->execute();
             }
-            
         }
         $size_stmt->close();
     }
+    //update item size price
     function sizeUpdate($conn, $size, $sku){
         $update = "UPDATE Product_Price SET Price = ? WHERE MasterSKU = ? AND SizeID = ?;";
         $insert = "INSERT INTO Product_Price (Price, MasterSKU, SizeID) VALUES (?, ?, ?);";
@@ -203,6 +208,7 @@
                 $size_stmt->bind_param("dsi",$size[$index],$sku,$itemSizeID);
                 $size_stmt->execute();
                 $size_stmt->close();
+                $query = $insert;
             }
             else{
                 $itemSizeID = $index+1;
