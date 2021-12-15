@@ -103,7 +103,7 @@
                     //create a table in a loop to display the receipt
                     $cartQty = 0;
                     $cartTotal = 0;
-                    $message = "'<p class='leftText'> <b>Receipt</b>: ".$id."&emsp;&emsp;<b>Time</b>: ".$time."</p>"
+                    $message = "<p class='leftText'>Your order will be ready in 15 - 20 minutes</p><p class='leftText'> <b>Receipt</b>: ".$id."&emsp;&emsp;<b>Time</b>: ".$time."</p>"
                     ."<p class='centerText' id='chk-detail'>Checkout Detail</p>"
                     ."<table class='tbl'>"
                     ."<tbody>";

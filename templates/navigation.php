@@ -7,7 +7,7 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
 
 ?>
 <nav class="navigation">
-    <div class="logo"><a><img class="logo-img img" src="<?php echo $currentLocation;?>images/ico/GitHub-Mark.png"></a></div>
+    <div class="logo"><a href="<?php echo $currentLocation."index.php"?>"><img class="logo-img img" src="<?php echo $currentLocation;?>images/ico/logoalpha.png"></a></div>
     <ul class="navigation-item-container">
         <?php
         echo "
@@ -24,10 +24,11 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
             }
         ?>
         
-        <li class="right">
+        
         <?php
         
                 if(isset($_SESSION["FirstName"]) && $_SESSION["role"] != 3){
+                    echo "<li class='right'>";
                     $location = "index.php";
                     if(isset($_SESSION["role"])){
                         if($_SESSION["role"] == 1){
@@ -39,11 +40,10 @@ if(preg_match("/[.]*\/employee\/[.]*/","".$_SERVER["REQUEST_URI"])){
                     }
                     echo "<p id='fname'><a href=".$currentLocation.$location.">";
                     echo $_SESSION["FirstName"];
-                    echo "</a></p>";
+                    echo "</a></p></li>";
                 }
                 
         ?>
-        </li>
         <?php
             echo "<a href=".$currentLocation."cart.php id='a-cart'  class='right'><div id='cart-container'>
                 <span id='qty'>";

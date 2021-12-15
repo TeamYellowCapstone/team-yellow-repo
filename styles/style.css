@@ -7,15 +7,14 @@
 #D93427 = red
 */
 
-html, body {
-    height: 100%;
-}
+
 
 body {
     background-color: #EDDDCB;
     margin: 0;
     font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
     color: #2C1210;
+    padding-bottom: 20px;
 }
 
 p {
@@ -142,10 +141,13 @@ input:not(.btn) {
     color: #ff0000;
     padding: 11px 10px 12px 10px;
     font-size: 16pt;
+    margin-bottom: 5px;
+    padding-bottom: 2px;
 }
 ul.error {
     width: fit-content;
     margin: auto;
+    font-size: 16px;
 }
 .center-text{
     text-align: center;
@@ -196,6 +198,7 @@ ul.error {
 
 .indent {
     margin-left: 40px;
+    font-size: 1.5em;
 }
 
 .centerText {
@@ -231,7 +234,13 @@ a[class="btn cancel"]{
 a.btn{
     text-decoration: none;
     text-align: center;
-    line-height: inherit;
+    line-height: 40px;
+    
+}
+.chk{
+    min-width: fit-content;
+    padding-left: 2px;
+    padding-right: 2px
 }
 .brandLogo {
     display: block;
@@ -253,6 +262,14 @@ th, td{
 }
 tr:nth-child(even){
   background-color: darkgray;
+}
+#cart-display{
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#cart-display::-webkit-scrollbar{
+    display: none;
 }
 
 #close{
@@ -319,14 +336,14 @@ text-align: center;
     z-index: 1000;
     box-shadow: 3px 3px 3px 0px #654d4d ;
     max-width: 400px;
-    max-height: 400px;
-    min-width: 100px;
+    max-height: 600px;
+    min-width: 300px;
     min-height: 100px;
     background-color: #2C1210;
     color: white;
     text-align: center;
     display: none;
-    margin: 20px auto;
+    margin: 60px auto;
     left: 50%;
 }
 .inline-block{
@@ -386,6 +403,42 @@ input, textarea{
 }
 .home-img{
     width: 50%;
+}
+.profile-cont{
+    width: 300px;
+    background-color: #2C1210;
+    margin: auto;
+    padding: 5px 5px 10px 5px;
+    border-radius: 5px;
+    box-shadow: 6px 8px 5px 0px grey;
+}
+.usr-img{
+    width: 300px;
+}
+.u-name, .u-id{
+    font-size: 24px;
+    color: #edddcb;
+}
+.map, .contact-content{
+    max-width: 600px;
+    border: 2px solid black;
+    margin: auto;
+}
+.contact-content{
+    background-color: #EDDDCB;
+    border-top: 1px solid #EDDDCB;
+}
+.map iframe{
+    width: 600px;
+    height: 450px;
+    border: 0px;
+}
+span.inside{
+    font-size: 16px;
+}
+span.inside a{
+    text-decoration: none;
+    color: #2C1210;
 }
 @media only screen and (max-width: 1035px) {
    /* .flex-box{

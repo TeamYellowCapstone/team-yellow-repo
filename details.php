@@ -118,12 +118,9 @@
                 unset($_SESSION["itemAdded"]);
             }
             echo "<h1 id='".$itemid."'>".$row["ProductName"]."</h1>";
-            echo "<img src='" .$imgSrc. "' height='300' width='300'> ";
+            echo "<img src='" .$imgSrc. "' width='300'> ";
 
             echo "<p id='desc'>".$row["Description"]."</p>";
-            
-
-            
             echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
             ?>
             <img src="images/creamer.png" alt="creamer" height='75' width='auto' >
@@ -162,7 +159,7 @@
                     }
                         echo "
                         <input class='radio radio-btn size' type='radio' name='size' id='". strtolower($size['SizeName'])."' value={$size['SizeID']}>
-                        <label for='". strtolower($size['SizeName'])."'>".substr($size['SizeName'],0,1)."</label>";
+                        <label for='". strtolower($size['SizeName'])."' class='size-btn'>".substr($size['SizeName'],0,1)."</label>";
                 }
                 //echo "<input type='hidden' class='radio radio-btn size' name='size' id='regular' value='4'>";
  

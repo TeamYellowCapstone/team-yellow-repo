@@ -10,8 +10,8 @@
 .logo{
     float: left;
     clear: left;
+    clear: both;
     width: 64px;
-    height: 100%;
 }
 .logo-img{
     width: 64px;
@@ -95,7 +95,7 @@
         margin: 5px 0;
         width: 30px;
         height: 5px;
-        background-color: black;
+        background-color: #EDDDCB;
         transition: 0.4s;
     }
     .on .top{
@@ -114,7 +114,6 @@
         width: 100%;
         padding: 0px;
         display: none;
-        transition: 0.5s;
     }
     .navigation-item-container.show{
         display: flex;
@@ -138,3 +137,14 @@
     }
 }
 /* navigation style ending */
+
+/* footer style begins here */
+footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #2C1210;
+    color: #EDDDCB;
+    text-align: center;
+}

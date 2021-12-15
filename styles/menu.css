@@ -4,9 +4,6 @@
     justify-content: space-around;
 
 }
-.menu-item-link:hover{
-    transform: scale(1.2);
-}
 .menu-item {
     min-width: 200px;
     width: 300px;

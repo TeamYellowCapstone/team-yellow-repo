@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php
-    header("content-security-policy: default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com");
+    header("content-security-policy: default-src 'self'; script-src 'self';frame-src  'self' https://www.google.com/ ;img-src 'self'; style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com");
     header("X-Frame-Options: SAMEORIGIN");
     header("Referrer-Policy: same-origin");
     header("Permissions-Policy: camera=(), microphone=()");
@@ -17,14 +17,16 @@
         echo "<link href='../styles/style.css' type='text/css' rel='stylesheet'>
         <link href='../templates/templates-style.css' type='text/css' rel='stylesheet'>
         <script type='text/javascript' src='../scripts/menu-bar.js' defer></script>
-        <script type='text/javascript' src='../scripts/displayMessage.js' defer></script>";
+        <script type='text/javascript' src='../scripts/displayMessage.js' defer></script>
+        <link rel='icon' type='image/x-icon' href='images/ico/Love You A Latte.ico'>";
 
     }
     else{
         echo "<link href='".$currentLocation."styles/style.css' type='text/css' rel='stylesheet'>
         <link href='".$currentLocation."templates/templates-style.css' type='text/css' rel='stylesheet'>
-        <script type='text/javascript' src=".$currentLocation."'scripts/displayMessage.js' defer></script>
-        <script type='text/javascript' src=".$currentLocation."'scripts/menu-bar.js' defer></script>";
+        <script type='text/javascript' src='".$currentLocation."scripts/displayMessage.js' defer></script>
+        <script type='text/javascript' src='".$currentLocation."scripts/menu-bar.js' defer></script>
+        <link rel='icon' type='image/x-icon' href='".$currentLocation."images/ico/Love You A Latte.ico'>";
     }
 ?>
 <!-- <link href="styles/style.css" type="text/css" rel="stylesheet">
