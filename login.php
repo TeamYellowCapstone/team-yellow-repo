@@ -195,7 +195,7 @@
                     }
                 ?>
                 <div>
-                    <label for="username">User Name: </label>
+                    <label for="username" class="input-lbl">User Name: </label>
                     <input name="uname" type="text" id="username" placeholder="Username" 
                     <?php
                         if(isset($_SESSION["uname"])){
@@ -205,7 +205,7 @@
                     ?>>
                 </div>
                 <div>
-                    <label for="pwrd">Password: </label>
+                    <label for="pwrd" class="input-lbl">Password: </label>
                     <input name="pwrd" type="password" id="pwrd" placeholder="Password" 
                     <?php
                         if(isset($_SESSION["pwrd"])){

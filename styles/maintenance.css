@@ -1,0 +1,32 @@
+.maintenance{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    max-width: 600px;
+    min-width: 350px;
+    height: 40px;
+    padding: 0px;
+    margin: auto;
+    margin-bottom: 10px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.maintenance::-webkit-scrollbar {
+    display: none;
+  }
+.maintenance .btn{
+    margin: 0px;
+    border-radius: 0px;
+    border: unset;
+    border-right: 1px solid;
+    line-height: 40px !important;
+    text-align: center;
+    padding: 0px !important;
+    width: 25% !important;
+    min-width: 125px;
+    height: inherit !important;
+}
+a.btn{
+    line-height: 40px;
+}
+  

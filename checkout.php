@@ -11,19 +11,16 @@
         }
         
         //fetch cart item
-        $cart_query = "SELECT * FROM CartView WHERE UserID = ?;";
-        $cart_stmt = $conn->prepare($cart_query);
-        $cart_stmt->bind_param("i",$user);
-        $cart_stmt->execute();
-        $cart_result = $cart_stmt->get_result();
-        if($cart_result->num_rows > 0){
-            
-        }
-        else{
+        // $cart_query = "SELECT CartView.ID, CartView.ProductName, CartView.Price, PricePercentage, SizeName, CartView.Quantity, OptionTotalPrice FROM CartView 
+        // INNER JOIN OptionPriceView ON CartView.ID = OptionPriceView.ID
+        // WHERE CartView.UserID = ?;";
+        // $cart_stmt = $conn->prepare($cart_query);
+        // $cart_stmt->bind_param("i",$user);
+        // $cart_stmt->execute();
+        // $cart_result = $cart_stmt->get_result();
 
-        }
-        $cart_stmt->close();
-        $conn->close();
+        // $cart_stmt->close();
+        // $conn->close();
     }
 ?>
 <!DOCTYPE html>
@@ -52,7 +49,7 @@
                     echo "</div>";
                     echo "<hr>";
                     echo "<div class='guest-div'>";
-                        echo "<a href='checkout/guestCheckout.php' class='btn btn-link'>Gust Checkout</a>";
+                        echo "<a href='checkout/guestCheckout.php' class='btn btn-link chk'>Guest Checkout</a>";
                     echo "</div>";
                 echo "</div>";
             }

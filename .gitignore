@@ -2,3 +2,4 @@
 *.zip
 */*.zip
 /connection/
+connection/connection.php

@@ -14,3 +14,17 @@ for(i=0; i<tab.length;i++){
     });
 }
 
+let outOfStockBtn = document.getElementsByClassName("stock-btn")[0];
+outOfStockBtn.addEventListener("click",function(){
+    let body = document.getElementsByClassName("update-item-form")[0];
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            body.innerHTML = xhttp.responseText;
+
+        }
+    }
+    xhttp.open("GET","scripts/php/outofstock.php");
+    xhttp.send();
+});
+

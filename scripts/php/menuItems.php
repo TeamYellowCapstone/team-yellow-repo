@@ -18,7 +18,7 @@
             if($cat_result->num_rows > 0){
                 //for each available catogories under this department
                 foreach ($cat_result as $cat) {
-                    $product_query = "SELECT MasterSKU, ProductName, Description, Price, ImgID FROM Product_Item WHERE IsMenuItem = 1 AND Department like ? AND Catagory = ?;";
+                    $product_query = "SELECT * FROM MenuItem WHERE Department like ? AND Catagory = ?;";
                     $product_stmt = $conn->prepare($product_query);
                     $prod_cat = $cat["Catagory"];
                     $product_stmt->bind_param("ss",$dept,$prod_cat);
@@ -29,12 +29,23 @@
                         //print catagory name and display/fetch items in the catagory
                         $msg = $msg. "<h2 class='catagory-name'>".$prod_cat."</h2><hr class='catagory-line'>";
                         while($row = $prod_result->fetch_assoc()){
-                            $msg = $msg. "<a href='details.php?itemid=".$row['MasterSKU']."' class='menu-item-link'>
-                                    <div class='menu-item' id='item".$row['MasterSKU']."'>
-                                        <h2 class='item-name centerText'>".$row['ProductName']."</h2>
-                                        <div><img src='images/".getImage($conn,$row["ImgID"])."' alt='' class='img menu-item-img'></div>
-                                    </div>
-                                    </a>";
+                            if($row["Quantity"] != 0){
+                                $msg = $msg. "<a href='details.php?itemid=".$row['MasterSKU']."' class='menu-item-link'>
+                                                                    <div class='menu-item' id='item".$row['MasterSKU']."'>
+                                                                        <h2 class='item-name centerText'>".$row['ProductName']."</h2>
+                                                                        <div class='img-cont'><img src='images/".getImage($conn,$row["ImgID"])."' alt='' class='img menu-item-img'></div>
+                                                                    </div>
+                                                                    </a>";
+                            }
+                            else{
+                                $msg = $msg. "<a href='#' class='menu-item-link'>
+                                                                    <div class='menu-item' id='item".$row['MasterSKU']."'>
+                                                                        <h2 class='item-name centerText'>".$row['ProductName']."</h2>
+                                                                        <div class='img-cont'><img src='images/uploads/outofstock.png' alt='' class='img menu-item-img'></div>
+                                                                    </div>
+                                                                    </a>";
+                            }
+                            
                         }
                     }
                 }

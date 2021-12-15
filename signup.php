@@ -172,7 +172,7 @@
                     }
                 ?>
                 <div >
-                    <label for="fname1" > First Name: </label >
+                    <label for="fname1" class="input-lbl"> First Name: </label >
                     <input type="text" id="fname1" name="fname" placeholder="First Name" <?php 
                         if(isset($_SESSION["fname"])){
                             echo "value=".$_SESSION["fname"];
@@ -180,7 +180,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="lname" > Last Name: </label >
+                    <label for="lname" class="input-lbl"> Last Name: </label >
                     <input type="text" id="lname" name="lname" placeholder="Last Name" <?php 
                         if(isset($_SESSION["lname"])){
                             echo "value=".$_SESSION["lname"];
@@ -188,7 +188,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="uname" > Username: </label >
+                    <label for="uname" class="input-lbl"> Username: </label >
                     <input type="text" id="uname" name="uname" placeholder="Create a user name" <?php 
                         if(isset($_SESSION["uname"])){
                             echo "value=".$_SESSION["uname"];
@@ -196,7 +196,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="email" > Email: </label >
+                    <label for="email" class="input-lbl"> Email: </label >
                     <input type="text" id="email" name="email" placeholder="someone@example.com" <?php 
                         if(isset($_SESSION["email"])){
                             echo "value=".$_SESSION["email"];
@@ -204,7 +204,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="pwrd" > Password: </label >
+                    <label for="pwrd" class="input-lbl"> Password: </label >
                     <input type="password" id="pwrd" name="pwrd" placeholder="New Password" <?php 
                         if(isset($_SESSION["pwrd"])){
                             echo "value=".$_SESSION["pwrd"];
@@ -213,7 +213,7 @@
 
                 </div >
                 <div >
-                    <label for="pwrd2" > Confirm Password: </label >
+                    <label for="pwrd2" class="input-lbl"> Confirm Password: </label >
                     <input type="password" id="pwrd2" name="pwrd2" placeholder="Confirm Password" <?php 
                         if(isset($_SESSION["pwrd2"])){
                             echo "value=".$_SESSION["pwrd2"];
@@ -222,7 +222,7 @@
 
                 </div >
                 <div >
-                    <label for="phno" > Phone number: </label >
+                    <label for="phno" class="input-lbl"> Phone number: </label >
                     <input type="text" id="phno" name="phno" placeholder="Enter your phone number" <?php 
                         if(isset($_SESSION["phno"])){
                             echo "value=".$_SESSION["phno"];

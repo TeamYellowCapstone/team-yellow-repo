@@ -17,7 +17,8 @@
 <head>
     <?php
         require ("../templates/head.php");
-    ?> 
+    ?>
+    <link href="../styles/maintenance.css" rel="stylesheet">
     <script src="scripts/js/switchTab.js" defer></script>
     <title>Maintenenance</title>
 </head>
@@ -32,6 +33,7 @@
             <label class="main-radio-lbl btn" for="update-item">Update Item</label>
             <input type="radio" value="update" id="update-item" name="add" class="main-radio-btn radio" <?php echo $_SESSION["action"] == "update" ? " checked" : ""?>>
             <a href="../signup.php" class="btn btn-link">Add Employee</a>
+            <button class="stock-btn btn">Out of Stock</button>
         </div>
         <!-- Add item display begins here -->
        
@@ -58,9 +60,12 @@
                         echo "<p class='success center-text'>".$_SESSION["success"]."</p>";
                         unset($_SESSION["success"]);
                     }
+                    if(isset($_SESSION["quantity"]) && $_SESSION["quantity"] == 0){
+                        echo "<p class='error center-text'>This product is out of stock!</p>";
+                    }
                 ?>
                 <div >
-                    <label for="sku" > SKU: </label >
+                    <label for="sku" class="input-lbl"> SKU: </label >
                     <input type="text" id="sku" name="sku" placeholder="SKU" <?php 
                         if(isset($_SESSION["sku"])){
                             echo "value='".$_SESSION["sku"]."'";
@@ -68,7 +73,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="pname" > Product Name: </label >
+                    <label for="pname" class="input-lbl"> Product Name: </label >
                     <input type="text" id="pname" name="pname" placeholder="Product Name" <?php 
                         if(isset($_SESSION["pname"])){
                             echo "value='".$_SESSION["pname"]."'";
@@ -76,23 +81,50 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="desc" > Description: </label >
+                    <label for="desc" class="input-lbl"> Description: </label >
                     <textarea class="txt-area main-txt"id="desc" name="desc" placeholder="Product Description" ><?php 
                         if(isset($_SESSION["desc"])){
                             echo $_SESSION["desc"];
                             unset($_SESSION["desc"]);
                         }?></textarea><span class="ast" > *</span >
                 </div >
+                <fieldset>
+                    <legend class="field-title">Price (Set the price for one or more item size)</legend>
+                    <div>
+                        <label for="small" class="input-lbl">Small: </label >
+                        <input type="text" id="small" name="small" placeholder="2.55" <?php 
+                            if(isset($_SESSION["small"])){
+                                echo "value=".$_SESSION["small"];
+                                unset($_SESSION["small"]);
+                            }?>>
+                    </div>
+                    <div>
+                        <label for="medium" class="input-lbl">Medium: </label >
+                        <input type="text" id="medium" name="medium" placeholder="2.55" <?php 
+                            if(isset($_SESSION["medium"])){
+                                echo "value=".$_SESSION["medium"];
+                                unset($_SESSION["medium"]);
+                            }?>>
+                    </div>
+                    <div>
+                        <label for="p-large" class="input-lbl">Large: </label >
+                        <input type="text" id="large" name="large" placeholder="2.55" <?php 
+                            if(isset($_SESSION["large"])){
+                                echo "value=".$_SESSION["large"];
+                                unset($_SESSION["large"]);
+                            }?>> 
+                    </div>
+                    <div>
+                        <label for="p-regular" class="input-lbl">Regular(one-size): </label >
+                        <input type="text" id="regular" name="regular" placeholder="2.55" <?php 
+                            if(isset($_SESSION["regular"])){
+                                echo "value=".$_SESSION["regular"];
+                                unset($_SESSION["regular"]);
+                            }?>> 
+                    </div>
+                </fieldset>
                 <div >
-                    <label for="price" > Price: </label >
-                    <input type="text" id="price" name="price" placeholder="2.55" <?php 
-                        if(isset($_SESSION["price"])){
-                            echo "value=".$_SESSION["price"];
-                            unset($_SESSION["price"]);
-                        }?>> <span class="ast" > *</span >
-                </div >
-                <div >
-                    <label for="dept" > Department: </label >
+                    <label for="dept" class="input-lbl"> Department: </label >
                     <input type="text" id="dept" name="dept" placeholder="Department Name" <?php 
                         if(isset($_SESSION["dept"])){
                             echo "value=".$_SESSION["dept"];
@@ -100,12 +132,21 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="category" > Category: </label >
+                    <label for="category" class="input-lbl"> Category: </label >
                     <input type="text" id="category" name="category" placeholder="Category" <?php 
                         if(isset($_SESSION["category"])){
                             echo "value=".$_SESSION["category"];
                             unset($_SESSION["category"]);
                         }?>> <span class="ast" > *</span >
+                </div >
+                <div >
+                    <label for="quantity" class="input-lbl"> Quantity</label >
+                    <input type="number" class="qty-btn" id="quantity" min=0 name="quantity" <?php 
+                        if(isset($_SESSION["quantity"])){
+                            echo "value=".$_SESSION["quantity"];
+                            unset($_SESSION["quantity"]);
+                        }?>>
+                    <span class="ast" > *</span >
                 </div >
                 <div >
                     <label for="is-menu" >
@@ -116,7 +157,7 @@
                         }?>> Check if this is a Menu Item.</label >
                     <span class="ast" > *</span >
                 </div >
-                <div >
+                <div class="flex-box">
                     <?php
                         if($_SESSION["action"] == "add"){
                             echo "<input class='submit btn' type='submit' name='add' value='Add' >";
@@ -127,9 +168,6 @@
                     ?>
                     
                     <a href="index.php" class="btn cancel">Cancel</a>
-                </div >
-                <div >
-                    
                 </div >
             </form >
         </div >

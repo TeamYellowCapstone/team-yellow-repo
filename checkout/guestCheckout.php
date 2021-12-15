@@ -117,7 +117,7 @@
                     }
                 ?>
                 <div >
-                    <label for="fname1" > First Name: </label >
+                    <label for="fname1" class="input-lbl"> First Name: </label >
                     <input type="text" id="fname1" name="fname" placeholder="First Name" <?php 
                         if(isset($_SESSION["fname"])){
                             echo "value=".$_SESSION["fname"];
@@ -125,7 +125,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="lname" > Last Name: </label >
+                    <label for="lname" class="input-lbl"> Last Name: </label >
                     <input type="text" id="lname" name="lname" placeholder="Last Name" <?php 
                         if(isset($_SESSION["lname"])){
                             echo "value=".$_SESSION["lname"];
@@ -133,7 +133,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="email" > Email: </label >
+                    <label for="email" class="input-lbl"> Email: </label >
                     <input type="text" id="email" name="email" placeholder="someone@example.com" <?php 
                         if(isset($_SESSION["email"])){
                             echo "value=".$_SESSION["email"];
@@ -141,7 +141,7 @@
                         }?>> <span class="ast" > *</span >
                 </div >
                 <div >
-                    <label for="phno" > Phone number: </label >
+                    <label for="phno" class="input-lbl"> Phone number: </label >
                     <input type="text" id="phno" name="phno" placeholder="Enter your phone number" <?php 
                         if(isset($_SESSION["phno"])){
                             echo "value=".$_SESSION["phno"];
@@ -150,7 +150,7 @@
                 </div >
                 <div >
                     <input class="submit btn" type="submit" name="create" value="Create" >
-                    <a href="index.php" class="btn cancel">Cancel</a>
+                    <a href="../index.php" class="btn cancel">Cancel</a>
                 </div >
                 <div >
                     
