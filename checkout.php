@@ -49,7 +49,7 @@
                     echo "</div>";
                     echo "<hr>";
                     echo "<div class='guest-div'>";
-                        echo "<a href='checkout/guestCheckout.php' class='btn btn-link chk'>Gust Checkout</a>";
+                        echo "<a href='checkout/guestCheckout.php' class='btn btn-link chk'>Guest Checkout</a>";
                     echo "</div>";
                 echo "</div>";
             }

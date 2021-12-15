@@ -73,12 +73,12 @@
                     $query_update;
                     if($val == -1){
                         $query_update = "UPDATE Cart SET Quantity = (Quantity - 1) WHERE CartID = ? AND UserID = ? AND Quantity > 1;";
-                        $_SESSION["remove_item"] = "Item has been removed.";
+                        $_SESSION["remove_item"] = "<center><p>Item has been removed.</p></center>";
                         $_SESSION["cartQty"] -= 1;
                     }
                     else{
                         $query_update = "UPDATE Cart SET Quantity = (Quantity + 1) WHERE CartID = ? AND UserID = ?";
-                        $_SESSION["remove_item"] = "Item quantity has been updated.";
+                        $_SESSION["remove_item"] = "<center><p>Item quantity has been updated.</p></center>";
                         $_SESSION["cartQty"] += 1;
                     }
                     

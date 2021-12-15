@@ -123,7 +123,6 @@
             echo "<p id='desc'>".$row["Description"]."</p>";
             echo "<form action='scripts/php/addToCart.php' method='GET' class='form add-to-cart-form'>";
             ?>
-            <img src="images/creamer.png" alt="creamer" height='75' width='auto' >
             <?php
             //$option_result = ["Creamer"=>["soy","2%"], "Sweetener"=>["sugar","honey]]
             foreach ($option_result as $key => $value) {
