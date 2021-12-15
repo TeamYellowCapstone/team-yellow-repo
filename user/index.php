@@ -41,7 +41,7 @@
         <div class="profile-cont">
             <img class="usr-img img" src="../images/ico/logo512.png">
             <p class="u-name">Name: <?php echo $u["FirstName"]. " " .$u["LastName"]; ?></p>
-            <p class="u-id">UserName: <?php echo $_SESSION["UserName"]; ?></p>
+            <p class="u-id">Username: <?php echo $_SESSION["UserName"]; ?></p>
         </div>
 
         <div class="background-wrap">

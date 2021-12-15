@@ -17,7 +17,7 @@
         <?php
             if(isset($_SESSION["acct"])){
                 echo "<h1 class='centerText'>Your Account Has Been Created Successfully</h1>";
-                echo "<p>You can log in <a href='login.php'>here</a></p>";
+                echo "<center><p>You can log in <a href='login.php'>here</a></p></center>";
                 unset($_SESSION["acct"]);
             }
         ?>
